@@ -12,9 +12,7 @@
     <class>pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.CustomerData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Repair</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.PersonalData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStation</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.ChargeRate</class>
     <properties>
@@ -30,8 +28,6 @@
     <class>pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.CustomerData</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.PersonalData</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="cbrmokPU"/>
@@ -44,7 +40,6 @@
     <class>pl.lodz.p.edu.s195738.cbr.entities.Bike</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Rent</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.CustomerData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Repair</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStation</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.ChargeRate</class>

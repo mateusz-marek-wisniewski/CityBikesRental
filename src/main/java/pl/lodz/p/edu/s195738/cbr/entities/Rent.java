@@ -26,6 +26,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 
 /**
  *
@@ -79,7 +80,7 @@ public class Rent implements Serializable {
     
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private CustomerData customerData;
+    private CustomerRole customerRole;
     
 
     public Rent() {
@@ -159,12 +160,12 @@ public class Rent implements Serializable {
         this.returnStation = returnStation;
     }
 
-    public CustomerData getCustomerData() {
-        return customerData;
+    public CustomerRole getCustomerRole() {
+        return customerRole;
     }
 
-    public void setCustomerData(CustomerData customerData) {
-        this.customerData = customerData;
+    public void setCustomerRole(CustomerRole customerRole) {
+        this.customerRole = customerRole;
     }
 
     @Override

@@ -17,12 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 
 /**
  *
@@ -35,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RentalOpinion.findAll", query = "SELECT r FROM RentalOpinion r"),
     @NamedQuery(name = "RentalOpinion.findById", query = "SELECT r FROM RentalOpinion r WHERE r.id = :id"),
     @NamedQuery(name = "RentalOpinion.findByContent", query = "SELECT r FROM RentalOpinion r WHERE r.content = :content")})
+@SecondaryTable(name = "customer_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "customer_id",referencedColumnName = "id"))
 public class RentalOpinion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,9 +57,9 @@ public class RentalOpinion implements Serializable {
     @Version
     private long version;
     
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
+    private CustomerRole customerRole;
     
 
     public RentalOpinion() {
@@ -95,12 +99,12 @@ public class RentalOpinion implements Serializable {
         this.version = version;
     }
 
-    public Account getAccount() {
-        return account;
+    public CustomerRole getCustomerRole() {
+        return customerRole;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setCustomerRole(CustomerRole customerRole) {
+        this.customerRole = customerRole;
     }
 
     @Override

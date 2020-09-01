@@ -5,13 +5,18 @@
  */
 package pl.lodz.p.edu.s195738.cbr.entities.roles;
 
-import javax.persistence.CascadeType;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
 import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
-import pl.lodz.p.edu.s195738.cbr.entities.CustomerData;
+import pl.lodz.p.edu.s195738.cbr.entities.Rent;
+import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 
 /**
  *
@@ -21,14 +26,40 @@ import pl.lodz.p.edu.s195738.cbr.entities.CustomerData;
 @DiscriminatorValue("CUSTOMER")
 public class CustomerRole extends AccountRole {
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
-    private CustomerData customerData;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "total_time", nullable = false, table = "customer_data")
+    private long totalTime;
 
-    public CustomerData getCustomerData() {
-        return customerData;
+    @OneToMany(mappedBy = "customerRole", fetch = FetchType.LAZY)
+    private Collection<Rent> rentCollection;
+    
+    @OneToMany(mappedBy = "customerRole", fetch = FetchType.LAZY)
+    private Collection<RentalOpinion> rentalOpinionCollection;
+
+    public long getTotalTime() {
+        return totalTime;
     }
 
-    public void setCustomerData(CustomerData customerData) {
-        this.customerData = customerData;
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    @XmlTransient
+    public Collection<Rent> getRentCollection() {
+        return rentCollection;
+    }
+
+    public void setRentCollection(Collection<Rent> rentCollection) {
+        this.rentCollection = rentCollection;
+    }
+
+    @XmlTransient
+    public Collection<RentalOpinion> getRentalOpinionCollection() {
+        return rentalOpinionCollection;
+    }
+
+    public void setRentalOpinionCollection(Collection<RentalOpinion> rentalOpinionCollection) {
+        this.rentalOpinionCollection = rentalOpinionCollection;
     }
 }
