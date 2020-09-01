@@ -14,7 +14,6 @@
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.CustomerData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Repair</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.EmployeeData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.PersonalData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStation</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.ChargeRate</class>
@@ -32,7 +31,6 @@
     <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.CustomerData</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.EmployeeData</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.PersonalData</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>

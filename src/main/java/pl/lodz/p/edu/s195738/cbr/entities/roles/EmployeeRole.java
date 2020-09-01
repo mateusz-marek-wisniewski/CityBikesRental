@@ -5,13 +5,15 @@
  */
 package pl.lodz.p.edu.s195738.cbr.entities.roles;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.validation.constraints.NotNull;
 import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
-import pl.lodz.p.edu.s195738.cbr.entities.EmployeeData;
 
 /**
  *
@@ -19,16 +21,19 @@ import pl.lodz.p.edu.s195738.cbr.entities.EmployeeData;
  */
 @Entity
 @DiscriminatorValue("EMPLOYEE")
+@SecondaryTable(name = "employee_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id"))
 public class EmployeeRole extends AccountRole {
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
-    private EmployeeData employeeData;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false, table = "employee_data")
+    private int phone;
 
-    public EmployeeData getEmployeeData() {
-        return employeeData;
+    public int getPhone() {
+        return phone;
     }
 
-    public void setEmployeeData(EmployeeData employeeData) {
-        this.employeeData = employeeData;
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 }

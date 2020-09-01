@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.*;
 
 /**
  *
@@ -95,8 +96,14 @@ public class Account implements Serializable {
     @Version
     private long version;
     
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-    private Collection<AccountRole> accountRoleCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.EAGER)
+    private AdminRole adminRole;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.EAGER)
+    private EmployeeRole employeeRole;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.EAGER)
+    private CustomerRole customerRole;
     
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<AccountPassword> accountPasswordCollection;
@@ -199,15 +206,6 @@ public class Account implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AccountRole> getAccountRoleCollection() {
-        return accountRoleCollection;
-    }
-
-    public void setAccountRoleCollection(Collection<AccountRole> accountRoleCollection) {
-        this.accountRoleCollection = accountRoleCollection;
-    }
-
-    @XmlTransient
     public Collection<AccountPassword> getAccountPasswordCollection() {
         return accountPasswordCollection;
     }
@@ -223,6 +221,33 @@ public class Account implements Serializable {
 
     public void setLoginAttemptCollection(Collection<LoginAttempt> loginAttemptCollection) {
         this.loginAttemptCollection = loginAttemptCollection;
+    }
+
+    @XmlTransient
+    public AdminRole getAdminRole() {
+        return adminRole;
+    }
+
+    public void setAdminRole(AdminRole adminRole) {
+        this.adminRole = adminRole;
+    }
+
+    @XmlTransient
+    public EmployeeRole getEmployeeRole() {
+        return employeeRole;
+    }
+
+    public void setEmployeeRole(EmployeeRole employeeRole) {
+        this.employeeRole = employeeRole;
+    }
+
+    @XmlTransient
+    public CustomerRole getCustomerRole() {
+        return customerRole;
+    }
+
+    public void setCustomerRole(CustomerRole customerRole) {
+        this.customerRole = customerRole;
     }
 
     public String getName() {
