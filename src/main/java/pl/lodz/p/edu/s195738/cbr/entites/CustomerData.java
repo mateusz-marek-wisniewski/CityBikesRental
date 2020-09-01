@@ -54,6 +54,9 @@ public class CustomerData implements Serializable {
     @OneToMany(mappedBy = "customerData", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
     
+    @OneToMany(mappedBy = "customerData", fetch = FetchType.LAZY)
+    private Collection<RentalOpinion> rentalOpinionCollection;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private AccountRole accountRole;

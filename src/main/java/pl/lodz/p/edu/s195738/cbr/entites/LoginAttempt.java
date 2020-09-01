@@ -71,7 +71,7 @@ public class LoginAttempt implements Serializable {
     
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account accountId;
+    private Account account;
 
     
     public LoginAttempt() {
@@ -129,12 +129,12 @@ public class LoginAttempt implements Serializable {
         this.version = version;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

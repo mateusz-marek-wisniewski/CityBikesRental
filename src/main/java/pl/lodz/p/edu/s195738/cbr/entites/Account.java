@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -47,6 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByEmailVerificationHash", query = "SELECT a FROM Account a WHERE a.emailVerificationHash = :emailVerificationHash"),
     @NamedQuery(name = "Account.findByConfirmed", query = "SELECT a FROM Account a WHERE a.confirmed = :confirmed"),
     @NamedQuery(name = "Account.findByActive", query = "SELECT a FROM Account a WHERE a.active = :active")})
+@SecondaryTable(name = "personal_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id"))
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,20 +95,26 @@ public class Account implements Serializable {
     @Version
     private long version;
     
-    @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<AccountRole> accountRoleCollection;
     
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<AccountPassword> accountPasswordCollection;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
-    private PersonalData personalData;
-    
-    @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
-    private Collection<RentalOpinion> rentalOpinionCollection;
-    
-    @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<LoginAttempt> loginAttemptCollection;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
+    @Column(name = "name", table = "personal_data")
+    private String name;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
+    @Column(name = "surname", table = "personal_data")
+    private String surname;
 
     
     public Account() {
@@ -231,6 +240,22 @@ public class Account implements Serializable {
 
     public void setLoginAttemptCollection(Collection<LoginAttempt> loginAttemptCollection) {
         this.loginAttemptCollection = loginAttemptCollection;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     @Override

@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.lodz.p.edu.s195738</groupId>
-    <artifactId>CityBikesRental</artifactId>
+    <artifactId>cbr</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>CityBikesRental-0.1-SNAPSHOT</name>
+    <name>CityBikesRental</name>
     
     <developers>
         <developer>
