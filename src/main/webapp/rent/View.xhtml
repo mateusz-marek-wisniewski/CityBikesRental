@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RentViewDlg" widgetVar="RentViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRentTitle}">
+            <h:form id="RentViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rentController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRentLabel_id}"/>
+                        <h:outputText value="#{rentController.selected.id}" title="#{bundle.ViewRentTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_startDate}"/>
+                        <h:outputText value="#{rentController.selected.startDate}" title="#{bundle.ViewRentTitle_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRentLabel_endDate}"/>
+                        <h:outputText value="#{rentController.selected.endDate}" title="#{bundle.ViewRentTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRentLabel_charge}"/>
+                        <h:outputText value="#{rentController.selected.charge}" title="#{bundle.ViewRentTitle_charge}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_version}"/>
+                        <h:outputText value="#{rentController.selected.version}" title="#{bundle.ViewRentTitle_version}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_bike}"/>
+                        <h:outputText value="#{rentController.selected.bike}" title="#{bundle.ViewRentTitle_bike}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_rentStation}"/>
+                        <h:outputText value="#{rentController.selected.rentStation}" title="#{bundle.ViewRentTitle_rentStation}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_returnStation}"/>
+                        <h:outputText value="#{rentController.selected.returnStation}" title="#{bundle.ViewRentTitle_returnStation}"/>
+                        <h:outputText value="#{bundle.ViewRentLabel_customerRole}"/>
+                        <h:outputText value="#{rentController.selected.customerRole}" title="#{bundle.ViewRentTitle_customerRole}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RentViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

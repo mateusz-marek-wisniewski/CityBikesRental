@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeeRoleCreateDlg" widgetVar="EmployeeRoleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmployeeRoleTitle}">
+            <h:form id="EmployeeRoleCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{employeeRoleController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{employeeRoleController.selected.phone}" title="#{bundle.CreateEmployeeRoleTitle_phone}" required="true" requiredMessage="#{bundle.CreateEmployeeRoleRequiredMessage_phone}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{employeeRoleController.selected.id}" title="#{bundle.CreateEmployeeRoleTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_roleName}" for="roleName" />
+                        <p:inputText id="roleName" value="#{employeeRoleController.selected.roleName}" title="#{bundle.CreateEmployeeRoleTitle_roleName}" required="true" requiredMessage="#{bundle.CreateEmployeeRoleRequiredMessage_roleName}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_active}" for="active" />
+                        <p:selectBooleanCheckbox id="active" value="#{employeeRoleController.selected.active}" required="true" requiredMessage="#{bundle.EditEmployeeRoleRequiredMessage_active}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_version}" for="version" />
+                        <p:inputText id="version" value="#{employeeRoleController.selected.version}" title="#{bundle.CreateEmployeeRoleTitle_version}" />
+                        <p:outputLabel value="#{bundle.CreateEmployeeRoleLabel_account}" for="account" />
+                        <p:selectOneMenu id="account" value="#{employeeRoleController.selected.account}" >
+                            <f:selectItems value="#{accountController.itemsAvailableSelectOne}"
+                                           var="accountItem"
+                                           itemValue="#{accountItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeeRoleController.create}" value="#{bundle.Save}" update="display,:EmployeeRoleListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmployeeRoleCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmployeeRoleCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

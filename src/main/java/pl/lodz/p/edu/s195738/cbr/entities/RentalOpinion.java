@@ -57,7 +57,7 @@ public class RentalOpinion implements Serializable {
     @Version
     private long version;
     
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_data_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private CustomerRole customerRole;
     

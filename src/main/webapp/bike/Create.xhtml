@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BikeCreateDlg" widgetVar="BikeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateBikeTitle}">
+            <h:form id="BikeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bikeController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{bikeController.selected.id}" title="#{bundle.CreateBikeTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_identifier}" for="identifier" />
+                        <p:inputText id="identifier" value="#{bikeController.selected.identifier}" title="#{bundle.CreateBikeTitle_identifier}" required="true" requiredMessage="#{bundle.CreateBikeRequiredMessage_identifier}"/>
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_bikeStatus}" for="bikeStatus" />
+                        <p:inputText id="bikeStatus" value="#{bikeController.selected.bikeStatus}" title="#{bundle.CreateBikeTitle_bikeStatus}" required="true" requiredMessage="#{bundle.CreateBikeRequiredMessage_bikeStatus}"/>
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_damageDesc}" for="damageDesc" />
+                        <p:inputText id="damageDesc" value="#{bikeController.selected.damageDesc}" title="#{bundle.CreateBikeTitle_damageDesc}" />
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_version}" for="version" />
+                        <p:inputText id="version" value="#{bikeController.selected.version}" title="#{bundle.CreateBikeTitle_version}" />
+                        <p:outputLabel value="#{bundle.CreateBikeLabel_bikeStation}" for="bikeStation" />
+                        <p:selectOneMenu id="bikeStation" value="#{bikeController.selected.bikeStation}" >
+                            <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"
+                                           var="bikeStationItem"
+                                           itemValue="#{bikeStationItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bikeController.create}" value="#{bundle.Save}" update="display,:BikeListForm:datalist,:growl" oncomplete="handleSubmit(args,'BikeCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BikeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

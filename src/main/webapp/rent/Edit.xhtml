@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RentEditDlg" widgetVar="RentEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditRentTitle}">
+            <h:form id="RentEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rentController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditRentLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{rentController.selected.id}" title="#{bundle.EditRentTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditRentLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentController.selected.startDate}" title="#{bundle.EditRentTitle_startDate}" required="true" requiredMessage="#{bundle.EditRentRequiredMessage_startDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditRentLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentController.selected.endDate}" title="#{bundle.EditRentTitle_endDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditRentLabel_charge}" for="charge" />
+                        <p:inputText id="charge" value="#{rentController.selected.charge}" title="#{bundle.EditRentTitle_charge}" />
+                        <p:outputLabel value="#{bundle.EditRentLabel_version}" for="version" />
+                        <p:inputText id="version" value="#{rentController.selected.version}" title="#{bundle.EditRentTitle_version}" />
+                        <p:outputLabel value="#{bundle.EditRentLabel_bike}" for="bike" />
+                        <p:selectOneMenu id="bike" value="#{rentController.selected.bike}" required="true" requiredMessage="#{bundle.EditRentRequiredMessage_bike}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bikeController.itemsAvailableSelectOne}"
+                                           var="bikeItem"
+                                           itemValue="#{bikeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditRentLabel_rentStation}" for="rentStation" />
+                        <p:selectOneMenu id="rentStation" value="#{rentController.selected.rentStation}" required="true" requiredMessage="#{bundle.EditRentRequiredMessage_rentStation}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"
+                                           var="rentStationItem"
+                                           itemValue="#{rentStationItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditRentLabel_returnStation}" for="returnStation" />
+                        <p:selectOneMenu id="returnStation" value="#{rentController.selected.returnStation}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"
+                                           var="returnStationItem"
+                                           itemValue="#{returnStationItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditRentLabel_customerRole}" for="customerRole" />
+                        <p:selectOneMenu id="customerRole" value="#{rentController.selected.customerRole}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{customerRoleController.itemsAvailableSelectOne}"
+                                           var="customerRoleItem"
+                                           itemValue="#{customerRoleItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rentController.update}" value="#{bundle.Save}" update="display,:RentListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RentEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RentEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
