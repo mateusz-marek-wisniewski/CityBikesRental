@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -45,14 +46,14 @@ public class Repair implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
+    @SequenceGenerator(name="repair_id_seq", sequenceName="repair_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="repair_id_seq")
     private Long id;
     
     @Min(0)
     @Column(name = "repair_cost", precision = 19, scale = 2)
     private BigDecimal repairCost;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -74,7 +75,7 @@ public class Repair implements Serializable {
     
     @JoinColumn(name = "bike_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bike bikeId;
+    private Bike bike;
     
 
     public Repair() {
@@ -139,12 +140,12 @@ public class Repair implements Serializable {
         this.version = version;
     }
 
-    public Bike getBikeId() {
-        return bikeId;
+    public Bike getBike() {
+        return bike;
     }
 
-    public void setBikeId(Bike bikeId) {
-        this.bikeId = bikeId;
+    public void setBike(Bike bike) {
+        this.bike = bike;
     }
 
     @Override
