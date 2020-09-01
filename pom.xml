@@ -7,6 +7,13 @@
     <packaging>war</packaging>
     <name>CityBikesRental-0.1-SNAPSHOT</name>
     
+    <developers>
+        <developer>
+            <name>Mateusz Wiśniewski</name>
+            <id>195738</id>
+        </developer>
+    </developers>
+    
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
