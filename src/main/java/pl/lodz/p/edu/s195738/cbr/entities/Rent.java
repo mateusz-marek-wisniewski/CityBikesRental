@@ -78,7 +78,7 @@ public class Rent implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private BikeStation returnStation;
     
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_data_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private CustomerRole customerRole;
     

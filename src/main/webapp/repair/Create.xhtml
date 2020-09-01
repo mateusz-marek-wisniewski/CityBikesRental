@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RepairCreateDlg" widgetVar="RepairCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRepairTitle}">
+            <h:form id="RepairCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{repairController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{repairController.selected.id}" title="#{bundle.CreateRepairTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_repairCost}" for="repairCost" />
+                        <p:inputText id="repairCost" value="#{repairController.selected.repairCost}" title="#{bundle.CreateRepairTitle_repairCost}" />
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_repairLog}" for="repairLog" />
+                        <p:inputText id="repairLog" value="#{repairController.selected.repairLog}" title="#{bundle.CreateRepairTitle_repairLog}" required="true" requiredMessage="#{bundle.CreateRepairRequiredMessage_repairLog}"/>
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{repairController.selected.startDate}" title="#{bundle.EditRepairTitle_startDate}" required="true" requiredMessage="#{bundle.EditRepairRequiredMessage_startDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{repairController.selected.endDate}" title="#{bundle.EditRepairTitle_endDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_version}" for="version" />
+                        <p:inputText id="version" value="#{repairController.selected.version}" title="#{bundle.CreateRepairTitle_version}" />
+                        <p:outputLabel value="#{bundle.CreateRepairLabel_bike}" for="bike" />
+                        <p:selectOneMenu id="bike" value="#{repairController.selected.bike}" required="true" requiredMessage="#{bundle.EditRepairRequiredMessage_bike}">
+                            <f:selectItems value="#{bikeController.itemsAvailableSelectOne}"
+                                           var="bikeItem"
+                                           itemValue="#{bikeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{repairController.create}" value="#{bundle.Save}" update="display,:RepairListForm:datalist,:growl" oncomplete="handleSubmit(args,'RepairCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RepairCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

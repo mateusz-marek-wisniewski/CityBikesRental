@@ -12,6 +12,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
@@ -24,6 +26,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
  */
 @Entity
 @DiscriminatorValue("CUSTOMER")
+@SecondaryTable(name = "customer_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id"))
 public class CustomerRole extends AccountRole {
     
     @Basic(optional = false)

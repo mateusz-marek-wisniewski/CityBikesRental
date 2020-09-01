@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountViewDlg" widgetVar="AccountViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAccountTitle}">
+            <h:form id="AccountViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{accountController.selected != null}">
+                        <h:outputText value="#{bundle.ViewAccountLabel_id}"/>
+                        <h:outputText value="#{accountController.selected.id}" title="#{bundle.ViewAccountTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_login}"/>
+                        <h:outputText value="#{accountController.selected.login}" title="#{bundle.ViewAccountTitle_login}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_password}"/>
+                        <h:outputText value="#{accountController.selected.password}" title="#{bundle.ViewAccountTitle_password}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_email}"/>
+                        <h:outputText value="#{accountController.selected.email}" title="#{bundle.ViewAccountTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_emailVerificationHash}"/>
+                        <h:outputText value="#{accountController.selected.emailVerificationHash}" title="#{bundle.ViewAccountTitle_emailVerificationHash}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_confirmed}"/>
+                        <p:selectBooleanCheckbox value="#{accountController.selected.confirmed}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_active}"/>
+                        <p:selectBooleanCheckbox value="#{accountController.selected.active}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_version}"/>
+                        <h:outputText value="#{accountController.selected.version}" title="#{bundle.ViewAccountTitle_version}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_adminRole}"/>
+                        <h:outputText value="#{accountController.selected.adminRole}" title="#{bundle.ViewAccountTitle_adminRole}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_employeeRole}"/>
+                        <h:outputText value="#{accountController.selected.employeeRole}" title="#{bundle.ViewAccountTitle_employeeRole}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_customerRole}"/>
+                        <h:outputText value="#{accountController.selected.customerRole}" title="#{bundle.ViewAccountTitle_customerRole}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_name}"/>
+                        <h:outputText value="#{accountController.selected.name}" title="#{bundle.ViewAccountTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewAccountLabel_surname}"/>
+                        <h:outputText value="#{accountController.selected.surname}" title="#{bundle.ViewAccountTitle_surname}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AccountViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
