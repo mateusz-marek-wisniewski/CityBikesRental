@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.entites;
+package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,39 +30,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Siwy
  */
 @Entity
-@Table(name = "login_attempt")
+@Table(name = "account_password", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"account_id", "password"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LoginAttempt.findAll", query = "SELECT l FROM LoginAttempt l"),
-    @NamedQuery(name = "LoginAttempt.findById", query = "SELECT l FROM LoginAttempt l WHERE l.id = :id"),
-    @NamedQuery(name = "LoginAttempt.findBySucceded", query = "SELECT l FROM LoginAttempt l WHERE l.succeded = :succeded"),
-    @NamedQuery(name = "LoginAttempt.findByLoginDate", query = "SELECT l FROM LoginAttempt l WHERE l.loginDate = :loginDate"),
-    @NamedQuery(name = "LoginAttempt.findByIpAddress", query = "SELECT l FROM LoginAttempt l WHERE l.ipAddress = :ipAddress")})
-public class LoginAttempt implements Serializable {
+    @NamedQuery(name = "AccountPassword.findAll", query = "SELECT a FROM AccountPassword a"),
+    @NamedQuery(name = "AccountPassword.findById", query = "SELECT a FROM AccountPassword a WHERE a.id = :id"),
+    @NamedQuery(name = "AccountPassword.findByPassword", query = "SELECT a FROM AccountPassword a WHERE a.password = :password")})
+public class AccountPassword implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name="login_attempt_id_seq", sequenceName="login_attempt_id_seq", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="login_attempt_id_seq")
+    @SequenceGenerator(name="account_password_id_seq", sequenceName="account_password_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="account_password_id_seq")
     private Long id;
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private boolean succeded;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "login_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date loginDate;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 18)
-    @Column(name = "ip_address", nullable = false, length = 18)
-    private String ipAddress;
+    @Size(min = 1, max = 64)
+    @Column(nullable = false, length = 64)
+    private String password;
     
     @Version
     private long version;
@@ -74,18 +60,16 @@ public class LoginAttempt implements Serializable {
     private Account account;
 
     
-    public LoginAttempt() {
+    public AccountPassword() {
     }
 
-    public LoginAttempt(Long id) {
+    public AccountPassword(Long id) {
         this.id = id;
     }
 
-    public LoginAttempt(Long id, boolean succeded, Date loginDate, String ipAddress, long version) {
+    public AccountPassword(Long id, String password, long version) {
         this.id = id;
-        this.succeded = succeded;
-        this.loginDate = loginDate;
-        this.ipAddress = ipAddress;
+        this.password = password;
         this.version = version;
     }
 
@@ -97,28 +81,12 @@ public class LoginAttempt implements Serializable {
         this.id = id;
     }
 
-    public boolean getSucceded() {
-        return succeded;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSucceded(boolean succeded) {
-        this.succeded = succeded;
-    }
-
-    public Date getLoginDate() {
-        return loginDate;
-    }
-
-    public void setLoginDate(Date loginDate) {
-        this.loginDate = loginDate;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getVersion() {
@@ -147,10 +115,10 @@ public class LoginAttempt implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LoginAttempt)) {
+        if (!(object instanceof AccountPassword)) {
             return false;
         }
-        LoginAttempt other = (LoginAttempt) object;
+        AccountPassword other = (AccountPassword) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -159,7 +127,7 @@ public class LoginAttempt implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.lodz.p.edu.s195738.cbr.entites.LoginAttempt[ id=" + id + " ]";
+        return "pl.lodz.p.edu.s195738.cbr.entites.AccountPassword[ id=" + id + " ]";
     }
     
 }

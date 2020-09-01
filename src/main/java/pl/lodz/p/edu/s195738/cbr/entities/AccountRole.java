@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.entites;
+package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "account_role", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"role_name", "account_id"})})
+@DiscriminatorColumn(name = "role_name", discriminatorType = DiscriminatorType.STRING)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AccountRole.findAll", query = "SELECT a FROM AccountRole a"),
@@ -66,12 +69,6 @@ public class AccountRole implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
-    private EmployeeData employeeData;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
-    private CustomerData customerData;
 
     
     public AccountRole() {
@@ -126,22 +123,6 @@ public class AccountRole implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public EmployeeData getEmployeeData() {
-        return employeeData;
-    }
-
-    public void setEmployeeData(EmployeeData employeeData) {
-        this.employeeData = employeeData;
-    }
-
-    public CustomerData getCustomerData() {
-        return customerData;
-    }
-
-    public void setCustomerData(CustomerData customerData) {
-        this.customerData = customerData;
     }
 
     @Override

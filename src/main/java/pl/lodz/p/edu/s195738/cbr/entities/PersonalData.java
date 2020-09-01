@@ -3,23 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.entites;
+package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,46 +26,54 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Siwy
  */
 @Entity
-@Table(name = "account_password", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"account_id", "password"})})
+@Table(name = "personal_data")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AccountPassword.findAll", query = "SELECT a FROM AccountPassword a"),
-    @NamedQuery(name = "AccountPassword.findById", query = "SELECT a FROM AccountPassword a WHERE a.id = :id"),
-    @NamedQuery(name = "AccountPassword.findByPassword", query = "SELECT a FROM AccountPassword a WHERE a.password = :password")})
-public class AccountPassword implements Serializable {
+    @NamedQuery(name = "PersonalData.findAll", query = "SELECT p FROM PersonalData p"),
+    @NamedQuery(name = "PersonalData.findById", query = "SELECT p FROM PersonalData p WHERE p.id = :id"),
+    @NamedQuery(name = "PersonalData.findByName", query = "SELECT p FROM PersonalData p WHERE p.name = :name"),
+    @NamedQuery(name = "PersonalData.findBySurname", query = "SELECT p FROM PersonalData p WHERE p.surname = :surname")})
+public class PersonalData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name="account_password_id_seq", sequenceName="account_password_id_seq", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="account_password_id_seq")
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
     private Long id;
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 64)
-    @Column(nullable = false, length = 64)
-    private String password;
+    @Size(min = 1, max = 32)
+    @Column(nullable = false, length = 32)
+    private String name;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
+    @Column(nullable = false, length = 32)
+    private String surname;
     
     @Version
     private long version;
     
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Account account;
-
     
-    public AccountPassword() {
+
+    public PersonalData() {
     }
 
-    public AccountPassword(Long id) {
+    public PersonalData(Long id) {
         this.id = id;
     }
 
-    public AccountPassword(Long id, String password, long version) {
+    public PersonalData(Long id, String name, String surname, long version) {
         this.id = id;
-        this.password = password;
+        this.name = name;
+        this.surname = surname;
         this.version = version;
     }
 
@@ -81,12 +85,20 @@ public class AccountPassword implements Serializable {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public long getVersion() {
@@ -115,10 +127,10 @@ public class AccountPassword implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AccountPassword)) {
+        if (!(object instanceof PersonalData)) {
             return false;
         }
-        AccountPassword other = (AccountPassword) object;
+        PersonalData other = (PersonalData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -127,7 +139,7 @@ public class AccountPassword implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.lodz.p.edu.s195738.cbr.entites.AccountPassword[ id=" + id + " ]";
+        return "pl.lodz.p.edu.s195738.cbr.entites.PersonalData[ id=" + id + " ]";
     }
     
 }

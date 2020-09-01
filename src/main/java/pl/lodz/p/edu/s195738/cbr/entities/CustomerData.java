@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.entites;
+package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,29 +15,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Siwy
  */
 @Entity
-@Table(name = "personal_data")
+@Table(name = "customer_data")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonalData.findAll", query = "SELECT p FROM PersonalData p"),
-    @NamedQuery(name = "PersonalData.findById", query = "SELECT p FROM PersonalData p WHERE p.id = :id"),
-    @NamedQuery(name = "PersonalData.findByName", query = "SELECT p FROM PersonalData p WHERE p.name = :name"),
-    @NamedQuery(name = "PersonalData.findBySurname", query = "SELECT p FROM PersonalData p WHERE p.surname = :surname")})
-public class PersonalData implements Serializable {
+    @NamedQuery(name = "CustomerData.findAll", query = "SELECT c FROM CustomerData c"),
+    @NamedQuery(name = "CustomerData.findById", query = "SELECT c FROM CustomerData c WHERE c.id = :id"),
+    @NamedQuery(name = "CustomerData.findByTotalTime", query = "SELECT c FROM CustomerData c WHERE c.totalTime = :totalTime")})
+public class CustomerData implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
     @Id
     @Basic(optional = false)
     @NotNull
@@ -45,35 +45,33 @@ public class PersonalData implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 32)
-    @Column(nullable = false, length = 32)
-    private String name;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 32)
-    @Column(nullable = false, length = 32)
-    private String surname;
+    @Column(name = "total_time", nullable = false)
+    private long totalTime;
     
     @Version
     private long version;
     
+    @OneToMany(mappedBy = "customerData", fetch = FetchType.LAZY)
+    private Collection<Rent> rentCollection;
+    
+    @OneToMany(mappedBy = "customerData", fetch = FetchType.LAZY)
+    private Collection<RentalOpinion> rentalOpinionCollection;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private Account account;
+    private AccountRole accountRole;
+
     
-
-    public PersonalData() {
+    public CustomerData() {
     }
 
-    public PersonalData(Long id) {
+    public CustomerData(Long id) {
         this.id = id;
     }
 
-    public PersonalData(Long id, String name, String surname, long version) {
+    public CustomerData(Long id, long totalTime, long version) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
+        this.totalTime = totalTime;
         this.version = version;
     }
 
@@ -85,20 +83,12 @@ public class PersonalData implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public long getTotalTime() {
+        return totalTime;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
     }
 
     public long getVersion() {
@@ -109,12 +99,21 @@ public class PersonalData implements Serializable {
         this.version = version;
     }
 
-    public Account getAccount() {
-        return account;
+    @XmlTransient
+    public Collection<Rent> getRentCollection() {
+        return rentCollection;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setRentCollection(Collection<Rent> rentCollection) {
+        this.rentCollection = rentCollection;
+    }
+
+    public AccountRole getAccountRole() {
+        return accountRole;
+    }
+
+    public void setAccountRole(AccountRole accountRole) {
+        this.accountRole = accountRole;
     }
 
     @Override
@@ -127,10 +126,10 @@ public class PersonalData implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PersonalData)) {
+        if (!(object instanceof CustomerData)) {
             return false;
         }
-        PersonalData other = (PersonalData) object;
+        CustomerData other = (CustomerData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -139,7 +138,7 @@ public class PersonalData implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.lodz.p.edu.s195738.cbr.entites.PersonalData[ id=" + id + " ]";
+        return "pl.lodz.p.edu.s195738.cbr.entites.CustomerData[ id=" + id + " ]";
     }
     
 }

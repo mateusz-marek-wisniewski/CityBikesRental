@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.entites;
+package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -214,23 +214,6 @@ public class Account implements Serializable {
 
     public void setAccountPasswordCollection(Collection<AccountPassword> accountPasswordCollection) {
         this.accountPasswordCollection = accountPasswordCollection;
-    }
-
-    public PersonalData getPersonalData() {
-        return personalData;
-    }
-
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
-    @XmlTransient
-    public Collection<RentalOpinion> getRentalOpinionCollection() {
-        return rentalOpinionCollection;
-    }
-
-    public void setRentalOpinionCollection(Collection<RentalOpinion> rentalOpinionCollection) {
-        this.rentalOpinionCollection = rentalOpinionCollection;
     }
 
     @XmlTransient
