@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,28 +33,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RentalOpinion.findAll", query = "SELECT r FROM RentalOpinion r"),
     @NamedQuery(name = "RentalOpinion.findById", query = "SELECT r FROM RentalOpinion r WHERE r.id = :id"),
-    @NamedQuery(name = "RentalOpinion.findByContent", query = "SELECT r FROM RentalOpinion r WHERE r.content = :content"),
-    @NamedQuery(name = "RentalOpinion.findByVersion", query = "SELECT r FROM RentalOpinion r WHERE r.version = :version")})
+    @NamedQuery(name = "RentalOpinion.findByContent", query = "SELECT r FROM RentalOpinion r WHERE r.content = :content")})
 public class RentalOpinion implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(nullable = false, length = 500)
     private String content;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountId;
+    
 
     public RentalOpinion() {
     }

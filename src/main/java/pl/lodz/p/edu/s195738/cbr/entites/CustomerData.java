@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CustomerData.findAll", query = "SELECT c FROM CustomerData c"),
     @NamedQuery(name = "CustomerData.findById", query = "SELECT c FROM CustomerData c WHERE c.id = :id"),
-    @NamedQuery(name = "CustomerData.findByTotalTime", query = "SELECT c FROM CustomerData c WHERE c.totalTime = :totalTime"),
-    @NamedQuery(name = "CustomerData.findByVersion", query = "SELECT c FROM CustomerData c WHERE c.version = :version")})
+    @NamedQuery(name = "CustomerData.findByTotalTime", query = "SELECT c FROM CustomerData c WHERE c.totalTime = :totalTime")})
 public class CustomerData implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,20 +42,23 @@ public class CustomerData implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "total_time", nullable = false)
     private long totalTime;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
-    @OneToMany(mappedBy = "customerId", fetch = FetchType.LAZY)
+    
+    @OneToMany(mappedBy = "customerData", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private AccountRole accountRole;
 
+    
     public CustomerData() {
     }
 

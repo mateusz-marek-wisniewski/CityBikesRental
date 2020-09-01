@@ -17,6 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ChargeRate.findAll", query = "SELECT c FROM ChargeRate c"),
     @NamedQuery(name = "ChargeRate.findById", query = "SELECT c FROM ChargeRate c WHERE c.id = :id"),
     @NamedQuery(name = "ChargeRate.findByTimeLimit", query = "SELECT c FROM ChargeRate c WHERE c.timeLimit = :timeLimit"),
-    @NamedQuery(name = "ChargeRate.findByChargeValue", query = "SELECT c FROM ChargeRate c WHERE c.chargeValue = :chargeValue"),
-    @NamedQuery(name = "ChargeRate.findByVersion", query = "SELECT c FROM ChargeRate c WHERE c.version = :version")})
+    @NamedQuery(name = "ChargeRate.findByChargeValue", query = "SELECT c FROM ChargeRate c WHERE c.chargeValue = :chargeValue")})
 public class ChargeRate implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,20 +43,22 @@ public class ChargeRate implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "time_limit", nullable = false)
     private int timeLimit;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
+    @Min(0)
     @Basic(optional = false)
     @NotNull
     @Column(name = "charge_value", nullable = false, precision = 5, scale = 2)
     private BigDecimal chargeValue;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
 
+    
     public ChargeRate() {
     }
 

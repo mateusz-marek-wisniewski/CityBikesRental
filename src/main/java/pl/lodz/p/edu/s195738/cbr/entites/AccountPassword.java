@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,29 +35,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "AccountPassword.findAll", query = "SELECT a FROM AccountPassword a"),
     @NamedQuery(name = "AccountPassword.findById", query = "SELECT a FROM AccountPassword a WHERE a.id = :id"),
-    @NamedQuery(name = "AccountPassword.findByPassword", query = "SELECT a FROM AccountPassword a WHERE a.password = :password"),
-    @NamedQuery(name = "AccountPassword.findByVersion", query = "SELECT a FROM AccountPassword a WHERE a.version = :version")})
+    @NamedQuery(name = "AccountPassword.findByPassword", query = "SELECT a FROM AccountPassword a WHERE a.password = :password")})
 public class AccountPassword implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
     @Column(nullable = false, length = 64)
     private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account accountId;
+    private Account account;
 
+    
     public AccountPassword() {
     }
 
@@ -94,12 +97,12 @@ public class AccountPassword implements Serializable {
         this.version = version;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

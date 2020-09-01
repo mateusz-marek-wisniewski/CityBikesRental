@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <!-- Define Persistence Unit -->
-  <persistence-unit name="my_persistence_unit">
+  <persistence-unit name="cbradminPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbradminDS</jta-data-source>
     <class>pl.lodz.p.edu.s195738.cbr.entites.Rent</class>
     <class>pl.lodz.p.edu.s195738.cbr.entites.BikeStation</class>
     <class>pl.lodz.p.edu.s195738.cbr.entites.EmployeeData</class>
@@ -15,5 +17,42 @@
     <class>pl.lodz.p.edu.s195738.cbr.entites.AccountRole</class>
     <class>pl.lodz.p.edu.s195738.cbr.entites.Account</class>
     <class>pl.lodz.p.edu.s195738.cbr.entites.RentalOpinion</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbradminPU"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="cbrmokPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbrmokDS</jta-data-source>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.EmployeeData</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.AccountPassword</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.LoginAttempt</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.PersonalData</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.CustomerData</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.AccountRole</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.Account</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbrmokPU"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="cbrmowPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbrmowDS</jta-data-source>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.Rent</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.BikeStation</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.Repair</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.Bike</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.CustomerData</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.ChargeRate</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entites.RentalOpinion</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbrmowPU"/>
+    </properties>
   </persistence-unit>
 </persistence>

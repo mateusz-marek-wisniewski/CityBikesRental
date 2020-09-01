@@ -21,6 +21,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,51 +45,60 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "BikeStation.findByCity", query = "SELECT b FROM BikeStation b WHERE b.city = :city"),
     @NamedQuery(name = "BikeStation.findByStreetName", query = "SELECT b FROM BikeStation b WHERE b.streetName = :streetName"),
     @NamedQuery(name = "BikeStation.findByGeolocLatitude", query = "SELECT b FROM BikeStation b WHERE b.geolocLatitude = :geolocLatitude"),
-    @NamedQuery(name = "BikeStation.findByGeolocLongitude", query = "SELECT b FROM BikeStation b WHERE b.geolocLongitude = :geolocLongitude"),
-    @NamedQuery(name = "BikeStation.findByVersion", query = "SELECT b FROM BikeStation b WHERE b.version = :version")})
+    @NamedQuery(name = "BikeStation.findByGeolocLongitude", query = "SELECT b FROM BikeStation b WHERE b.geolocLongitude = :geolocLongitude")})
 public class BikeStation implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
     @Column(nullable = false, length = 5)
     private String identifier;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private String city;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "street_name", nullable = false, length = 100)
     private String streetName;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
     @Basic(optional = false)
+    @Min(-90)@Max(90)
     @NotNull
     @Column(name = "geoloc_latitude", nullable = false, precision = 10, scale = 6)
     private BigDecimal geolocLatitude;
+    
     @Basic(optional = false)
+    @Min(-180)@Max(180)
     @NotNull
     @Column(name = "geoloc_longitude", nullable = false, precision = 10, scale = 6)
     private BigDecimal geolocLongitude;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "startStationId", fetch = FetchType.LAZY)
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rentStation", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
-    @OneToMany(mappedBy = "endStationId", fetch = FetchType.LAZY)
-    private Collection<Rent> rentCollection1;
-    @OneToMany(mappedBy = "bikeStationId", fetch = FetchType.LAZY)
+    
+    @OneToMany(mappedBy = "returnStation", fetch = FetchType.LAZY)
+    private Collection<Rent> returnCollection;
+    
+    @OneToMany(mappedBy = "bikeStation", fetch = FetchType.LAZY)
     private Collection<Bike> bikeCollection;
 
+    
     public BikeStation() {
     }
 
@@ -170,12 +182,12 @@ public class BikeStation implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Rent> getRentCollection1() {
-        return rentCollection1;
+    public Collection<Rent> getReturnCollection() {
+        return returnCollection;
     }
 
-    public void setRentCollection1(Collection<Rent> rentCollection1) {
-        this.rentCollection1 = rentCollection1;
+    public void setReturnCollection(Collection<Rent> returnCollection) {
+        this.returnCollection = returnCollection;
     }
 
     @XmlTransient

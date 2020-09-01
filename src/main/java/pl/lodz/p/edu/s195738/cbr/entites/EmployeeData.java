@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,27 +30,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EmployeeData.findAll", query = "SELECT e FROM EmployeeData e"),
     @NamedQuery(name = "EmployeeData.findById", query = "SELECT e FROM EmployeeData e WHERE e.id = :id"),
-    @NamedQuery(name = "EmployeeData.findByPhone", query = "SELECT e FROM EmployeeData e WHERE e.phone = :phone"),
-    @NamedQuery(name = "EmployeeData.findByVersion", query = "SELECT e FROM EmployeeData e WHERE e.version = :version")})
+    @NamedQuery(name = "EmployeeData.findByPhone", query = "SELECT e FROM EmployeeData e WHERE e.phone = :phone")})
 public class EmployeeData implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private int phone;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private AccountRole accountRole;
+    
 
     public EmployeeData() {
     }

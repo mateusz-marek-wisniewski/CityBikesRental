@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,38 +38,42 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LoginAttempt.findById", query = "SELECT l FROM LoginAttempt l WHERE l.id = :id"),
     @NamedQuery(name = "LoginAttempt.findBySucceded", query = "SELECT l FROM LoginAttempt l WHERE l.succeded = :succeded"),
     @NamedQuery(name = "LoginAttempt.findByLoginDate", query = "SELECT l FROM LoginAttempt l WHERE l.loginDate = :loginDate"),
-    @NamedQuery(name = "LoginAttempt.findByIpAddress", query = "SELECT l FROM LoginAttempt l WHERE l.ipAddress = :ipAddress"),
-    @NamedQuery(name = "LoginAttempt.findByVersion", query = "SELECT l FROM LoginAttempt l WHERE l.version = :version")})
+    @NamedQuery(name = "LoginAttempt.findByIpAddress", query = "SELECT l FROM LoginAttempt l WHERE l.ipAddress = :ipAddress")})
 public class LoginAttempt implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private boolean succeded;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "login_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date loginDate;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 18)
     @Column(name = "ip_address", nullable = false, length = 18)
     private String ipAddress;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountId;
 
+    
     public LoginAttempt() {
     }
 

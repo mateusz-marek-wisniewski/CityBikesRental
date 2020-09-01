@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,58 +45,69 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email = :email"),
     @NamedQuery(name = "Account.findByEmailVerificationHash", query = "SELECT a FROM Account a WHERE a.emailVerificationHash = :emailVerificationHash"),
     @NamedQuery(name = "Account.findByConfirmed", query = "SELECT a FROM Account a WHERE a.confirmed = :confirmed"),
-    @NamedQuery(name = "Account.findByActive", query = "SELECT a FROM Account a WHERE a.active = :active"),
-    @NamedQuery(name = "Account.findByVersion", query = "SELECT a FROM Account a WHERE a.version = :version")})
+    @NamedQuery(name = "Account.findByActive", query = "SELECT a FROM Account a WHERE a.active = :active")})
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
     @Column(nullable = false, length = 16)
     private String login;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
     @Column(nullable = false, length = 64)
     private String password;
+    
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
     @Column(nullable = false, length = 64)
     private String email;
+    
     @Size(max = 64)
     @Column(name = "email_verification_hash", length = 64)
     private String emailVerificationHash;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private boolean confirmed;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private boolean active;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
     private Collection<AccountRole> accountRoleCollection;
-    @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
+    
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<AccountPassword> accountPasswordCollection;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
     private PersonalData personalData;
+    
     @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
     private Collection<RentalOpinion> rentalOpinionCollection;
+    
     @OneToMany(mappedBy = "accountId", fetch = FetchType.LAZY)
     private Collection<LoginAttempt> loginAttemptCollection;
 
+    
     public Account() {
     }
 

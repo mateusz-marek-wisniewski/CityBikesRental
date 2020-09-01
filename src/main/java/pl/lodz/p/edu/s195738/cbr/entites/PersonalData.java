@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,33 +32,36 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PersonalData.findAll", query = "SELECT p FROM PersonalData p"),
     @NamedQuery(name = "PersonalData.findById", query = "SELECT p FROM PersonalData p WHERE p.id = :id"),
     @NamedQuery(name = "PersonalData.findByName", query = "SELECT p FROM PersonalData p WHERE p.name = :name"),
-    @NamedQuery(name = "PersonalData.findBySurname", query = "SELECT p FROM PersonalData p WHERE p.surname = :surname"),
-    @NamedQuery(name = "PersonalData.findByVersion", query = "SELECT p FROM PersonalData p WHERE p.version = :version")})
+    @NamedQuery(name = "PersonalData.findBySurname", query = "SELECT p FROM PersonalData p WHERE p.surname = :surname")})
 public class PersonalData implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
     @Column(nullable = false, length = 32)
     private String name;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
     @Column(nullable = false, length = 32)
     private String surname;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Account account;
+    
 
     public PersonalData() {
     }

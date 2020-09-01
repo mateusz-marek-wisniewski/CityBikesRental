@@ -22,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,40 +41,46 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bike.findById", query = "SELECT b FROM Bike b WHERE b.id = :id"),
     @NamedQuery(name = "Bike.findByIdentifier", query = "SELECT b FROM Bike b WHERE b.identifier = :identifier"),
     @NamedQuery(name = "Bike.findByBikeStatus", query = "SELECT b FROM Bike b WHERE b.bikeStatus = :bikeStatus"),
-    @NamedQuery(name = "Bike.findByDamageDesc", query = "SELECT b FROM Bike b WHERE b.damageDesc = :damageDesc"),
-    @NamedQuery(name = "Bike.findByVersion", query = "SELECT b FROM Bike b WHERE b.version = :version")})
+    @NamedQuery(name = "Bike.findByDamageDesc", query = "SELECT b FROM Bike b WHERE b.damageDesc = :damageDesc")})
 public class Bike implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private int identifier;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "bike_status", nullable = false, length = 10)
     private String bikeStatus;
+    
     @Size(max = 255)
     @Column(name = "damage_desc", length = 255)
     private String damageDesc;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bikeId", fetch = FetchType.LAZY)
     private Collection<Repair> repairCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bikeId", fetch = FetchType.LAZY)
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bike", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
+    
     @JoinColumn(name = "bike_station_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private BikeStation bikeStationId;
+    private BikeStation bikeStation;
 
+    
     public Bike() {
     }
 
@@ -146,12 +153,12 @@ public class Bike implements Serializable {
         this.rentCollection = rentCollection;
     }
 
-    public BikeStation getBikeStationId() {
-        return bikeStationId;
+    public BikeStation getBikeStation() {
+        return bikeStation;
     }
 
-    public void setBikeStationId(BikeStation bikeStationId) {
-        this.bikeStationId = bikeStationId;
+    public void setBikeStation(BikeStation bikeStation) {
+        this.bikeStation = bikeStation;
     }
 
     @Override

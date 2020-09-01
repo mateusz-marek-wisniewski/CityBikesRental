@@ -21,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,43 +37,50 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rent.findById", query = "SELECT r FROM Rent r WHERE r.id = :id"),
     @NamedQuery(name = "Rent.findByStartDate", query = "SELECT r FROM Rent r WHERE r.startDate = :startDate"),
     @NamedQuery(name = "Rent.findByEndDate", query = "SELECT r FROM Rent r WHERE r.endDate = :endDate"),
-    @NamedQuery(name = "Rent.findByCharge", query = "SELECT r FROM Rent r WHERE r.charge = :charge"),
-    @NamedQuery(name = "Rent.findByVersion", query = "SELECT r FROM Rent r WHERE r.version = :version")})
+    @NamedQuery(name = "Rent.findByCharge", query = "SELECT r FROM Rent r WHERE r.charge = :charge")})
 public class Rent implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
+    @Min(0)
     @Column(precision = 19, scale = 2)
     private BigDecimal charge;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "bike_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bike bikeId;
+    private Bike bike;
+    
     @JoinColumn(name = "start_station_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private BikeStation startStationId;
+    private BikeStation rentStation;
+    
     @JoinColumn(name = "end_station_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private BikeStation endStationId;
+    private BikeStation returnStation;
+    
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private CustomerData customerId;
+    private CustomerData customerData;
+    
 
     public Rent() {
     }
@@ -126,36 +135,36 @@ public class Rent implements Serializable {
         this.version = version;
     }
 
-    public Bike getBikeId() {
-        return bikeId;
+    public Bike getBike() {
+        return bike;
     }
 
-    public void setBikeId(Bike bikeId) {
-        this.bikeId = bikeId;
+    public void setBike(Bike bike) {
+        this.bike = bike;
     }
 
-    public BikeStation getStartStationId() {
-        return startStationId;
+    public BikeStation getRentStation() {
+        return rentStation;
     }
 
-    public void setStartStationId(BikeStation startStationId) {
-        this.startStationId = startStationId;
+    public void setRentStation(BikeStation rentStation) {
+        this.rentStation = rentStation;
     }
 
-    public BikeStation getEndStationId() {
-        return endStationId;
+    public BikeStation getReturnStation() {
+        return returnStation;
     }
 
-    public void setEndStationId(BikeStation endStationId) {
-        this.endStationId = endStationId;
+    public void setReturnStation(BikeStation returnStation) {
+        this.returnStation = returnStation;
     }
 
-    public CustomerData getCustomerId() {
-        return customerId;
+    public CustomerData getCustomerData() {
+        return customerData;
     }
 
-    public void setCustomerId(CustomerData customerId) {
-        this.customerId = customerId;
+    public void setCustomerData(CustomerData customerData) {
+        this.customerData = customerData;
     }
 
     @Override

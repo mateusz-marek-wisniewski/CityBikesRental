@@ -21,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,17 +39,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Repair.findByRepairCost", query = "SELECT r FROM Repair r WHERE r.repairCost = :repairCost"),
     @NamedQuery(name = "Repair.findByRepairLog", query = "SELECT r FROM Repair r WHERE r.repairLog = :repairLog"),
     @NamedQuery(name = "Repair.findByStartDate", query = "SELECT r FROM Repair r WHERE r.startDate = :startDate"),
-    @NamedQuery(name = "Repair.findByEndDate", query = "SELECT r FROM Repair r WHERE r.endDate = :endDate"),
-    @NamedQuery(name = "Repair.findByVersion", query = "SELECT r FROM Repair r WHERE r.version = :version")})
+    @NamedQuery(name = "Repair.findByEndDate", query = "SELECT r FROM Repair r WHERE r.endDate = :endDate")})
 public class Repair implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
+    @Min(0)
     @Column(name = "repair_cost", precision = 19, scale = 2)
     private BigDecimal repairCost;
     @Basic(optional = false)
@@ -55,21 +58,24 @@ public class Repair implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "repair_log", nullable = false, length = 255)
     private String repairLog;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "bike_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bike bikeId;
+    
 
     public Repair() {
     }

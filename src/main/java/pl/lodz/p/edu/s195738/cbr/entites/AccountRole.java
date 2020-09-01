@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,37 +38,42 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AccountRole.findAll", query = "SELECT a FROM AccountRole a"),
     @NamedQuery(name = "AccountRole.findById", query = "SELECT a FROM AccountRole a WHERE a.id = :id"),
     @NamedQuery(name = "AccountRole.findByRoleName", query = "SELECT a FROM AccountRole a WHERE a.roleName = :roleName"),
-    @NamedQuery(name = "AccountRole.findByActive", query = "SELECT a FROM AccountRole a WHERE a.active = :active"),
-    @NamedQuery(name = "AccountRole.findByVersion", query = "SELECT a FROM AccountRole a WHERE a.version = :version")})
+    @NamedQuery(name = "AccountRole.findByActive", query = "SELECT a FROM AccountRole a WHERE a.active = :active")})
 public class AccountRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
     @Column(name = "role_name", nullable = false, length = 16)
     private String roleName;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private boolean active;
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    
+    @Version
     private long version;
+    
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountId;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
     private EmployeeData employeeData;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountRole", fetch = FetchType.LAZY)
     private CustomerData customerData;
 
+    
     public AccountRole() {
     }
 
