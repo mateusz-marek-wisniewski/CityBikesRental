@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailVerificationHashDoesNotExistException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.LoginDoesNotExistException;
 
 /**
  *
@@ -29,4 +31,19 @@ public class AccountFacade extends AbstractFacade<Account> {
         super(Account.class);
     }
     
+    public Account findByLogin(String login) throws LoginDoesNotExistException {
+        try {
+            return (Account) em.createNamedQuery("Account.findByLogin").setParameter("login", login).getResultList().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new LoginDoesNotExistException();
+        }
+    }
+
+    public Account findByVerificationHash(String hash) throws EmailVerificationHashDoesNotExistException {
+        try {
+            return (Account) em.createNamedQuery("Account.findByEmailVerificationHash").setParameter("emailVerificationHash", hash).getResultList().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new EmailVerificationHashDoesNotExistException();
+        }
+    }
 }

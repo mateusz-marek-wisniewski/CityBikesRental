@@ -24,9 +24,45 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
     <application>
+        <locale-config>
+            <default-locale>pl</default-locale>
+            <supported-locale>pl</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
         <resource-bundle>
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>i18n.roles</base-name>
+            <var>roles</var>
+        </resource-bundle>
     </application>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>customerPanel</from-outcome>
+            <to-view-id>/customer/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>employeePanel</from-outcome>
+            <to-view-id>/employee/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>adminPanel</from-outcome>
+            <to-view-id>/admin/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

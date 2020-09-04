@@ -7,9 +7,13 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        Hello from Facelets, Customer
         <br />
-        <h:link outcome="/login.xhtml" value="#{msg['signin.form.signin']}"/>
+        <br />
+        
+        <h:form>
+            <h:commandButton value="logout" action="#{glassfishAuth.logout}" />
+        </h:form>
     </h:body>
 </html>
 

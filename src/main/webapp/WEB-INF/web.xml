@@ -21,4 +21,124 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+    
+    <!-- definicja ról uwzględnianych w kontroli dostępu -->
+    <security-role>
+        <description/>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>CUSTOMER</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>EMPLOYEE</role-name>
+    </security-role>
+    
+    <!-- kontrola dostępu do zasobów administratora -->
+    <security-constraint>
+        <display-name>Strony administratora</display-name>
+        <web-resource-collection>
+            <web-resource-name>AdminConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!-- kontrola dostępu do zasobów pracownika -->
+    <security-constraint>
+        <display-name>Strony pracownika</display-name>
+        <web-resource-collection>
+            <web-resource-name>EmployeeConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/employee/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>EMPLOYEE</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!-- kontrola dostępu do zasobów klienta -->
+    <security-constraint>
+        <display-name>Strony klienta</display-name>
+        <web-resource-collection>
+            <web-resource-name>CustomerConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/customer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>CUSTOMER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!-- kontrola dostępu do stron logowania -->
+    <security-constraint>
+        <display-name>Strony logowania</display-name>
+        <web-resource-collection>
+            <web-resource-name>LoginConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/login.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <context-param>
+        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>cbrrealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/index.html</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>font/ttf</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>otf</extension>
+        <mime-type>font/otf</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>font/woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>font/woff2</mime-type>
+    </mime-mapping>
 </web-app>
