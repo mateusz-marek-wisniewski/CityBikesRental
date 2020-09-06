@@ -5,53 +5,27 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
-        <title>#{msg['signin.page.title']}</title>
-        <style type="text/css">
-            .form-signin {
-                margin: 0 auto;
-                max-width: 330px;
-                padding: 15px;
-            }
-            
-            html,
-            body {
-              height: 100%;
-            }
-            body {
-                font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-                padding-top: 60px;
-                background-color: #add;
-                display: -ms-flexbox;
-                display: flex;
-                -ms-flex-align: center;
-                align-items: center;
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
-            #register, #footer{
-                margin-top: 1em;
-            }
-        </style>
+        <title>#{msg.signin} - #{msg.appName}</title>
+        <h:outputStylesheet library="css" name="login.css"/>
     </h:head>
     <h:body class="text-center">
         <b:container>
             <h:form styleClass="form-signin">
-                <h1 class="form-signin-heading mb-3 font-weight-normal" style="margin-bottom: 1em;">#{msg['signin.form.title']}</h1>
-                <b:messages globalOnly="true" style="color:red;margin:8px;" />
-                <b:inputText id="username" placeholder="#{msg['signin.form.username']}" value="#{glassfishAuth.username}" required="true">
+                <h1 class="form-signin-heading mb-3 font-weight-normal" style="margin-bottom: 1em;">#{msg.signinFormTitle}</h1>
+                <b:messages globalOnly="true" />
+                <b:inputText id="username" placeholder="#{msg.username}" value="#{glassfishAuth.username}" required="true">
                     <f:facet name="prepend">
                         <b:icon name="user" />
                     </f:facet>
                 </b:inputText>
-                <b:inputText id="password" placeholder="#{msg['signin.form.password']}" type="password" value="#{glassfishAuth.password}" required="true">
+                <b:inputText id="password" placeholder="#{msg.password}" type="password" value="#{glassfishAuth.password}" required="true">
                     <f:facet name="prepend">
                         <b:icon name="lock" />
                     </f:facet>
                 </b:inputText>
-                <b:commandButton look="primary btn-block" value="#{msg['signin.form.signin']}" icon="log-in" size="lg" action="#{glassfishAuth.login}"/>
-                <b:commandLink id="register" look="btn-block mt-3" value="#{msg['signin.form.signup']}" icon="log-in" outcome="register"/>
-                <p id="footer" class="mt-5 mb-3 text-muted">#{msg.cbr_footer_simple}</p>
+                <b:commandButton look="primary btn-block" value="#{msg.signin}" icon="log-in" size="lg" action="#{glassfishAuth.login}"/>
+                <b:commandLink id="register" look="btn-block mt-3" value="#{msg.signup}" icon="circle-arrow-up" outcome="register"/>
+                <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
             </h:form>
         </b:container>
     </h:body>

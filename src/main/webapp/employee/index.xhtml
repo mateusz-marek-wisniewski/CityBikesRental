@@ -1,19 +1,46 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-        Hello from Facelets, Employee
-        <br />
-        <br />
-        
-        <h:form>
-            <h:commandButton value="logout" action="#{glassfishAuth.logout}" />
-        </h:form>
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.employeePanel}</ui:define>
+
+        <ui:define name="body">
+            <h:form id="EmployeePanelForm">
+                <b:row>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="primary btn-block" style-class="btn-enormous" value="#{msg.attachBikes}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.detachBikes}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.saveBikeFailure}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.saveStationFailure}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.describeBikeRepair}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.describeStationRepair}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.bikeStationList}" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.failureReportsList}" />
+                    </b:column>
+                </b:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
 

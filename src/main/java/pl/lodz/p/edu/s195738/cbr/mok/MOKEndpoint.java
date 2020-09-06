@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;

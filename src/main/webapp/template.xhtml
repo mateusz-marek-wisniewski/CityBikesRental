@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b ="http://bootsfaces.net/ui">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert> - #{msg.appName}</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="3000" />
+
+        <b:navBar brand="#{msg.appName}" brandHref="#" >
+            <b:navbarLinks>
+                <b:navLink value="#{msg.adminPanel}" rendered="#{glassfishAuth.isAdmin}" outcome="adminPanel"></b:navLink>
+                <b:navLink value="#{msg.employeePanel}" rendered="#{glassfishAuth.isEmloyee}" outcome="employeePanel"></b:navLink>
+                <b:navLink value="#{msg.customerPanel}" rendered="#{glassfishAuth.isCustomer}" outcome="customerPanel"></b:navLink>
+            </b:navbarLinks>
+            <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
+            <!--<b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>-->
+            <b:navbarLinks pull="right" rendered="#{not glassfishAuth.isUserLoggedIn()}">
+                <b:navLink value="#{msg.signin}" outcome="login"></b:navLink>
+                <b:navLink value="#{msg.signup}" outcome="signup"></b:navLink>
+            </b:navbarLinks>
+            <h:form id="logoutForm" rendered="#{glassfishAuth.isUserLoggedIn()}">
+                <b:navbarLinks pull="right">
+                    <b:dropMenu value="#{glassfishAuth.username}">
+                        <b:navLink value="#{msg.myAccount}" outcome="myAccountPanel"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navCommandLink value="#{msg.logout}" action="#{glassfishAuth.logout()}"></b:navCommandLink>
+                    </b:dropMenu>
+                </b:navbarLinks>
+            </h:form>
+        </b:navBar>
+
+        <b:container id="main">
+            <ui:insert name="body"/>
+        </b:container>
+
+        <b:container>
+            <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
+        </b:container>
+
+    </h:body>
+
+</html>

@@ -5,10 +5,13 @@
  */
 package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
 
+import javax.ejb.ApplicationException;
+
 /**
  *
  * @author Siwy
  */
+@ApplicationException(rollback=false)
 public class SignInFailedException extends MOKException {
     
 }

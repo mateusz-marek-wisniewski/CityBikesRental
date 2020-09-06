@@ -89,6 +89,26 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+   
+    <!-- kontrola dostępu do zasobów konta użytkownika -->
+    <security-constraint>
+        <display-name>Strony konta użytkownika</display-name>
+        <web-resource-collection>
+            <web-resource-name>MyAccountConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/myaccount/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN</role-name>
+            <role-name>EMPLOYEE</role-name>
+            <role-name>CUSTOMER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     
     <!-- kontrola dostępu do stron logowania -->
     <security-constraint>
@@ -98,9 +118,6 @@
             <description/>
             <url-pattern>/login.xhtml</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            <description/>
-        </auth-constraint>
         <user-data-constraint>
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>

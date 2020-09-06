@@ -56,6 +56,7 @@ public class GlassfishAuth implements Serializable {
     
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, rb.getString("logoutSuccessfulMessage")));
         return "logout";
     }
 
