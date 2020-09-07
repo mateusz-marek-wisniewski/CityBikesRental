@@ -10,5 +10,8 @@ package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
  * @author Siwy
  */
 public class EmailVerificationHashDoesNotExistException extends MOKException {
-    
+
+    public EmailVerificationHashDoesNotExistException(Throwable thrwbl) {
+        super(thrwbl);
+    }
 }

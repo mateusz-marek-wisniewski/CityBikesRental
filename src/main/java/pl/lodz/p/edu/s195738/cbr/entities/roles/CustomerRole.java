@@ -40,6 +40,12 @@ public class CustomerRole extends AccountRole {
     @OneToMany(mappedBy = "customerRole", fetch = FetchType.LAZY)
     private Collection<RentalOpinion> rentalOpinionCollection;
 
+    
+    public CustomerRole() {
+        super.setRoleName("CUSTOMER");
+        super.setActive(true);
+    } 
+    
     public long getTotalTime() {
         return totalTime;
     }

@@ -86,6 +86,7 @@ public class AccountController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    if (selected.getEmailVerificationHash() == "") selected.setEmailVerificationHash(null);
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -102,9 +103,12 @@ public class AccountController implements Serializable {
                 } else {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
                 }
+                
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            } finally {
+                items = null;
             }
         }
     }

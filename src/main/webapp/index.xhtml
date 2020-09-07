@@ -9,9 +9,14 @@
     
     <ui:composition template="/template.xhtml">
 
+        <f:metadata>
+            <f:viewParam name="success" value="#{success}" />
+        </f:metadata>
+
         <ui:define name="title">#{msg.welcomePageTitle}</ui:define>
 
         <ui:define name="body">
+            <b:alert severity="success" rendered="#{not empty success}" closable="true"><h1>#{msg["success_".concat(success)]}</h1>#{msg["success_".concat(success).concat('_detail')]}</b:alert>
             <b:jumbotron>
                 <b:container>
                     <h1>#{msg.welcomePageJumbotronTitle}</h1>

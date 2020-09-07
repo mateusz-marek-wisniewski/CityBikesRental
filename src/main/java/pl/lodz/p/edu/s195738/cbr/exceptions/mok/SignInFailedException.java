@@ -13,5 +13,8 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback=false)
 public class SignInFailedException extends MOKException {
-    
+
+    public SignInFailedException(Throwable thrwbl) {
+        super(thrwbl);
+    }
 }

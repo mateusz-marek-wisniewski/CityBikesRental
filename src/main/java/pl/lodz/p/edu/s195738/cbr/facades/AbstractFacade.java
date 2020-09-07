@@ -7,6 +7,7 @@ package pl.lodz.p.edu.s195738.cbr.facades;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 
 /**
  *
@@ -22,7 +23,7 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
+    public void create(T entity) throws BaseApplicationException {
         getEntityManager().persist(entity);
     }
 

@@ -1,7 +1,12 @@
-.form-signin {
+.form-signin, .form-register {
     margin: 0 auto;
     max-width: 330px;
     padding: 15px;
+}
+
+.form-group, .btn {
+    margin-bottom: 0 !important;
+    margin-top: 15px !important;
 }
 
 html,

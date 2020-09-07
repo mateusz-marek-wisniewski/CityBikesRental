@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.exceptions;
-
-import javax.ejb.ApplicationException;
+package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
 
 /**
  *
  * @author Siwy
  */
-@ApplicationException(rollback = true)
-public class BaseApplicationException extends Exception {
+public class EmailAddressAlreadyInUseException extends MOKException {
 
-    public BaseApplicationException(Throwable thrwbl) {
+    public EmailAddressAlreadyInUseException(Throwable thrwbl) {
         super(thrwbl);
     }
 }

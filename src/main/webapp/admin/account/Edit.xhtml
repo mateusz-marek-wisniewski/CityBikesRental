@@ -20,8 +20,6 @@
                         <p:inputText id="password" value="#{accountController.selected.password}" title="#{bundle.EditAccountTitle_password}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_password}"/>
                         <p:outputLabel value="#{bundle.EditAccountLabel_email}" for="email" />
                         <p:inputText id="email" value="#{accountController.selected.email}" title="#{bundle.EditAccountTitle_email}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_email}"/>
-                        <p:outputLabel value="#{bundle.EditAccountLabel_emailVerificationHash}" for="emailVerificationHash" />
-                        <p:inputText id="emailVerificationHash" value="#{accountController.selected.emailVerificationHash}" title="#{bundle.EditAccountTitle_emailVerificationHash}" />
                         <p:outputLabel value="#{bundle.EditAccountLabel_confirmed}" for="confirmed" />
                         <p:selectBooleanCheckbox id="confirmed" value="#{accountController.selected.confirmed}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_confirmed}"/>
                         <p:outputLabel value="#{bundle.EditAccountLabel_active}" for="active" />

@@ -29,6 +29,11 @@ public class EmployeeRole extends AccountRole {
     @Column(nullable = false, table = "employee_data")
     private int phone;
 
+    public EmployeeRole() {
+        super.setRoleName("EMPLOYEE");
+        super.setActive(true);
+    }    
+    
     public int getPhone() {
         return phone;
     }

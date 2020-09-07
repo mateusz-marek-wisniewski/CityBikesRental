@@ -5,15 +5,13 @@
  */
 package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
 
-import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
-
 /**
  *
  * @author Siwy
  */
-public class MOKException extends BaseApplicationException {
+public class PasswordsDoNotMatchException extends MOKException {
 
-    public MOKException(Throwable thrwbl) {
-        super(thrwbl);
+    public PasswordsDoNotMatchException() {
+        super(new Throwable());
     }
 }

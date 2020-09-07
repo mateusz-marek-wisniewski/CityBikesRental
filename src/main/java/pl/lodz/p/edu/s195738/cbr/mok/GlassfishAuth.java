@@ -10,14 +10,13 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mok.SignInFailedException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 
 /**
  *
@@ -47,7 +46,7 @@ public class GlassfishAuth implements Serializable {
             password = "";
             resolveRoles();
             return redirectToPanel();
-        } catch (SignInFailedException ex) {
+        } catch (BaseApplicationException ex) {
             password = "";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(ex.getClass().getName())));
         }
@@ -56,8 +55,8 @@ public class GlassfishAuth implements Serializable {
     
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, rb.getString("logoutSuccessfulMessage")));
-        return "logout";
+        return "logoutSuccess";
+
     }
 
     public boolean isUserLoggedIn() {

@@ -41,6 +41,9 @@
             <base-name>i18n.roles</base-name>
             <var>roles</var>
         </resource-bundle>
+        <message-bundle>
+            i18n.jsf_messages
+        </message-bundle>
     </application>
     
     <navigation-rule>
@@ -70,9 +73,24 @@
             <redirect />
         </navigation-case>
         <navigation-case>
-            <from-outcome>logout</from-outcome>
+            <from-outcome>logoutSuccess</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
-            <redirect />
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>logout</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>registrationSuccess</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>registration</value>
+                </redirect-param>
+            </redirect>
         </navigation-case>
     </navigation-rule>
 </faces-config>

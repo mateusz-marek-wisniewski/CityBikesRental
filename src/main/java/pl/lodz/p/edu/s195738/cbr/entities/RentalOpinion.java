@@ -38,7 +38,6 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
     @NamedQuery(name = "RentalOpinion.findAll", query = "SELECT r FROM RentalOpinion r"),
     @NamedQuery(name = "RentalOpinion.findById", query = "SELECT r FROM RentalOpinion r WHERE r.id = :id"),
     @NamedQuery(name = "RentalOpinion.findByContent", query = "SELECT r FROM RentalOpinion r WHERE r.content = :content")})
-@SecondaryTable(name = "customer_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "customer_data_id",referencedColumnName = "id"))
 public class RentalOpinion implements Serializable {
 
     private static final long serialVersionUID = 1L;

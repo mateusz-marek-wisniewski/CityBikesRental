@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b ="http://bootsfaces.net/ui">
+      xmlns:b ="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert> - #{msg.appName}</title>
@@ -27,14 +28,16 @@
             <!--<b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>-->
             <b:navbarLinks pull="right" rendered="#{not glassfishAuth.isUserLoggedIn()}">
                 <b:navLink value="#{msg.signin}" outcome="login"></b:navLink>
-                <b:navLink value="#{msg.signup}" outcome="signup"></b:navLink>
+                <b:navLink value="#{msg.signup}" outcome="register"></b:navLink>
             </b:navbarLinks>
             <h:form id="logoutForm" rendered="#{glassfishAuth.isUserLoggedIn()}">
                 <b:navbarLinks pull="right">
                     <b:dropMenu value="#{glassfishAuth.username}">
                         <b:navLink value="#{msg.myAccount}" outcome="myAccountPanel"></b:navLink>
                         <b:navLink></b:navLink>
-                        <b:navCommandLink value="#{msg.logout}" action="#{glassfishAuth.logout()}"></b:navCommandLink>
+                        <b:navCommandLink value="#{msg.logout}" action="#{glassfishAuth.logout()}">
+                            <f:param name="success" value="logout" />
+                        </b:navCommandLink>
                     </b:dropMenu>
                 </b:navbarLinks>
             </h:form>

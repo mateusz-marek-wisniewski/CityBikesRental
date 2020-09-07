@@ -16,5 +16,9 @@ import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
 @Entity
 @DiscriminatorValue("ADMIN")
 public class AdminRole extends AccountRole {
-    
+
+    public AdminRole() {
+        super.setRoleName("ADMIN");
+        super.setActive(true);
+    }    
 }

@@ -9,6 +9,9 @@ package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
  *
  * @author Siwy
  */
-public class LoginDoesNotExistException extends MOKException {
-    
+public class EmailCanNotBeSentException extends MOKException {
+
+    public EmailCanNotBeSentException(Throwable thrwbl) {
+        super(thrwbl);
+    }
 }

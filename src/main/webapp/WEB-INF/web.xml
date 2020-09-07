@@ -110,13 +110,14 @@
         </user-data-constraint>
     </security-constraint>
     
-    <!-- kontrola dostępu do stron logowania -->
+    <!-- kontrola dostępu do stron gościa -->
     <security-constraint>
         <display-name>Strony logowania</display-name>
         <web-resource-collection>
             <web-resource-name>LoginConstraint</web-resource-name>
             <description/>
             <url-pattern>/login.xhtml</url-pattern>
+            <url-pattern>/register.xhtml</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <description/>
