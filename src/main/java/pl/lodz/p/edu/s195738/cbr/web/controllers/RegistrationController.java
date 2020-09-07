@@ -6,6 +6,8 @@
 package pl.lodz.p.edu.s195738.cbr.web.controllers;
 
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -28,6 +30,7 @@ public class RegistrationController {
     private String password;
     private String password2;
     private String email;
+    private String key;
     
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
     
@@ -44,6 +47,15 @@ public class RegistrationController {
             return null;
         }
         return "registrationSuccess";
+    }
+    
+    public String verify() {
+        try {
+            mok.confirmAccountEmail(key);
+        } catch (BaseApplicationException ex) {
+            return "verificationError";
+        }
+        return "verificationSuccess";
     }
 
     public String getUsername() {
@@ -92,5 +104,13 @@ public class RegistrationController {
 
     public void setPassword2(String password2) {
         this.password2 = password2;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

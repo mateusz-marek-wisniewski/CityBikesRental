@@ -27,7 +27,7 @@ public abstract class AbstractFacade<T> {
         getEntityManager().persist(entity);
     }
 
-    public void edit(T entity) {
+    public void edit(T entity) throws BaseApplicationException {
         getEntityManager().merge(entity);
     }
 

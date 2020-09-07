@@ -92,5 +92,25 @@
                 </redirect-param>
             </redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>verificationSuccess</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>verification</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>verificationError</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>error</name>
+                    <value>verification</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

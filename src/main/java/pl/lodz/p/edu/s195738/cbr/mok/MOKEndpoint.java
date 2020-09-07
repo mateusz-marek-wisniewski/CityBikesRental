@@ -100,9 +100,22 @@ public class MOKEndpoint implements SessionSynchronization{
         try {
             emailUtil.sendEmail(email, msg.getString("emailVerificationMsgTitle"), MessageFormat.format(msg.getString("emailVerificationMsgBody"), verlink));
         } catch (MessagingException ex) {
-            Logger.getLogger(MOKEndpoint.class.getName()).log(Level.SEVERE, null, ex);
             throw new EmailCanNotBeSentException(ex);
         }
+    }
+    
+    /**
+     * MOK.2 Potwierdź konto e-mailem
+     * Po znalezieniu konta z podanym kluczem w postaci niejawnej potwierdza konto
+     * 
+     * @param verkey klucz w postaci jawnej
+     * @throws BaseApplicationException
+     */
+    public void confirmAccountEmail(String verkey) throws BaseApplicationException {
+        Account account = accountFacade.findByVerificationHash(PasswordUtil.hash(verkey));
+        account.setEmailVerificationHash(null);
+        account.setConfirmed(true);
+        accountFacade.edit(account);
     }
     
     /**
