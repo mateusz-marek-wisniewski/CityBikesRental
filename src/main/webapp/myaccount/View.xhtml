@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="index.xhtml">
+
+        <ui:define name="title">#{msg.myAccountData}</ui:define>
+        
+        <ui:define name="header">#{msg.myAccountData}</ui:define>
+
+        <ui:define name="mainContent">
+            <b:row>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="#{msg.username}" />
+                    <h:outputText styleClass="viewValue" value="#{glassfishAuth.account.login}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="#{msg.email}" />
+                    <h:outputText styleClass="viewValue" value="#{glassfishAuth.account.email}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="#{msg.name}" />
+                    <h:outputText styleClass="viewValue" value="#{glassfishAuth.account.name}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="#{msg.surname}" />
+                    <h:outputText styleClass="viewValue" value="#{glassfishAuth.account.surname}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn" rendered="#{not empty glassfishAuth.account.employeeRole}">
+                    <h:outputText styleClass="viewLabel" value="#{msg.phoneNumber}" />
+                    <h:outputText styleClass="viewValue" value="#{glassfishAuth.account.employeeRole.phone}" />
+                </b:column>
+            </b:row>
+            <br />
+            <br />
+            <b:row>
+                <b:column col-md="6">
+                    <h:outputText styleClass="viewLabel" value="#{msg.latestSuccessulLoginAttempt}" />
+                </b:column>
+                <b:column col-md="3">
+                    <h:outputText styleClass="text-muted" value="#{glassfishAuth.account.getLatestLoginAttemptBySuccess(true).loginDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                    </h:outputText>
+                </b:column>
+                <b:column col-md="3">
+                    <h:outputText styleClass="text-muted" value="#{glassfishAuth.account.getLatestLoginAttemptBySuccess(true).ipAddress}" />
+                </b:column>
+            </b:row>
+            <b:row>
+                <b:column col-md="6">
+                    <h:outputText styleClass="viewLabel" value="#{msg.latestUnsuccessulLoginAttempt}" />
+                </b:column>
+                <b:column col-md="3">
+                    <h:outputText styleClass="text-muted" value="#{glassfishAuth.account.getLatestLoginAttemptBySuccess(false).loginDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                    </h:outputText>
+                </b:column>
+                <b:column col-md="3">
+                    <h:outputText styleClass="text-muted" value="#{glassfishAuth.account.getLatestLoginAttemptBySuccess(false).ipAddress}" />
+                </b:column>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>

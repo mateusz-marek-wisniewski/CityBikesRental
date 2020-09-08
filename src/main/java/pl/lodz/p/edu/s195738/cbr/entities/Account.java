@@ -7,6 +7,7 @@ package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -141,6 +142,16 @@ public class Account implements Serializable {
         this.confirmed = confirmed;
         this.active = active;
         this.version = version;
+    }
+    
+    public LoginAttempt getLatestLoginAttemptBySuccess(boolean isSuccessful){
+        if (loginAttemptCollection == null) return null;
+        return loginAttemptCollection.stream()
+                    .sorted((o1, o2) -> o2.getLoginDate().compareTo(o1.getLoginDate()))
+                    .filter(loginAttempt -> loginAttempt.getSucceded() == isSuccessful)
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElse(null);
     }
 
     public Long getId() {

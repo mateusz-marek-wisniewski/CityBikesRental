@@ -9,27 +9,26 @@
     
     <ui:composition template="/template.xhtml">
 
-        <ui:define name="title">#{msg.myAccount}</ui:define>
-
         <ui:define name="body">
             <h:form id="MyAccountPanelForm">
                 <b:row>
                     <b:column col-sm="3" col-md="2" styleClass="sidebar">
                         <b:listLinks>
-                            <b:navLink value="#{msg.myAccountData}" outcome="account/List" active="true" />
+                            <b:navLink value="#{msg.myAccountData}" outcome="View" active="true" />
                         </b:listLinks>
                         <b:listLinks>
-                            <b:navLink value="#{msg.editMyAccountData}" outcome="account/List" />
-                            <b:navLink value="#{msg.changeMyPassword}" outcome="accountPassword/List" />
+                            <b:navLink value="#{msg.editMyAccountData}" outcome="Edit" />
+                            <b:navLink value="#{msg.changeMyPassword}" outcome="ChangePassword" />
                         </b:listLinks>
                         <b:listLinks>
                             <b:navLink />
-                            <b:navLink value="#{msg.removeMyAccount}" />
+                            <b:navLink value="#{msg.removeMyAccount}" outcome="Remove" />
                         </b:listLinks>
                     </b:column>
                     <b:column col-sm="9" col-md="10" styleClass="main">
-                        <h1>#{msg.myAccountData}</h1>
+                        <h1><ui:insert name="header" /></h1>
                         <hr />
+                        <ui:insert name="mainContent" />
                     </b:column>
                 </b:row>
             </h:form>

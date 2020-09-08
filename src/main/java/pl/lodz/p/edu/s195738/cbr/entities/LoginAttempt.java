@@ -62,8 +62,8 @@ public class LoginAttempt implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 18)
-    @Column(name = "ip_address", nullable = false, length = 18)
+    @Size(min = 1, max = 50)
+    @Column(name = "ip_address", nullable = false, length = 50)
     private String ipAddress;
     
     @Version

@@ -147,7 +147,7 @@ public class MOKEndpoint implements SessionSynchronization{
         // ustaw właściwości obiektu próby logowania
         LoginAttempt loginAttempt = new LoginAttempt();
         loginAttempt.setLoginDate(new java.sql.Date(new Date().getTime()));
-        loginAttempt.setIpAddress(ipAddress.concat("/32"));
+        loginAttempt.setIpAddress(ipAddress);
         loginAttempt.setAccount(account);
         
         try {
