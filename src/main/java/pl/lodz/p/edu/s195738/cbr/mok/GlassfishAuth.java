@@ -13,17 +13,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mok.AccountConcurrentEditException;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailAddressAlreadyInUseException;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameAlreadyExistsException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
 import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
 
@@ -41,6 +36,9 @@ public class GlassfishAuth implements Serializable {
     private boolean isAdmin;
     private boolean isEmloyee;
     private boolean isCustomer;
+    private String oldPassword;
+    private String newPassword;
+    private String newPasswordRepeat;
     private Account account;
     
     ResourceBundle rb = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
@@ -72,17 +70,27 @@ public class GlassfishAuth implements Serializable {
     
     public String edit() {
         try {
-            account = mokEndpoint.editMyAccount(account);
+            mokEndpoint.editMyAccount(account);
         } catch (BaseApplicationException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(e.getClass().getName())));
-            try {
-                account = accountFacade.findByLogin(username);
-            } catch (UsernameDoesNotExistException ex) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(ex.getClass().getName())));
-            }
+            account = accountFacade.find(account.getId());
             return null;
         }
+        account = accountFacade.find(account.getId());
         return "View";
+    }
+    
+    public void change() {
+        try {
+            mokEndpoint.changeMyPassword(oldPassword, newPassword, newPasswordRepeat, account);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, rb.getString("changePasswordSuccess")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(ex.getClass().getName())));
+        } finally {
+            oldPassword = "";
+            newPassword = "";
+            newPasswordRepeat = "";
+        }
     }
 
     public boolean isUserLoggedIn() {
@@ -154,4 +162,29 @@ public class GlassfishAuth implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewPasswordRepeat() {
+        return newPasswordRepeat;
+    }
+
+    public void setNewPasswordRepeat(String newPasswordRepeat) {
+        this.newPasswordRepeat = newPasswordRepeat;
+    }
+    
 }

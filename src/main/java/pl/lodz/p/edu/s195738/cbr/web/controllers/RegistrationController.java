@@ -41,10 +41,11 @@ public class RegistrationController {
         try {
             mok.createCustomerAccount(username, password, password2, email, name, surname);
         } catch (BaseApplicationException ex) {
-            password = "";
-            password2 = "";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
             return null;
+        } finally {
+            password = "";
+            password2 = "";
         }
         return "registrationSuccess";
     }

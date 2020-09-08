@@ -153,6 +153,10 @@ public class Account implements Serializable {
                     .findFirst()
                     .orElse(null);
     }
+    
+    public boolean isPasswordInAccountPasswordCollection(String passwordHash) {
+        return getAccountPasswordCollection().stream().anyMatch(accountPassword -> (accountPassword.getPassword().equals(passwordHash)));
+    }
 
     public Long getId() {
         return id;

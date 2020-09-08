@@ -169,17 +169,40 @@ public class MOKEndpoint implements SessionSynchronization{
     }
     
     /**
-     * MOK.4 Zmień dane własnego konta
+     * MOK.5 Zmień dane własnego konta
      * Pozwala użytkownikowi zalogowanemu zmienić dane jego własnego konta
      * 
      * @param account obiekt konta użytkownika ze zmienionymi danymi
-     * @return 
      * @throws BaseApplicationException
      */
-    public Account editMyAccount(Account account) throws BaseApplicationException {
+    public void editMyAccount(Account account) throws BaseApplicationException {
         accountFacade.edit(account);
-        return accountFacade.findByLogin(account.getLogin());
     }
+    
+    /**
+     * MOK.6 Zmień hasło własnego konta
+     * Pozwala użytkownikowi zalogowanemu zmienić jego własne hasło
+     * 
+     * @param oldPassword obecne hasło  postaci jawnej
+     * @param newPassword nowe hasło w postaci jawnej
+     * @param newPasswordRepeat nowe hasło w postaci jawnej powtórzone
+     * @param account konto zalogowanego użytkownika
+     * @throws BaseApplicationException
+     */
+    public void changeMyPassword(String oldPassword, String newPassword, String newPasswordRepeat, Account account) throws BaseApplicationException{
+        if (!account.getPassword().equals(PasswordUtil.hash(oldPassword))) throw new CurrentPasswordInvalidException();
+        if (!newPassword.equals(newPasswordRepeat)) throw new PasswordsDoNotMatchException();
+        if (newPassword.equals(oldPassword)) throw new PasswordsCurrentAndNewCanNotBeTheSameException();
+        if (account.isPasswordInAccountPasswordCollection(PasswordUtil.hash(newPassword))) throw new PasswordAlreadyUsedException();
+        
+        account.setPassword(PasswordUtil.hash(newPassword));
+        AccountPassword accountPassword = new AccountPassword();
+        accountPassword.setPassword(PasswordUtil.hash(oldPassword));
+        accountPassword.setAccount(account);
+        account.getAccountPasswordCollection().add(accountPassword);
+        accountFacade.edit(account);
+    }
+    
 
     
     /**
