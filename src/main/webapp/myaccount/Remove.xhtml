@@ -13,6 +13,21 @@
         
         <ui:define name="header">#{msg.removeMyAccount}</ui:define>
 
-        <ui:define name="mainContent"></ui:define>
+        <ui:define name="mainContent">
+            <h:outputText value="#{msg.removeMyAccountDetail}" />
+            <br/>
+            <br />
+            <b:button look="danger" value="#{msg.removeMyAccount}" onclick="$('.modalPC').modal()" />
+            <h:form id="removeMyAccountForm">
+                <b:modal id="removeAccountModal" title="#{msg.removeMyAccount}" styleClass="modalPC"
+                         closable="false"  close-on-escape="false" backdrop="false">
+                    <h:outputText value="#{msg.areYouSure}" />
+                    <f:facet name="footer">
+                        <b:commandButton look="danger" value="#{msg.removeMyAccount}" action="#{glassfishAuth.remove()}" />
+                        <b:button value="#{msg.cancel}" dismiss="modal" />
+                    </f:facet>
+                </b:modal>
+              </h:form>
+        </ui:define>
     </ui:composition>
 </html>

@@ -211,6 +211,19 @@ public class MOKEndpoint implements SessionSynchronization{
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
     
+    /**
+     * MOK.8 usuń własne konto
+     * Pozwala użytkownikowi zalogowanemu usunąć swoje konto
+     * 
+     * @param account konto użytkownika do usunięcia
+     * @throws BaseApplicationException
+     */
+    public void myAccountRemoval(Account account) throws BaseApplicationException {
+        logOut();
+        account.setActive(false);
+        accountFacade.edit(account);
+    }
+    
 
     
     /**

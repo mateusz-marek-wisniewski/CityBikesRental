@@ -112,5 +112,16 @@
                 </redirect-param>
             </redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>accountRemovalSuccess</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>accountRemoval</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+        
     </navigation-rule>
 </faces-config>

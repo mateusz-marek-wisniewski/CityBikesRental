@@ -92,6 +92,15 @@ public class GlassfishAuth implements Serializable {
             newPasswordRepeat = "";
         }
     }
+    
+    public String remove() {
+        try {
+            mokEndpoint.myAccountRemoval(account);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, e.getMessage()));
+        }
+        return "accountRemovalSuccess";
+    }
 
     public boolean isUserLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser() != null;
