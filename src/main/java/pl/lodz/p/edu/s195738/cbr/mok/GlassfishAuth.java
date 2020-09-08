@@ -63,7 +63,7 @@ public class GlassfishAuth implements Serializable {
     }
     
     public String logout(){
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        mokEndpoint.logOut();
         return "logoutSuccess";
 
     }

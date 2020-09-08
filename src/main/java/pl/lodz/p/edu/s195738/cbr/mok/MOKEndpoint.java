@@ -203,6 +203,14 @@ public class MOKEndpoint implements SessionSynchronization{
         accountFacade.edit(account);
     }
     
+    /**
+     * MOK.7 Wyloguj się
+     * Pozwala użytkownikowi zalogowanemu wylogować się
+     */
+    public void logOut() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    }
+    
 
     
     /**
