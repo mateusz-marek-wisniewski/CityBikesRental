@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.edu.s195738.cbr.mok;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -24,6 +25,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.edu.s195738.cbr.entities.*;
@@ -164,7 +167,21 @@ public class MOKEndpoint implements SessionSynchronization{
         }
         return account;
     }
+    
+    /**
+     * MOK.4 Zmień dane własnego konta
+     * Pozwala użytkownikowi zalogowanemu zmienić dane jego własnego konta
+     * 
+     * @param account obiekt konta użytkownika ze zmienionymi danymi
+     * @return 
+     * @throws BaseApplicationException
+     */
+    public Account editMyAccount(Account account) throws BaseApplicationException {
+        accountFacade.edit(account);
+        return accountFacade.findByLogin(account.getLogin());
+    }
 
+    
     /**
      *
      * @throws EJBException

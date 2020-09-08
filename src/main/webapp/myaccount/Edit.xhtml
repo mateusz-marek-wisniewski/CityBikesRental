@@ -13,6 +13,52 @@
         
         <ui:define name="header">#{msg.editMyAccountData}</ui:define>
 
-        <ui:define name="mainContent"></ui:define>
+        <ui:define name="mainContent">
+            <h:form id="editMyDataForm">
+                <b:messages globalOnly="true" />
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.username}" />
+                        <b:inputText id="username" value="#{glassfishAuth.account.login}" required="true">
+                            <f:validateRegex pattern="^[a-zA-Z0-9_]+$" />
+                        </b:inputText>
+                        <b:message for="username" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.email}" />
+                        <b:inputText id="email" value="#{glassfishAuth.account.email}" required="true">
+                            <f:validateRegex pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+                        </b:inputText>
+                        <b:message for="email" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.name}" />
+                        <b:inputText id="name" value="#{glassfishAuth.account.name}" required="true">
+                            <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð]+$" />
+                        </b:inputText>
+                        <b:message for="name" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.surname}" />
+                        <b:inputText id="surname" value="#{glassfishAuth.account.surname}" required="true">
+                            <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð ,.'-]+$" />
+                        </b:inputText>
+                        <b:message for="surname" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn" rendered="#{not empty glassfishAuth.account.employeeRole}">
+                        <h:outputText id="phone" styleClass="viewLabel" value="#{msg.phoneNumber}" />
+                        <b:inputText styleClass="viewValue" value="#{glassfishAuth.account.employeeRole.phone}" required="true">
+                            <f:validateRegex pattern="^[0-9]{9}$" />
+                        </b:inputText>
+                        <b:message for="surname" />
+                    </b:column>
+                </b:row>
+                <b:commandButton value="#{msg.save}" action="#{glassfishAuth.edit()}" />
+            </h:form>
+        </ui:define>
     </ui:composition>
 </html>

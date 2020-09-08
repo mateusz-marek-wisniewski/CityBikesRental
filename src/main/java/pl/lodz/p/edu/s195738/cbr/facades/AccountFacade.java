@@ -6,6 +6,8 @@
 package pl.lodz.p.edu.s195738.cbr.facades;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
@@ -22,6 +24,7 @@ import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
  *
  * @author Siwy
  */
+
 @Stateless
 public class AccountFacade extends AbstractFacade<Account> {
 
@@ -56,10 +59,10 @@ public class AccountFacade extends AbstractFacade<Account> {
     @Override
     public void edit(Account account) throws BaseApplicationException {
         try {
-            super.create(account);
+            super.edit(account);
             getEntityManager().flush();
-        } catch (OptimisticLockException e) {
-            throw new AccountConcurrentEditException(e);
+        } catch (OptimisticLockException ex) {
+            throw new AccountConcurrentEditException(ex);
         } catch (PersistenceException pe) {
             if (pe.getCause().toString().contains("account_login_key")) {
                 throw new UsernameAlreadyExistsException(pe);

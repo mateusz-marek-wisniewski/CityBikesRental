@@ -10,13 +10,22 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.AccountConcurrentEditException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailAddressAlreadyInUseException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameAlreadyExistsException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
+import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
 
 /**
  *
@@ -38,6 +47,8 @@ public class GlassfishAuth implements Serializable {
     
     @EJB
     MOKEndpoint mokEndpoint;
+    @EJB
+    AccountFacade accountFacade;
 
     public String login() throws IOException {
         try {
@@ -58,6 +69,21 @@ public class GlassfishAuth implements Serializable {
         return "logoutSuccess";
 
     }
+    
+    public String edit() {
+        try {
+            account = mokEndpoint.editMyAccount(account);
+        } catch (BaseApplicationException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(e.getClass().getName())));
+            try {
+                account = accountFacade.findByLogin(username);
+            } catch (UsernameDoesNotExistException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(ex.getClass().getName())));
+            }
+            return null;
+        }
+        return "View";
+    }
 
     public boolean isUserLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser() != null;
@@ -75,7 +101,7 @@ public class GlassfishAuth implements Serializable {
     }
     
     public String redirectToPanel() throws IOException {
-        if (isAdmin) return "adminPanel";;
+        if (isAdmin) return "adminPanel";
         if (isEmloyee) return "employeePanel";
         if (isCustomer) return "customerPanel";
         return null;
