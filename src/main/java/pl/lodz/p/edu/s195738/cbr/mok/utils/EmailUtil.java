@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Named
 @RequestScoped

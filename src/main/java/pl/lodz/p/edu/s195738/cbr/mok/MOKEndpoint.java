@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
@@ -30,17 +32,23 @@ import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.edu.s195738.cbr.entities.*;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole;
 import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.*;
 import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.AccountRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.AdminRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.EmployeeRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.LoginAttemptFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.utils.EmailUtil;
 import pl.lodz.p.edu.s195738.cbr.mok.utils.PasswordUtil;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 
 @Stateful
@@ -49,6 +57,13 @@ public class MOKEndpoint implements SessionSynchronization{
     
     @EJB
     AccountFacade accountFacade;
+    @EJB
+    AdminRoleFacade adminRoleFacade;
+    @EJB
+    EmployeeRoleFacade employeeRoleFacade;
+    @EJB
+    CustomerRoleFacade customerRoleFacade;
+    
     @EJB
     LoginAttemptFacade loginAttemptFacade;
     
@@ -175,6 +190,7 @@ public class MOKEndpoint implements SessionSynchronization{
      * @param account obiekt konta użytkownika ze zmienionymi danymi
      * @throws BaseApplicationException
      */
+    @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
     public void editMyAccount(Account account) throws BaseApplicationException {
         accountFacade.edit(account);
     }
@@ -189,6 +205,7 @@ public class MOKEndpoint implements SessionSynchronization{
      * @param account konto zalogowanego użytkownika
      * @throws BaseApplicationException
      */
+    @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
     public void changeMyPassword(String oldPassword, String newPassword, String newPasswordRepeat, Account account) throws BaseApplicationException{
         if (!account.getPassword().equals(PasswordUtil.hash(oldPassword))) throw new CurrentPasswordInvalidException();
         if (!newPassword.equals(newPasswordRepeat)) throw new PasswordsDoNotMatchException();
@@ -207,21 +224,111 @@ public class MOKEndpoint implements SessionSynchronization{
      * MOK.7 Wyloguj się
      * Pozwala użytkownikowi zalogowanemu wylogować się
      */
+    @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
     public void logOut() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
     
     /**
-     * MOK.8 usuń własne konto
+     * MOK.8 Usuń własne konto
      * Pozwala użytkownikowi zalogowanemu usunąć swoje konto
      * 
      * @param account konto użytkownika do usunięcia
      * @throws BaseApplicationException
      */
+    @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
     public void myAccountRemoval(Account account) throws BaseApplicationException {
         logOut();
         account.setActive(false);
         accountFacade.edit(account);
+    }
+    
+    /**
+     * MOK.9 Wyświetl listę kont
+     * Administrator wyświetla listę wszystkich użytkowników
+     * 
+     * @return lista wszystkich użytkowników
+     */
+    @RolesAllowed("ADMIN")
+    public List<Account> getAccountsList() {
+        return accountFacade.findAll();
+    }
+    
+    @RolesAllowed("ADMIN")
+    public void createAccount(Account account, String password2, String phone) throws BaseApplicationException {
+        
+        // sprawdź poprawność hasła
+        if (!account.getPassword().equals(password2)) throw new PasswordsDoNotMatchException();
+        
+        //zaszyfruj hasło
+        account.setPassword(PasswordUtil.hash(account.getPassword()));
+        
+        // ustaw powiązanie dwustronne
+        if (account.getAdminRole() != null) account.getAdminRole().setAccount(account);        
+        if (account.getEmployeeRole() != null) {
+            account.getEmployeeRole().setAccount(account);
+            account.getEmployeeRole().setPhone(phone);
+        }
+        if (account.getCustomerRole() != null) account.getCustomerRole().setAccount(account);
+        
+        accountFacade.create(account);
+    }
+    
+    @RolesAllowed("ADMIN")
+    public Account getAccountCopyBeforeEdit(Account account) {
+        return accountFacade.find(account.getId());
+    }
+    
+    @RolesAllowed("ADMIN")
+    public void editAccount(Account account, boolean a1, boolean a2, boolean e1, boolean e2, boolean c1, boolean c2, String phone) throws BaseApplicationException {
+
+        if (a1 && account.getAdminRole() == null) {
+            AdminRole aR = new AdminRole();
+            aR.setActive(a2);
+            aR.setAccount(account);
+            account.setAdminRole(aR);
+            adminRoleFacade.create(aR);
+        } else if (a1 && account.getAdminRole() != null) {
+            account.getAdminRole().setActive(a2);
+        } else if (!a1 && account.getAdminRole() != null) {
+            adminRoleFacade.remove(account.getAdminRole());
+            account.setAdminRole(null);
+        }
+
+        if (e1 && account.getEmployeeRole() == null) {
+            EmployeeRole eR = new EmployeeRole();
+            eR.setActive(e2);
+            eR.setAccount(account);
+            eR.setPhone(phone);
+            account.setEmployeeRole(eR);
+            employeeRoleFacade.create(eR);
+        } else if (e1 && account.getEmployeeRole() != null) {
+            account.getEmployeeRole().setActive(e2);
+            account.getEmployeeRole().setPhone(phone);
+        } else if (!e1 && account.getEmployeeRole() != null) {
+            employeeRoleFacade.remove(account.getEmployeeRole());
+            account.setEmployeeRole(null);
+        }
+        
+        if (c1 && account.getCustomerRole() == null) {
+            CustomerRole cR = new CustomerRole();
+            cR.setActive(c2);
+            cR.setAccount(account);
+            account.setCustomerRole(cR);
+            customerRoleFacade.create(cR);
+        } else if (c1 && account.getCustomerRole() != null) {
+            account.getCustomerRole().setActive(c2);
+        } else if (!c1 && account.getCustomerRole() != null) {
+            customerRoleFacade.remove(account.getCustomerRole());
+            account.setCustomerRole(null);
+        }
+        
+        accountFacade.edit(account);
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeAccount(Account account) {
+        accountFacade.remove(account);
     }
     
 

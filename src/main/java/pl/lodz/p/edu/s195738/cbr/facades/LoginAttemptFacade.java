@@ -12,7 +12,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Stateless
 public class LoginAttemptFacade extends AbstractFacade<LoginAttempt> {

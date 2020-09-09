@@ -7,43 +7,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui">
     
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/admin/template_new.xhtml">
 
-        <ui:define name="title">#{msg.adminPanel}</ui:define>
+        <ui:define name="title">#{msg.mainPage}</ui:define>
+        
+        <ui:define name="header">#{msg.mainPage}</ui:define>
 
-        <ui:define name="body">
-            <h:form id="AdminPanelForm">
-                <b:row>
-                    <b:column col-sm="3" col-md="2" styleClass="sidebar">
-                        <b:listLinks>
-                            <b:navLink value="#{msg.mainPage}" outcome="/admin/index.html" active="true" />
-                        </b:listLinks>
-                        <b:listLinks>
-                            <b:navLink header="MOK"  tooltip="#{msg.MOK}" />
-                            <b:navLink value="#{msg.accounts}" outcome="account/List" />
-                            <b:navLink value="Account Passwords" outcome="accountPassword/List" />
-                            <b:navLink value="Account Roles" outcome="accountRole/List" />
-                            <b:navLink value="Login Attempts" outcome="loginAttempt/List" />
-                            <b:navLink value="Admin Roles" outcome="adminRole/List" />
-                            <b:navLink value="Customer Roles" outcome="customerRole/List" />
-                            <b:navLink value="Employee Roles" outcome="employeeRole/List" />
-                        </b:listLinks>
-                        <b:listLinks>
-                            <b:navLink header="MOW" tooltip="#{msg.MOW}" />
-                            <b:navLink value="#{msg.bikes}" outcome="bike/List" />
-                            <b:navLink value="#{msg.bikeStations}" outcome="bikeStation/List" />
-                            <b:navLink value="#{msg.chargeRates}" outcome="chargeRate/List" />
-                            <b:navLink value="#{msg.rents}" outcome="rent/List" />
-                            <b:navLink value="#{msg.rentalOpinions}" outcome="rentalOpinion/List" />
-                            <b:navLink value="#{msg.repairs}" outcome="repair/List" />
-                        </b:listLinks>
-                    </b:column>
-                    <b:column col-sm="9" col-md="10" styleClass="main">
-                        <h1>#{msg.mainPage}</h1>
-                        <hr />
-                    </b:column>
-                </b:row>
-            </h:form>
+        <ui:define name="mainContent">
+            
         </ui:define>
     </ui:composition>
 </html>

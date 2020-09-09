@@ -12,7 +12,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.AccountPassword;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Stateless
 public class AccountPasswordFacade extends AbstractFacade<AccountPassword> {

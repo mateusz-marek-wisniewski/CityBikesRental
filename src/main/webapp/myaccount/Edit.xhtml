@@ -54,7 +54,7 @@
                         <b:inputText styleClass="viewValue" value="#{glassfishAuth.account.employeeRole.phone}" required="true">
                             <f:validateRegex pattern="^[0-9]{9}$" />
                         </b:inputText>
-                        <b:message for="surname" />
+                        <b:message for="phone" />
                     </b:column>
                 </b:row>
                 <b:commandButton value="#{msg.save}" action="#{glassfishAuth.edit()}" />

@@ -22,7 +22,7 @@ import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 
 @Stateless

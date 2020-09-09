@@ -24,7 +24,7 @@ import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 
 @Named

@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 public class PasswordUtil {
 

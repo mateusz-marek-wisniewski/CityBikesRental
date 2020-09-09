@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <b:row>
+                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink value="#{msg.mainPage}" outcome="/admin/index.html" active="true" />
+                    </b:listLinks>
+                    <b:listLinks>
+                        <b:navLink header="MOK"  tooltip="#{msg.MOK}" />
+                        <b:navLink value="#{msg.accounts}" outcome="/admin/account/ListNew" />
+                        <b:navLink value="Account Passwords" outcome="/admin/accountPassword/List" />
+                        <b:navLink value="Account Roles" outcome="/admin/accountRole/List" />
+                        <b:navLink value="Login Attempts" outcome="/admin/loginAttempt/List" />
+                        <b:navLink value="Admin Roles" outcome="/admin/adminRole/List" />
+                        <b:navLink value="Customer Roles" outcome="/admin/customerRole/List" />
+                        <b:navLink value="Employee Roles" outcome="/admin/employeeRole/List" />
+                    </b:listLinks>
+                    <b:listLinks>
+                        <b:navLink header="MOW" tooltip="#{msg.MOW}" />
+                        <b:navLink value="#{msg.bikes}" outcome="/admin/bike/List" />
+                        <b:navLink value="#{msg.bikeStations}" outcome="/admin/bikeStation/List" />
+                        <b:navLink value="#{msg.chargeRates}" outcome="/admin/chargeRate/List" />
+                        <b:navLink value="#{msg.rents}" outcome="/admin/rent/List" />
+                        <b:navLink value="#{msg.rentalOpinions}" outcome="/admin/rentalOpinion/List" />
+                        <b:navLink value="#{msg.repairs}" outcome="/admin/repair/List" />
+                    </b:listLinks>
+                </b:column>
+                <b:column col-sm="9" col-md="10" styleClass="main">
+                    <h1><ui:insert name="header" /></h1>
+                    <hr />
+                    <ui:insert name="mainContent" />
+                </b:column>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>

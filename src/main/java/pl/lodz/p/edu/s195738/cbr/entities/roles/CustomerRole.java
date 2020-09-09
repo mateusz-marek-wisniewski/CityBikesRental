@@ -22,7 +22,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Entity
 @DiscriminatorValue("CUSTOMER")

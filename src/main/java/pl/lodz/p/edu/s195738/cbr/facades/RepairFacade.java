@@ -12,7 +12,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.Repair;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Stateless
 public class RepairFacade extends AbstractFacade<Repair> {

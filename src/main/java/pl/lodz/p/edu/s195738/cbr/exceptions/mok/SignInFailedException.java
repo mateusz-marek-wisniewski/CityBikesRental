@@ -9,7 +9,7 @@ import javax.ejb.ApplicationException;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @ApplicationException(rollback=false)
 public class SignInFailedException extends MOKException {

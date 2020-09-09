@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Entity
 @Table(name = "account_role", uniqueConstraints = {

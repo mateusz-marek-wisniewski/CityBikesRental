@@ -12,7 +12,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Stateless
 public class EmployeeRoleFacade extends AbstractFacade<EmployeeRole> {

@@ -18,7 +18,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.MOKEndpoint;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 
 @Named

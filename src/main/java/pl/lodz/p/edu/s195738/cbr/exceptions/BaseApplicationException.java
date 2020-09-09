@@ -9,7 +9,7 @@ import javax.ejb.ApplicationException;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @ApplicationException(rollback = true)
 public class BaseApplicationException extends Exception {

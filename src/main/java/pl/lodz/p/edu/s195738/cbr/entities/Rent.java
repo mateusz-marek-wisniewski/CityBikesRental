@@ -30,7 +30,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Entity
 @XmlRootElement

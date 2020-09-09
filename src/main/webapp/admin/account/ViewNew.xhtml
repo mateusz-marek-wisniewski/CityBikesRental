@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition>
+
+        <b:modal id="AccountViewDlg" class="viewModal" title="#{msg.accountData}" closable="true" close-on-escape="true">
+            <h:form id="AccountViewForm">
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.username}" />
+                        <h:outputText styleClass="viewValue" value="#{accountController.selected.login}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.email}" />
+                        <h:outputText styleClass="viewValue" value="#{accountController.selected.email}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.name}" />
+                        <h:outputText styleClass="viewValue" value="#{accountController.selected.name}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.surname}" />
+                        <h:outputText styleClass="viewValue" value="#{accountController.selected.surname}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.activeAccount}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[accountController.selected.active]}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.confirmed}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[accountController.selected.confirmed]}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.roles}" />
+                        <h:outputText style="display:block;" value="#{roles.ADMIN} (#{accountController.selected.adminRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.adminRole}" />
+                        <h:outputText style="display:block;" value="#{roles.EMPLOYEE} (#{accountController.selected.employeeRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.employeeRole}" />
+                        <h:outputText style="display:block;" value="#{roles.CUSTOMER} (#{accountController.selected.customerRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.customerRole}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn" rendered="#{not empty accountController.selected.employeeRole}">
+                        <h:outputText styleClass="viewLabel" value="#{msg.phoneNumber}" />
+                        <h:outputText styleClass="viewValue" value="#{accountController.selected.employeeRole.phone}" />
+                    </b:column>
+                </b:row>
+                <br />
+                <br />
+                <b:row>
+                    <b:column col-md="5">
+                        <h:outputText styleClass="viewLabel" value="#{msg.latestSuccessulLoginAttempt}" />
+                    </b:column>
+                    <b:column col-md="4">
+                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(true).loginDate}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:column>
+                    <b:column col-md="3">
+                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(true).ipAddress}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="5">
+                        <h:outputText styleClass="viewLabel" value="#{msg.latestUnsuccessulLoginAttempt}" />
+                    </b:column>
+                    <b:column col-md="4">
+                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(false).loginDate}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:column>
+                    <b:column col-md="3">
+                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(false).ipAddress}" />
+                    </b:column>
+                </b:row>
+            </h:form>
+        </b:modal>
+
+    </ui:composition>
+</html>

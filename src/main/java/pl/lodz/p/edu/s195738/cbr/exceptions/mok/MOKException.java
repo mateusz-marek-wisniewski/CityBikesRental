@@ -9,7 +9,7 @@ import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 public class MOKException extends BaseApplicationException {
 

@@ -12,7 +12,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Stateless
 public class CustomerRoleFacade extends AbstractFacade<CustomerRole> {

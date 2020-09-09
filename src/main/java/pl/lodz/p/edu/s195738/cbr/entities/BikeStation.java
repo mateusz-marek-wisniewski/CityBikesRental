@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Entity
 @Table(name = "bike_station", uniqueConstraints = {

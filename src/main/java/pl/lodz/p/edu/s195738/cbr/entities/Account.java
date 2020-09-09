@@ -35,7 +35,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.*;
 
 /**
  *
- * @author Siwy
+ * @author Mateusz Wiśniewski
  */
 @Entity
 @Table(uniqueConstraints = {
@@ -64,8 +64,8 @@ public class Account implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 16)
-    @Column(nullable = false, length = 16)
+    @Size(min = 1, max = 50)
+    @Column(nullable = false, length = 50)
     private String login;
     
     @Basic(optional = false)
