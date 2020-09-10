@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListLoginAttemptTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListLoginAttemptTitle_succeded}"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.succeded}" disabled="true"/>
@@ -52,12 +46,6 @@
                                 <h:outputText value="#{bundle.ListLoginAttemptTitle_ipAddress}"/>
                             </f:facet>
                             <h:outputText value="#{item.ipAddress}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListLoginAttemptTitle_version}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.version}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

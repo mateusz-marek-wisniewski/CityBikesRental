@@ -12,12 +12,8 @@
             <h:form id="RentalOpinionViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rentalOpinionController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRentalOpinionLabel_id}"/>
-                        <h:outputText value="#{rentalOpinionController.selected.id}" title="#{bundle.ViewRentalOpinionTitle_id}"/>
                         <h:outputText value="#{bundle.ViewRentalOpinionLabel_content}"/>
                         <h:outputText value="#{rentalOpinionController.selected.content}" title="#{bundle.ViewRentalOpinionTitle_content}"/>
-                        <h:outputText value="#{bundle.ViewRentalOpinionLabel_version}"/>
-                        <h:outputText value="#{rentalOpinionController.selected.version}" title="#{bundle.ViewRentalOpinionTitle_version}"/>
                         <h:outputText value="#{bundle.ViewRentalOpinionLabel_customerRole}"/>
                         <h:outputText value="#{rentalOpinionController.selected.customerRole}" title="#{bundle.ViewRentalOpinionTitle_customerRole}"/>
                     </p:panelGrid>

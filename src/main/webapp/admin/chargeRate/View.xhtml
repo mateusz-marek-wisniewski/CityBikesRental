@@ -12,14 +12,10 @@
             <h:form id="ChargeRateViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{chargeRateController.selected != null}">
-                        <h:outputText value="#{bundle.ViewChargeRateLabel_id}"/>
-                        <h:outputText value="#{chargeRateController.selected.id}" title="#{bundle.ViewChargeRateTitle_id}"/>
                         <h:outputText value="#{bundle.ViewChargeRateLabel_timeLimit}"/>
                         <h:outputText value="#{chargeRateController.selected.timeLimit}" title="#{bundle.ViewChargeRateTitle_timeLimit}"/>
                         <h:outputText value="#{bundle.ViewChargeRateLabel_chargeValue}"/>
                         <h:outputText value="#{chargeRateController.selected.chargeValue}" title="#{bundle.ViewChargeRateTitle_chargeValue}"/>
-                        <h:outputText value="#{bundle.ViewChargeRateLabel_version}"/>
-                        <h:outputText value="#{chargeRateController.selected.version}" title="#{bundle.ViewChargeRateTitle_version}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ChargeRateViewDialog.hide()"/>
                 </h:panelGroup>

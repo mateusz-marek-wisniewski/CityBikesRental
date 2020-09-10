@@ -14,14 +14,10 @@
                     <p:panelGrid columns="2" rendered="#{employeeRoleController.selected != null}">
                         <h:outputText value="#{bundle.ViewEmployeeRoleLabel_phone}"/>
                         <h:outputText value="#{employeeRoleController.selected.phone}" title="#{bundle.ViewEmployeeRoleTitle_phone}"/>
-                        <h:outputText value="#{bundle.ViewEmployeeRoleLabel_id}"/>
-                        <h:outputText value="#{employeeRoleController.selected.id}" title="#{bundle.ViewEmployeeRoleTitle_id}"/>
                         <h:outputText value="#{bundle.ViewEmployeeRoleLabel_roleName}"/>
                         <h:outputText value="#{employeeRoleController.selected.roleName}" title="#{bundle.ViewEmployeeRoleTitle_roleName}"/>
                         <h:outputText value="#{bundle.ViewEmployeeRoleLabel_active}"/>
                         <p:selectBooleanCheckbox value="#{employeeRoleController.selected.active}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewEmployeeRoleLabel_version}"/>
-                        <h:outputText value="#{employeeRoleController.selected.version}" title="#{bundle.ViewEmployeeRoleTitle_version}"/>
                         <h:outputText value="#{bundle.ViewEmployeeRoleLabel_account}"/>
                         <h:outputText value="#{employeeRoleController.selected.account}" title="#{bundle.ViewEmployeeRoleTitle_account}"/>
                     </p:panelGrid>

@@ -12,8 +12,6 @@
             <h:form id="RentViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rentController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRentLabel_id}"/>
-                        <h:outputText value="#{rentController.selected.id}" title="#{bundle.ViewRentTitle_id}"/>
                         <h:outputText value="#{bundle.ViewRentLabel_startDate}"/>
                         <h:outputText value="#{rentController.selected.startDate}" title="#{bundle.ViewRentTitle_startDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -24,8 +22,6 @@
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewRentLabel_charge}"/>
                         <h:outputText value="#{rentController.selected.charge}" title="#{bundle.ViewRentTitle_charge}"/>
-                        <h:outputText value="#{bundle.ViewRentLabel_version}"/>
-                        <h:outputText value="#{rentController.selected.version}" title="#{bundle.ViewRentTitle_version}"/>
                         <h:outputText value="#{bundle.ViewRentLabel_bike}"/>
                         <h:outputText value="#{rentController.selected.bike}" title="#{bundle.ViewRentTitle_bike}"/>
                         <h:outputText value="#{bundle.ViewRentLabel_rentStation}"/>

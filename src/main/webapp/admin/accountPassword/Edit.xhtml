@@ -12,12 +12,8 @@
             <h:form id="AccountPasswordEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountPasswordController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditAccountPasswordLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{accountPasswordController.selected.id}" title="#{bundle.EditAccountPasswordTitle_id}" />
                         <p:outputLabel value="#{bundle.EditAccountPasswordLabel_password}" for="password" />
                         <p:inputText id="password" value="#{accountPasswordController.selected.password}" title="#{bundle.EditAccountPasswordTitle_password}" required="true" requiredMessage="#{bundle.EditAccountPasswordRequiredMessage_password}"/>
-                        <p:outputLabel value="#{bundle.EditAccountPasswordLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{accountPasswordController.selected.version}" title="#{bundle.EditAccountPasswordTitle_version}" />
                         <p:outputLabel value="#{bundle.EditAccountPasswordLabel_account}" for="account" />
                         <p:selectOneMenu id="account" value="#{accountPasswordController.selected.account}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

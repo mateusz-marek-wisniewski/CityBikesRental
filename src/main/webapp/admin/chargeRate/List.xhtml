@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChargeRateTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListChargeRateTitle_timeLimit}"/>
                             </f:facet>
                             <h:outputText value="#{item.timeLimit}"/>
@@ -44,12 +38,6 @@
                                 <h:outputText value="#{bundle.ListChargeRateTitle_chargeValue}"/>
                             </f:facet>
                             <h:outputText value="#{item.chargeValue}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChargeRateTitle_version}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.version}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{chargeRateController.prepareCreate}" update=":ChargeRateCreateForm" oncomplete="PF('ChargeRateCreateDialog').show()"/>

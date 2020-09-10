@@ -12,16 +12,12 @@
             <h:form id="BikeViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bikeController.selected != null}">
-                        <h:outputText value="#{bundle.ViewBikeLabel_id}"/>
-                        <h:outputText value="#{bikeController.selected.id}" title="#{bundle.ViewBikeTitle_id}"/>
                         <h:outputText value="#{bundle.ViewBikeLabel_identifier}"/>
                         <h:outputText value="#{bikeController.selected.identifier}" title="#{bundle.ViewBikeTitle_identifier}"/>
                         <h:outputText value="#{bundle.ViewBikeLabel_bikeStatus}"/>
                         <h:outputText value="#{bikeController.selected.bikeStatus}" title="#{bundle.ViewBikeTitle_bikeStatus}"/>
                         <h:outputText value="#{bundle.ViewBikeLabel_damageDesc}"/>
                         <h:outputText value="#{bikeController.selected.damageDesc}" title="#{bundle.ViewBikeTitle_damageDesc}"/>
-                        <h:outputText value="#{bundle.ViewBikeLabel_version}"/>
-                        <h:outputText value="#{bikeController.selected.version}" title="#{bundle.ViewBikeTitle_version}"/>
                         <h:outputText value="#{bundle.ViewBikeLabel_bikeStation}"/>
                         <h:outputText value="#{bikeController.selected.bikeStation}" title="#{bundle.ViewBikeTitle_bikeStation}"/>
                     </p:panelGrid>

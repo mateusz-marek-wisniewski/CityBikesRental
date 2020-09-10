@@ -12,14 +12,10 @@
             <h:form id="AccountRoleEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountRoleController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditAccountRoleLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{accountRoleController.selected.id}" title="#{bundle.EditAccountRoleTitle_id}" />
                         <p:outputLabel value="#{bundle.EditAccountRoleLabel_roleName}" for="roleName" />
                         <p:inputText id="roleName" value="#{accountRoleController.selected.roleName}" title="#{bundle.EditAccountRoleTitle_roleName}" required="true" requiredMessage="#{bundle.EditAccountRoleRequiredMessage_roleName}"/>
                         <p:outputLabel value="#{bundle.EditAccountRoleLabel_active}" for="active" />
                         <p:selectBooleanCheckbox id="active" value="#{accountRoleController.selected.active}" required="true" requiredMessage="#{bundle.EditAccountRoleRequiredMessage_active}"/>
-                        <p:outputLabel value="#{bundle.EditAccountRoleLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{accountRoleController.selected.version}" title="#{bundle.EditAccountRoleTitle_version}" />
                         <p:outputLabel value="#{bundle.EditAccountRoleLabel_account}" for="account" />
                         <p:selectOneMenu id="account" value="#{accountRoleController.selected.account}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

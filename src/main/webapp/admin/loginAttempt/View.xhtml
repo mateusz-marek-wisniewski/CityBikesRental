@@ -12,8 +12,6 @@
             <h:form id="LoginAttemptViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{loginAttemptController.selected != null}">
-                        <h:outputText value="#{bundle.ViewLoginAttemptLabel_id}"/>
-                        <h:outputText value="#{loginAttemptController.selected.id}" title="#{bundle.ViewLoginAttemptTitle_id}"/>
                         <h:outputText value="#{bundle.ViewLoginAttemptLabel_succeded}"/>
                         <p:selectBooleanCheckbox value="#{loginAttemptController.selected.succeded}" disabled="true"/>
                         <h:outputText value="#{bundle.ViewLoginAttemptLabel_loginDate}"/>
@@ -22,8 +20,6 @@
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewLoginAttemptLabel_ipAddress}"/>
                         <h:outputText value="#{loginAttemptController.selected.ipAddress}" title="#{bundle.ViewLoginAttemptTitle_ipAddress}"/>
-                        <h:outputText value="#{bundle.ViewLoginAttemptLabel_version}"/>
-                        <h:outputText value="#{loginAttemptController.selected.version}" title="#{bundle.ViewLoginAttemptTitle_version}"/>
                         <h:outputText value="#{bundle.ViewLoginAttemptLabel_account}"/>
                         <h:outputText value="#{loginAttemptController.selected.account}" title="#{bundle.ViewLoginAttemptTitle_account}"/>
                     </p:panelGrid>

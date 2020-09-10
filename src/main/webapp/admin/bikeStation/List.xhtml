@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListBikeStationTitle_identifier}"/>
                             </f:facet>
                             <h:outputText value="#{item.identifier}"/>
@@ -62,12 +56,6 @@
                                 <h:outputText value="#{bundle.ListBikeStationTitle_geolocLongitude}"/>
                             </f:facet>
                             <h:outputText value="#{item.geolocLongitude}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_version}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.version}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{bikeStationController.prepareCreate}" update=":BikeStationCreateForm" oncomplete="PF('BikeStationCreateDialog').show()"/>

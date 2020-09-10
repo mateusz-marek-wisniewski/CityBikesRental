@@ -12,14 +12,10 @@
             <h:form id="AdminRoleCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminRoleController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAdminRoleLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{adminRoleController.selected.id}" title="#{bundle.CreateAdminRoleTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateAdminRoleLabel_roleName}" for="roleName" />
                         <p:inputText id="roleName" value="#{adminRoleController.selected.roleName}" title="#{bundle.CreateAdminRoleTitle_roleName}" required="true" requiredMessage="#{bundle.CreateAdminRoleRequiredMessage_roleName}"/>
                         <p:outputLabel value="#{bundle.CreateAdminRoleLabel_active}" for="active" />
                         <p:selectBooleanCheckbox id="active" value="#{adminRoleController.selected.active}" required="true" requiredMessage="#{bundle.EditAdminRoleRequiredMessage_active}"/>
-                        <p:outputLabel value="#{bundle.CreateAdminRoleLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{adminRoleController.selected.version}" title="#{bundle.CreateAdminRoleTitle_version}" />
                         <p:outputLabel value="#{bundle.CreateAdminRoleLabel_account}" for="account" />
                         <p:selectOneMenu id="account" value="#{adminRoleController.selected.account}" >
                             <f:selectItems value="#{accountController.itemsAvailableSelectOne}"

@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRepairTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRepairTitle_repairCost}"/>
                             </f:facet>
                             <h:outputText value="#{item.repairCost}"/>
@@ -60,12 +54,6 @@
                             <h:outputText value="#{item.endDate}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRepairTitle_version}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.version}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

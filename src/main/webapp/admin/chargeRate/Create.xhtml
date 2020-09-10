@@ -12,14 +12,10 @@
             <h:form id="ChargeRateCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{chargeRateController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateChargeRateLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{chargeRateController.selected.id}" title="#{bundle.CreateChargeRateTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateChargeRateLabel_timeLimit}" for="timeLimit" />
                         <p:inputText id="timeLimit" value="#{chargeRateController.selected.timeLimit}" title="#{bundle.CreateChargeRateTitle_timeLimit}" required="true" requiredMessage="#{bundle.CreateChargeRateRequiredMessage_timeLimit}"/>
                         <p:outputLabel value="#{bundle.CreateChargeRateLabel_chargeValue}" for="chargeValue" />
                         <p:inputText id="chargeValue" value="#{chargeRateController.selected.chargeValue}" title="#{bundle.CreateChargeRateTitle_chargeValue}" required="true" requiredMessage="#{bundle.CreateChargeRateRequiredMessage_chargeValue}"/>
-                        <p:outputLabel value="#{bundle.CreateChargeRateLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{chargeRateController.selected.version}" title="#{bundle.CreateChargeRateTitle_version}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{chargeRateController.create}" value="#{bundle.Save}" update="display,:ChargeRateListForm:datalist,:growl" oncomplete="handleSubmit(args,'ChargeRateCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ChargeRateCreateDialog.hide()"/>

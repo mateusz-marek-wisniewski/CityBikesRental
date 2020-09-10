@@ -12,16 +12,12 @@
             <h:form id="RentCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rentController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRentLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{rentController.selected.id}" title="#{bundle.CreateRentTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateRentLabel_startDate}" for="startDate" />
                         <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentController.selected.startDate}" title="#{bundle.EditRentTitle_startDate}" required="true" requiredMessage="#{bundle.EditRentRequiredMessage_startDate}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateRentLabel_endDate}" for="endDate" />
                         <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentController.selected.endDate}" title="#{bundle.EditRentTitle_endDate}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateRentLabel_charge}" for="charge" />
                         <p:inputText id="charge" value="#{rentController.selected.charge}" title="#{bundle.CreateRentTitle_charge}" />
-                        <p:outputLabel value="#{bundle.CreateRentLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{rentController.selected.version}" title="#{bundle.CreateRentTitle_version}" />
                         <p:outputLabel value="#{bundle.CreateRentLabel_bike}" for="bike" />
                         <p:selectOneMenu id="bike" value="#{rentController.selected.bike}" required="true" requiredMessage="#{bundle.EditRentRequiredMessage_bike}">
                             <f:selectItems value="#{bikeController.itemsAvailableSelectOne}"

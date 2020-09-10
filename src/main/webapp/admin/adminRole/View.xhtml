@@ -12,14 +12,10 @@
             <h:form id="AdminRoleViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminRoleController.selected != null}">
-                        <h:outputText value="#{bundle.ViewAdminRoleLabel_id}"/>
-                        <h:outputText value="#{adminRoleController.selected.id}" title="#{bundle.ViewAdminRoleTitle_id}"/>
                         <h:outputText value="#{bundle.ViewAdminRoleLabel_roleName}"/>
                         <h:outputText value="#{adminRoleController.selected.roleName}" title="#{bundle.ViewAdminRoleTitle_roleName}"/>
                         <h:outputText value="#{bundle.ViewAdminRoleLabel_active}"/>
                         <p:selectBooleanCheckbox value="#{adminRoleController.selected.active}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewAdminRoleLabel_version}"/>
-                        <h:outputText value="#{adminRoleController.selected.version}" title="#{bundle.ViewAdminRoleTitle_version}"/>
                         <h:outputText value="#{bundle.ViewAdminRoleLabel_account}"/>
                         <h:outputText value="#{adminRoleController.selected.account}" title="#{bundle.ViewAdminRoleTitle_account}"/>
                     </p:panelGrid>

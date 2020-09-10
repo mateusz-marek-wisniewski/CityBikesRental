@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAccountRoleTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAccountRoleTitle_roleName}"/>
                             </f:facet>
                             <h:outputText value="#{item.roleName}"/>
@@ -44,12 +38,6 @@
                                 <h:outputText value="#{bundle.ListAccountRoleTitle_active}"/>
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.active}" disabled="true"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAccountRoleTitle_version}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.version}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

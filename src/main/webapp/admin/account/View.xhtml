@@ -12,8 +12,6 @@
             <h:form id="AccountViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountController.selected != null}">
-                        <h:outputText value="#{bundle.ViewAccountLabel_id}"/>
-                        <h:outputText value="#{accountController.selected.id}" title="#{bundle.ViewAccountTitle_id}"/>
                         <h:outputText value="#{bundle.ViewAccountLabel_login}"/>
                         <h:outputText value="#{accountController.selected.login}" title="#{bundle.ViewAccountTitle_login}"/>
                         <h:outputText value="#{bundle.ViewAccountLabel_password}"/>
@@ -24,10 +22,6 @@
                         <h:outputText value="#{accountController.selected.emailVerificationHash}" title="#{bundle.ViewAccountTitle_emailVerificationHash}"/>
                         <h:outputText value="#{bundle.ViewAccountLabel_confirmed}"/>
                         <p:selectBooleanCheckbox value="#{accountController.selected.confirmed}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewAccountLabel_active}"/>
-                        <p:selectBooleanCheckbox value="#{accountController.selected.active}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewAccountLabel_version}"/>
-                        <h:outputText value="#{accountController.selected.version}" title="#{bundle.ViewAccountTitle_version}"/>
                         <h:outputText value="#{bundle.ViewAccountLabel_adminRole}"/>
                         <h:outputText value="#{accountController.selected.adminRole}" title="#{bundle.ViewAccountTitle_adminRole}"/>
                         <h:outputText value="#{bundle.ViewAccountLabel_employeeRole}"/>

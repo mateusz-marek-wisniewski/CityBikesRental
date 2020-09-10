@@ -12,8 +12,6 @@
             <h:form id="BikeStationEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bikeStationController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditBikeStationLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{bikeStationController.selected.id}" title="#{bundle.EditBikeStationTitle_id}" />
                         <p:outputLabel value="#{bundle.EditBikeStationLabel_identifier}" for="identifier" />
                         <p:inputText id="identifier" value="#{bikeStationController.selected.identifier}" title="#{bundle.EditBikeStationTitle_identifier}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_identifier}"/>
                         <p:outputLabel value="#{bundle.EditBikeStationLabel_city}" for="city" />
@@ -24,8 +22,6 @@
                         <p:inputText id="geolocLatitude" value="#{bikeStationController.selected.geolocLatitude}" title="#{bundle.EditBikeStationTitle_geolocLatitude}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_geolocLatitude}"/>
                         <p:outputLabel value="#{bundle.EditBikeStationLabel_geolocLongitude}" for="geolocLongitude" />
                         <p:inputText id="geolocLongitude" value="#{bikeStationController.selected.geolocLongitude}" title="#{bundle.EditBikeStationTitle_geolocLongitude}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_geolocLongitude}"/>
-                        <p:outputLabel value="#{bundle.EditBikeStationLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{bikeStationController.selected.version}" title="#{bundle.EditBikeStationTitle_version}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{bikeStationController.update}" value="#{bundle.Save}" update="display,:BikeStationListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BikeStationEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="BikeStationEditDialog.hide()"/>

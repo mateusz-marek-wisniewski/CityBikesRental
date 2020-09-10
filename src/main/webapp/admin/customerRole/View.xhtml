@@ -14,14 +14,10 @@
                     <p:panelGrid columns="2" rendered="#{customerRoleController.selected != null}">
                         <h:outputText value="#{bundle.ViewCustomerRoleLabel_totalTime}"/>
                         <h:outputText value="#{customerRoleController.selected.totalTime}" title="#{bundle.ViewCustomerRoleTitle_totalTime}"/>
-                        <h:outputText value="#{bundle.ViewCustomerRoleLabel_id}"/>
-                        <h:outputText value="#{customerRoleController.selected.id}" title="#{bundle.ViewCustomerRoleTitle_id}"/>
                         <h:outputText value="#{bundle.ViewCustomerRoleLabel_roleName}"/>
                         <h:outputText value="#{customerRoleController.selected.roleName}" title="#{bundle.ViewCustomerRoleTitle_roleName}"/>
                         <h:outputText value="#{bundle.ViewCustomerRoleLabel_active}"/>
                         <p:selectBooleanCheckbox value="#{customerRoleController.selected.active}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewCustomerRoleLabel_version}"/>
-                        <h:outputText value="#{customerRoleController.selected.version}" title="#{bundle.ViewCustomerRoleTitle_version}"/>
                         <h:outputText value="#{bundle.ViewCustomerRoleLabel_account}"/>
                         <h:outputText value="#{customerRoleController.selected.account}" title="#{bundle.ViewCustomerRoleTitle_account}"/>
                     </p:panelGrid>

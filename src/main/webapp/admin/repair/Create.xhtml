@@ -12,8 +12,6 @@
             <h:form id="RepairCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{repairController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRepairLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{repairController.selected.id}" title="#{bundle.CreateRepairTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateRepairLabel_repairCost}" for="repairCost" />
                         <p:inputText id="repairCost" value="#{repairController.selected.repairCost}" title="#{bundle.CreateRepairTitle_repairCost}" />
                         <p:outputLabel value="#{bundle.CreateRepairLabel_repairLog}" for="repairLog" />
@@ -22,8 +20,6 @@
                         <p:calendar id="startDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{repairController.selected.startDate}" title="#{bundle.EditRepairTitle_startDate}" required="true" requiredMessage="#{bundle.EditRepairRequiredMessage_startDate}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateRepairLabel_endDate}" for="endDate" />
                         <p:calendar id="endDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{repairController.selected.endDate}" title="#{bundle.EditRepairTitle_endDate}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreateRepairLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{repairController.selected.version}" title="#{bundle.CreateRepairTitle_version}" />
                         <p:outputLabel value="#{bundle.CreateRepairLabel_bike}" for="bike" />
                         <p:selectOneMenu id="bike" value="#{repairController.selected.bike}" required="true" requiredMessage="#{bundle.EditRepairRequiredMessage_bike}">
                             <f:selectItems value="#{bikeController.itemsAvailableSelectOne}"

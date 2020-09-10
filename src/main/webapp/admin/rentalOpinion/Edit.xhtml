@@ -12,12 +12,8 @@
             <h:form id="RentalOpinionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rentalOpinionController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditRentalOpinionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{rentalOpinionController.selected.id}" title="#{bundle.EditRentalOpinionTitle_id}" />
                         <p:outputLabel value="#{bundle.EditRentalOpinionLabel_content}" for="content" />
                         <p:inputText id="content" value="#{rentalOpinionController.selected.content}" title="#{bundle.EditRentalOpinionTitle_content}" required="true" requiredMessage="#{bundle.EditRentalOpinionRequiredMessage_content}"/>
-                        <p:outputLabel value="#{bundle.EditRentalOpinionLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{rentalOpinionController.selected.version}" title="#{bundle.EditRentalOpinionTitle_version}" />
                         <p:outputLabel value="#{bundle.EditRentalOpinionLabel_customerRole}" for="customerRole" />
                         <p:selectOneMenu id="customerRole" value="#{rentalOpinionController.selected.customerRole}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

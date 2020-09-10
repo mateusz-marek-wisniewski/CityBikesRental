@@ -12,8 +12,6 @@
             <h:form id="RepairViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{repairController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRepairLabel_id}"/>
-                        <h:outputText value="#{repairController.selected.id}" title="#{bundle.ViewRepairTitle_id}"/>
                         <h:outputText value="#{bundle.ViewRepairLabel_repairCost}"/>
                         <h:outputText value="#{repairController.selected.repairCost}" title="#{bundle.ViewRepairTitle_repairCost}"/>
                         <h:outputText value="#{bundle.ViewRepairLabel_repairLog}"/>
@@ -26,8 +24,6 @@
                         <h:outputText value="#{repairController.selected.endDate}" title="#{bundle.ViewRepairTitle_endDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
-                        <h:outputText value="#{bundle.ViewRepairLabel_version}"/>
-                        <h:outputText value="#{repairController.selected.version}" title="#{bundle.ViewRepairTitle_version}"/>
                         <h:outputText value="#{bundle.ViewRepairLabel_bike}"/>
                         <h:outputText value="#{repairController.selected.bike}" title="#{bundle.ViewRepairTitle_bike}"/>
                     </p:panelGrid>

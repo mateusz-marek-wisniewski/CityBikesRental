@@ -12,16 +12,12 @@
             <h:form id="BikeCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bikeController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateBikeLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{bikeController.selected.id}" title="#{bundle.CreateBikeTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateBikeLabel_identifier}" for="identifier" />
                         <p:inputText id="identifier" value="#{bikeController.selected.identifier}" title="#{bundle.CreateBikeTitle_identifier}" required="true" requiredMessage="#{bundle.CreateBikeRequiredMessage_identifier}"/>
                         <p:outputLabel value="#{bundle.CreateBikeLabel_bikeStatus}" for="bikeStatus" />
                         <p:inputText id="bikeStatus" value="#{bikeController.selected.bikeStatus}" title="#{bundle.CreateBikeTitle_bikeStatus}" required="true" requiredMessage="#{bundle.CreateBikeRequiredMessage_bikeStatus}"/>
                         <p:outputLabel value="#{bundle.CreateBikeLabel_damageDesc}" for="damageDesc" />
                         <p:inputText id="damageDesc" value="#{bikeController.selected.damageDesc}" title="#{bundle.CreateBikeTitle_damageDesc}" />
-                        <p:outputLabel value="#{bundle.CreateBikeLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{bikeController.selected.version}" title="#{bundle.CreateBikeTitle_version}" />
                         <p:outputLabel value="#{bundle.CreateBikeLabel_bikeStation}" for="bikeStation" />
                         <p:selectOneMenu id="bikeStation" value="#{bikeController.selected.bikeStation}" >
                             <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"

@@ -12,12 +12,8 @@
             <h:form id="AccountPasswordCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountPasswordController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAccountPasswordLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{accountPasswordController.selected.id}" title="#{bundle.CreateAccountPasswordTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateAccountPasswordLabel_password}" for="password" />
                         <p:inputText id="password" value="#{accountPasswordController.selected.password}" title="#{bundle.CreateAccountPasswordTitle_password}" required="true" requiredMessage="#{bundle.CreateAccountPasswordRequiredMessage_password}"/>
-                        <p:outputLabel value="#{bundle.CreateAccountPasswordLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{accountPasswordController.selected.version}" title="#{bundle.CreateAccountPasswordTitle_version}" />
                         <p:outputLabel value="#{bundle.CreateAccountPasswordLabel_account}" for="account" />
                         <p:selectOneMenu id="account" value="#{accountPasswordController.selected.account}" >
                             <f:selectItems value="#{accountController.itemsAvailableSelectOne}"

@@ -12,8 +12,6 @@
             <h:form id="BikeStationCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bikeStationController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateBikeStationLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{bikeStationController.selected.id}" title="#{bundle.CreateBikeStationTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateBikeStationLabel_identifier}" for="identifier" />
                         <p:inputText id="identifier" value="#{bikeStationController.selected.identifier}" title="#{bundle.CreateBikeStationTitle_identifier}" required="true" requiredMessage="#{bundle.CreateBikeStationRequiredMessage_identifier}"/>
                         <p:outputLabel value="#{bundle.CreateBikeStationLabel_city}" for="city" />
@@ -24,8 +22,6 @@
                         <p:inputText id="geolocLatitude" value="#{bikeStationController.selected.geolocLatitude}" title="#{bundle.CreateBikeStationTitle_geolocLatitude}" required="true" requiredMessage="#{bundle.CreateBikeStationRequiredMessage_geolocLatitude}"/>
                         <p:outputLabel value="#{bundle.CreateBikeStationLabel_geolocLongitude}" for="geolocLongitude" />
                         <p:inputText id="geolocLongitude" value="#{bikeStationController.selected.geolocLongitude}" title="#{bundle.CreateBikeStationTitle_geolocLongitude}" required="true" requiredMessage="#{bundle.CreateBikeStationRequiredMessage_geolocLongitude}"/>
-                        <p:outputLabel value="#{bundle.CreateBikeStationLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{bikeStationController.selected.version}" title="#{bundle.CreateBikeStationTitle_version}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{bikeStationController.create}" value="#{bundle.Save}" update="display,:BikeStationListForm:datalist,:growl" oncomplete="handleSubmit(args,'BikeStationCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="BikeStationCreateDialog.hide()"/>

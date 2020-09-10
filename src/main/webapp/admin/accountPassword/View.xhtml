@@ -12,12 +12,8 @@
             <h:form id="AccountPasswordViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountPasswordController.selected != null}">
-                        <h:outputText value="#{bundle.ViewAccountPasswordLabel_id}"/>
-                        <h:outputText value="#{accountPasswordController.selected.id}" title="#{bundle.ViewAccountPasswordTitle_id}"/>
                         <h:outputText value="#{bundle.ViewAccountPasswordLabel_password}"/>
                         <h:outputText value="#{accountPasswordController.selected.password}" title="#{bundle.ViewAccountPasswordTitle_password}"/>
-                        <h:outputText value="#{bundle.ViewAccountPasswordLabel_version}"/>
-                        <h:outputText value="#{accountPasswordController.selected.version}" title="#{bundle.ViewAccountPasswordTitle_version}"/>
                         <h:outputText value="#{bundle.ViewAccountPasswordLabel_account}"/>
                         <h:outputText value="#{accountPasswordController.selected.account}" title="#{bundle.ViewAccountPasswordTitle_account}"/>
                     </p:panelGrid>

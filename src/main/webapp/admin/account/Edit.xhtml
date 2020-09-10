@@ -12,8 +12,6 @@
             <h:form id="AccountEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{accountController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditAccountLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{accountController.selected.id}" title="#{bundle.EditAccountTitle_id}" />
                         <p:outputLabel value="#{bundle.EditAccountLabel_login}" for="login" />
                         <p:inputText id="login" value="#{accountController.selected.login}" title="#{bundle.EditAccountTitle_login}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_login}"/>
                         <p:outputLabel value="#{bundle.EditAccountLabel_password}" for="password" />
@@ -24,8 +22,6 @@
                         <p:selectBooleanCheckbox id="confirmed" value="#{accountController.selected.confirmed}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_confirmed}"/>
                         <p:outputLabel value="#{bundle.EditAccountLabel_active}" for="active" />
                         <p:selectBooleanCheckbox id="active" value="#{accountController.selected.active}" required="true" requiredMessage="#{bundle.EditAccountRequiredMessage_active}"/>
-                        <p:outputLabel value="#{bundle.EditAccountLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{accountController.selected.version}" title="#{bundle.EditAccountTitle_version}" />
                         <p:outputLabel value="#{bundle.EditAccountLabel_adminRole}" for="adminRole" />
                         <p:selectOneMenu id="adminRole" value="#{accountController.selected.adminRole}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

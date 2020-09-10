@@ -14,14 +14,10 @@
                     <p:panelGrid columns="2" rendered="#{customerRoleController.selected != null}">
                         <p:outputLabel value="#{bundle.EditCustomerRoleLabel_totalTime}" for="totalTime" />
                         <p:inputText id="totalTime" value="#{customerRoleController.selected.totalTime}" title="#{bundle.EditCustomerRoleTitle_totalTime}" required="true" requiredMessage="#{bundle.EditCustomerRoleRequiredMessage_totalTime}"/>
-                        <p:outputLabel value="#{bundle.EditCustomerRoleLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{customerRoleController.selected.id}" title="#{bundle.EditCustomerRoleTitle_id}" />
                         <p:outputLabel value="#{bundle.EditCustomerRoleLabel_roleName}" for="roleName" />
                         <p:inputText id="roleName" value="#{customerRoleController.selected.roleName}" title="#{bundle.EditCustomerRoleTitle_roleName}" required="true" requiredMessage="#{bundle.EditCustomerRoleRequiredMessage_roleName}"/>
                         <p:outputLabel value="#{bundle.EditCustomerRoleLabel_active}" for="active" />
                         <p:selectBooleanCheckbox id="active" value="#{customerRoleController.selected.active}" required="true" requiredMessage="#{bundle.EditCustomerRoleRequiredMessage_active}"/>
-                        <p:outputLabel value="#{bundle.EditCustomerRoleLabel_version}" for="version" />
-                        <p:inputText id="version" value="#{customerRoleController.selected.version}" title="#{bundle.EditCustomerRoleTitle_version}" />
                         <p:outputLabel value="#{bundle.EditCustomerRoleLabel_account}" for="account" />
                         <p:selectOneMenu id="account" value="#{customerRoleController.selected.account}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
