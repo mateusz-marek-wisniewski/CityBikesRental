@@ -6,6 +6,7 @@ import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeFacade;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,10 +15,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("bikeController")
 @SessionScoped
@@ -25,8 +29,15 @@ public class BikeController implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.facades.BikeFacade ejbFacade;
+    @EJB
+    private MOWEndpoint mow;
     private List<Bike> items = null;
     private Bike selected;
+    
+    private String bikeIdentifier;
+    private String damageDescription;
+
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public BikeController() {
     }
@@ -37,6 +48,22 @@ public class BikeController implements Serializable {
 
     public void setSelected(Bike selected) {
         this.selected = selected;
+    }
+
+    public String getBikeIdentifier() {
+        return bikeIdentifier;
+    }
+
+    public void setBikeIdentifier(String bikeIdentifier) {
+        this.bikeIdentifier = bikeIdentifier;
+    }
+
+    public String getDamageDescription() {
+        return damageDescription;
+    }
+
+    public void setDamageDescription(String damageDescription) {
+        this.damageDescription = damageDescription;
     }
 
     protected void setEmbeddableKeys() {
@@ -71,6 +98,17 @@ public class BikeController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+    
+    public void report() {
+        try {
+            mow.reportBike(Integer.parseInt(bikeIdentifier), damageDescription);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("reportBike_success"), bikeIdentifier)));
+            bikeIdentifier = "";
+            damageDescription = "";
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
         }
     }
 

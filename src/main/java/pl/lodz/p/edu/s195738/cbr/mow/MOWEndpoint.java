@@ -28,8 +28,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
 import pl.lodz.p.edu.s195738.cbr.entities.Rent;
 import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeNotInStationException;
-import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.*;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeStationFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade;
@@ -145,6 +144,14 @@ public class MOWEndpoint implements SessionSynchronization {
         
         return rentToReturn;
     }
+    
+    @RolesAllowed("CUSTOMER")
+    public void reportBike(int identifier, String damageDescription) throws BaseApplicationException {
+        Bike bike = bikeFacade.findByIdentifier(identifier);
+        if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        bike.setDamageDesc(damageDescription);
+        bikeFacade.edit(bike);
+    }
 
     /**
      * MOW.31 Wyświetl listę wypożyczeń
@@ -165,6 +172,13 @@ public class MOWEndpoint implements SessionSynchronization {
         return rentalOpinionFacade.find(userSession.getAccount().getCustomerRole().getId());
     } 
     
+    /**
+     * MOK.33 Dodaj/edytuj opinię o wypożyczalni
+     * Pozwala klientowi dodać opinię o stacji jeśli jej jeszcze nie dodał, lub edytować ją
+     * 
+     * @param opinion opinia do dodania/edycji
+     * @throws BaseApplicationException
+     */
     @RolesAllowed("CUSTOMER")
     public void updateOpinion(RentalOpinion opinion) throws BaseApplicationException {
         opinion.setAddedDate(new Date());
