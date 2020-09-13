@@ -207,7 +207,7 @@ public class MOKEndpoint implements SessionSynchronization{
      */
     @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
     public void changeMyPassword(String oldPassword, String newPassword, String newPasswordRepeat, Account account) throws BaseApplicationException{
-        if (!account.getPassword().equals(PasswordUtil.hash(oldPassword))) throw new CurrentPasswordInvalidException();
+        if (!account.getPassword().equals(PasswordUtil.hash(oldPassword))) throw new CurrentPasswordIsInvalidException();
         if (!newPassword.equals(newPasswordRepeat)) throw new PasswordsDoNotMatchException();
         if (newPassword.equals(oldPassword)) throw new PasswordsCurrentAndNewCanNotBeTheSameException();
         if (account.isPasswordInAccountPasswordCollection(PasswordUtil.hash(newPassword))) throw new PasswordAlreadyUsedException();

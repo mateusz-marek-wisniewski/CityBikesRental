@@ -26,6 +26,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.Bike;
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStation;
 import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
 import pl.lodz.p.edu.s195738.cbr.entities.Rent;
+import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeNotInStationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
@@ -34,6 +35,7 @@ import pl.lodz.p.edu.s195738.cbr.facades.BikeStationFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.RentFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.RentalOpinionFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.GlassfishAuth;
 
 /**
@@ -61,6 +63,8 @@ public class MOWEndpoint implements SessionSynchronization {
     ChargeRateFacade chargeRateFacade;
     @EJB
     CustomerRoleFacade customerRoleFacade;
+    @EJB
+    RentalOpinionFacade rentalOpinionFacade;
     
     /**
      * MOW.27 Wypożycz rower
@@ -155,8 +159,20 @@ public class MOWEndpoint implements SessionSynchronization {
         rentList.sort((r1, r2) -> r2.getStartDate().compareTo(r1.getStartDate()));
         return rentList;
     }
+
+    @RolesAllowed("CUSTOMER")
+    public RentalOpinion getCustomerOpinion() {
+        return rentalOpinionFacade.find(userSession.getAccount().getCustomerRole().getId());
+    } 
     
-    
+    @RolesAllowed("CUSTOMER")
+    public void updateOpinion(RentalOpinion opinion) throws BaseApplicationException {
+        opinion.setAddedDate(new Date());
+        opinion.setCustomerRole(userSession.getAccount().getCustomerRole());
+        opinion.setId(userSession.getAccount().getCustomerRole().getId());
+        
+        rentalOpinionFacade.edit(opinion);
+    }  
     
 
 

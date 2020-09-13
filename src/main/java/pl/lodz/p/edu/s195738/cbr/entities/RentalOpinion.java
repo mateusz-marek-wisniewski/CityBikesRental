@@ -6,22 +6,22 @@
 package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,8 +43,8 @@ public class RentalOpinion implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name="rental_opinion_id_seq", sequenceName="rental_opinion_id_seq", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="rental_opinion_id_seq")
+    @NotNull
+    @Column(name = "id")
     private Long id;
     
     @Basic(optional = false)
@@ -53,11 +53,24 @@ public class RentalOpinion implements Serializable {
     @Column(nullable = false, length = 500)
     private String content;
     
+    @Basic(optional = false)
+    @NotNull
+    @Max(5)
+    @Min(1)
+    @Column(nullable = false)
+    private int rating;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "added_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date addedDate;
+    
     @Version
     private long version;
     
-    @JoinColumn(name = "customer_data_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
     private CustomerRole customerRole;
     
 
@@ -88,6 +101,22 @@ public class RentalOpinion implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
     }
 
     public long getVersion() {

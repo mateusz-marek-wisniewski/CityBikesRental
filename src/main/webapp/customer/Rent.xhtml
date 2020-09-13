@@ -12,9 +12,9 @@
         <ui:define name="title">#{msg.rentBike}</ui:define>
 
         <ui:define name="body">
+            <h1>#{msg.rentBike}</h1>
+            <hr />
             <h:form id="RentForm">
-                <h1>#{msg.rentBike}</h1>
-                <hr />
                 <b:messages globalOnly="true" />
                 <b:row>
                     <b:column colMd="6" colSm="12">
@@ -34,6 +34,7 @@
                         <b:message for="bike" />
                     </b:column>
                 </b:row>
+                <br />
                 <b:commandButton look="primary " class="btn-big" value="#{msg.rent}" action="#{rentController.rent()}" />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
             </h:form>

@@ -23,8 +23,11 @@
                     <b:column colMd="6" colSm="12">
                         <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.myRents}" outcome="RentsList" />
                     </b:column>
-                    <b:column colMd="6" colSm="12">
-                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.addOpinion}" />
+                    <b:column colMd="6" colSm="12" rendered="#{empty rentalOpinionController.customerOpinion.addedDate}">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.addOpinion}" outcome="UpdateOpinion" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12" rendered="#{not empty rentalOpinionController.customerOpinion.addedDate}">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.editOpinion}" outcome="UpdateOpinion" />
                     </b:column>
                     <b:column colMd="6" colSm="12">
                         <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.reportBikeFailure}" />

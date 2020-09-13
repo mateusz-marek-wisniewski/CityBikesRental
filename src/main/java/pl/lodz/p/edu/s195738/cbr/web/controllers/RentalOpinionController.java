@@ -14,10 +14,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("rentalOpinionController")
 @SessionScoped
@@ -25,8 +28,13 @@ public class RentalOpinionController implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.facades.RentalOpinionFacade ejbFacade;
+    @EJB
+    private MOWEndpoint mow;
     private List<RentalOpinion> items = null;
     private RentalOpinion selected;
+    private RentalOpinion customerOpinion;
+
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public RentalOpinionController() {
     }
@@ -37,6 +45,16 @@ public class RentalOpinionController implements Serializable {
 
     public void setSelected(RentalOpinion selected) {
         this.selected = selected;
+    }
+
+    public RentalOpinion getCustomerOpinion() {
+        if (customerOpinion == null) customerOpinion = mow.getCustomerOpinion();
+        if (customerOpinion == null) customerOpinion = new RentalOpinion();
+        return customerOpinion;
+    }
+
+    public void setCustomerOpinion(RentalOpinion customerOpinion) {
+        this.customerOpinion = customerOpinion;
     }
 
     protected void setEmbeddableKeys() {
@@ -71,6 +89,19 @@ public class RentalOpinionController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+    
+    public void updateOpinion() {
+        try {
+            mow.updateOpinion(customerOpinion);
+            if (customerOpinion.getAddedDate() == null)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("addOpinion_success")));
+            else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("editOpinion_success")));
+            customerOpinion = null;
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
         }
     }
 

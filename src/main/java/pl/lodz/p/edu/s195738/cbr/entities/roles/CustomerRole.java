@@ -7,11 +7,13 @@ package pl.lodz.p.edu.s195738.cbr.entities.roles;
 
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.validation.constraints.NotNull;
@@ -26,7 +28,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
  */
 @Entity
 @DiscriminatorValue("CUSTOMER")
-@SecondaryTable(name = "customer_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id"))
+@SecondaryTable(name = "customer_data", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id"))
 public class CustomerRole extends AccountRole {
     
     @Basic(optional = false)
@@ -37,8 +39,8 @@ public class CustomerRole extends AccountRole {
     @OneToMany(mappedBy = "customerRole", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
     
-    @OneToMany(mappedBy = "customerRole", fetch = FetchType.LAZY)
-    private Collection<RentalOpinion> rentalOpinionCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customerRole", fetch = FetchType.LAZY)
+    private RentalOpinion rentalOpinion;
 
     
     public CustomerRole() {
@@ -64,11 +66,11 @@ public class CustomerRole extends AccountRole {
     }
 
     @XmlTransient
-    public Collection<RentalOpinion> getRentalOpinionCollection() {
-        return rentalOpinionCollection;
+    public RentalOpinion getRentalOpinion() {
+        return rentalOpinion;
     }
 
-    public void setRentalOpinionCollection(Collection<RentalOpinion> rentalOpinionCollection) {
-        this.rentalOpinionCollection = rentalOpinionCollection;
+    public void setRentalOpinion(RentalOpinion rentalOpinion) {
+        this.rentalOpinion = rentalOpinion;
     }
 }

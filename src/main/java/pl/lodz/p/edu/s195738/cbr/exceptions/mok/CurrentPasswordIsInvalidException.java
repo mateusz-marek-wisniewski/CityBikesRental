@@ -9,9 +9,9 @@ package pl.lodz.p.edu.s195738.cbr.exceptions.mok;
  *
  * @author Mateusz Wiśniewski
  */
-public class CurrentPasswordInvalidException extends MOKException {
+public class CurrentPasswordIsInvalidException extends MOKException {
 
-    public CurrentPasswordInvalidException() {
+    public CurrentPasswordIsInvalidException() {
         super(new Throwable());
     }
 }
