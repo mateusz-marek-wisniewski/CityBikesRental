@@ -38,6 +38,7 @@ public class RentController implements Serializable {
     private String bikeIdentifier;
 
     private List<Rent> customerToReturnList;
+    private List<Rent> customerRentList;
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
@@ -70,6 +71,10 @@ public class RentController implements Serializable {
 
     public List<Rent> getCustomerToReturnList() {
         return mow.getCustomerRentsToReturn();
+    }
+    
+    public List<Rent> getCustomerRentList() {
+        return mow.getCustomerRents();
     }
 
     protected void setEmbeddableKeys() {

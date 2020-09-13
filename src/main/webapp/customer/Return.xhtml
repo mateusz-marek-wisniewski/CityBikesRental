@@ -9,14 +9,14 @@
     
     <ui:composition template="/template.xhtml">
 
-        <ui:define name="title">#{msg.rentBike}</ui:define>
+        <ui:define name="title">#{msg.returnBike}</ui:define>
 
         <ui:define name="body">
             <h:form id="ReturnForm">
                 <h1>#{msg.returnBike}</h1>
                 <hr />
                 <b:messages globalOnly="true" />
-                <b:row>
+                <b:row rendered="#{not empty rentController.customerToReturnList}">
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />

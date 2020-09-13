@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.myRents}</ui:define>
+
+        <ui:define name="body">
+            <h:form id="ReturnForm">
+                <h1>#{msg.myRents}</h1>
+                <hr />
+                <b:messages globalOnly="true" />
+                <b:row>
+                    <p:repeat value="#{rentController.customerRentList}" var="rent" >
+                        <b:column>
+                            <b:commandLink look="block" class="scroll-list-item" >
+                                <f:setPropertyActionListener value="#{rent}" target="#{rentController.selected}" />
+                                <b:row>
+                                    <b:column colMd="5" colSm="12">
+                                        <b:row>
+                                            <h:outputText styleClass="text-muted" value="#{rent.startDate}">
+                                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                                            </h:outputText>
+                                        </b:row>
+                                        <b:row>
+                                            <h:outputText styleClass="text-muted" value="#{rent.rentStation.identifier}, #{rent.rentStation.city} #{rent.rentStation.streetName}" />
+                                        </b:row>
+                                    </b:column>
+                                    <b:column colMd="2" colSm="12" rendered="#{not empty rent.endDate}">
+                                        >
+                                    </b:column>
+                                    <b:column colMd="5" colSm="12" rendered="#{not empty rent.endDate}">
+                                        <b:row>
+                                            <h:outputText styleClass="text-muted" value="#{rent.endDate}">
+                                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                                            </h:outputText>
+                                        </b:row>
+                                        <b:row>
+                                            <h:outputText styleClass="text-muted" value="#{rent.returnStation.identifier}, #{rent.returnStation.city} #{rent.returnStation.streetName}" />
+                                        </b:row>
+                                    </b:column>
+                                </b:row>
+                                <h:outputText style="font-size: 39px;" value="#{rent.bike.identifier}" />
+                                <b:row>
+                                    <h:outputText styleClass="text-muted" value="#{msg.charge}: #{rent.charge} zł" />
+                                </b:row>
+                            </b:commandLink>
+                        </b:column>
+                    </p:repeat>
+                </b:row>
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

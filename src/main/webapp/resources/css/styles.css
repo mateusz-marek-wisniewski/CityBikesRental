@@ -77,3 +77,8 @@ body {
     font-size: 0.7em;
     text-transform: none;
 }
+
+.scroll-list-item {
+    margin-bottom: 2em !important;
+    background-color: #fafafa;
+}

@@ -141,6 +141,22 @@ public class MOWEndpoint implements SessionSynchronization {
         
         return rentToReturn;
     }
+
+    /**
+     * MOW.31 Wyświetl listę wypożyczeń
+     * Umożlwia klientowi wyświetlenie jego listy wypożyczeń
+     * 
+     * @return lista wypożyczeń klienta
+     */
+    @RolesAllowed("CUSTOMER")
+    public List<Rent> getCustomerRents() {
+        List<Rent> rentList =  customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
+                .collect(Collectors.toList());
+        rentList.sort((r1, r2) -> r2.getStartDate().compareTo(r1.getStartDate()));
+        return rentList;
+    }
+    
+    
     
 
 
