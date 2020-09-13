@@ -145,12 +145,36 @@ public class MOWEndpoint implements SessionSynchronization {
         return rentToReturn;
     }
     
+    /**
+     * MOW.29 Zgłoś usterkę roweru
+     * Pozwala klientowi zgłosić usterkę roweru
+     * 
+     * @param identifier identyfikator roweru
+     * @param damageDescription opis usterki
+     * @throws BaseApplicationException
+     */
     @RolesAllowed("CUSTOMER")
     public void reportBike(int identifier, String damageDescription) throws BaseApplicationException {
         Bike bike = bikeFacade.findByIdentifier(identifier);
         if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
         bike.setDamageDesc(damageDescription);
         bikeFacade.edit(bike);
+    }
+    
+    /**
+     * MOW.30 Zgłoś usterkę stacji
+     * Pozwala klientowi zgłosić usterkę stacji
+     * 
+     * @param identifier identyfikator stacji
+     * @param damageDescription opis usterki
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("CUSTOMER")
+    public void reportBikeStation(String identifier, String damageDescription) throws BaseApplicationException {
+        BikeStation bikeStation = bikeStationFacade.findByIdentifier(identifier);
+        if (bikeStation.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        bikeStation.setDamageDesc(damageDescription);
+        bikeStationFacade.edit(bikeStation);
     }
 
     /**

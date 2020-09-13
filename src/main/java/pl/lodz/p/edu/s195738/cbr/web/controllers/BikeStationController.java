@@ -6,6 +6,7 @@ import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeStationFacade;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,10 +15,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("bikeStationController")
 @SessionScoped
@@ -25,8 +29,15 @@ public class BikeStationController implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.facades.BikeStationFacade ejbFacade;
+    @EJB
+    private MOWEndpoint mow;
     private List<BikeStation> items = null;
     private BikeStation selected;
+
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    
+    private String bikeStationIdentifier;
+    private String damageDescription;
 
     public BikeStationController() {
     }
@@ -37,6 +48,22 @@ public class BikeStationController implements Serializable {
 
     public void setSelected(BikeStation selected) {
         this.selected = selected;
+    }
+
+    public String getBikeStationIdentifier() {
+        return bikeStationIdentifier;
+    }
+
+    public void setBikeStationIdentifier(String bikeStationIdentifier) {
+        this.bikeStationIdentifier = bikeStationIdentifier;
+    }
+
+    public String getDamageDescription() {
+        return damageDescription;
+    }
+
+    public void setDamageDescription(String damageDescription) {
+        this.damageDescription = damageDescription;
     }
 
     protected void setEmbeddableKeys() {
@@ -71,6 +98,18 @@ public class BikeStationController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+    
+    public void report() {
+        try {
+            mow.reportBikeStation(bikeStationIdentifier, damageDescription);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("reportBikeStation_success"), bikeStationIdentifier)));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeStationIdentifier = "";
+            damageDescription = "";
         }
     }
 

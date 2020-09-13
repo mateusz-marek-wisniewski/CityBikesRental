@@ -86,6 +86,10 @@ public class BikeStation implements Serializable {
     @Column(name = "geoloc_longitude", nullable = false, precision = 10, scale = 6)
     private BigDecimal geolocLongitude;
     
+    @Size(max = 255)
+    @Column(name = "damage_desc", length = 255)
+    private String damageDesc;
+    
     @Version
     private long version;
     
@@ -162,6 +166,14 @@ public class BikeStation implements Serializable {
 
     public void setGeolocLongitude(BigDecimal geolocLongitude) {
         this.geolocLongitude = geolocLongitude;
+    }
+
+    public String getDamageDesc() {
+        return damageDesc;
+    }
+
+    public void setDamageDesc(String damageDesc) {
+        this.damageDesc = damageDesc;
     }
 
     public long getVersion() {

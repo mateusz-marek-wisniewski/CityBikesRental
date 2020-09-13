@@ -33,11 +33,11 @@ public class BikeController implements Serializable {
     private MOWEndpoint mow;
     private List<Bike> items = null;
     private Bike selected;
+
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
     
     private String bikeIdentifier;
     private String damageDescription;
-
-    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public BikeController() {
     }
@@ -105,10 +105,11 @@ public class BikeController implements Serializable {
         try {
             mow.reportBike(Integer.parseInt(bikeIdentifier), damageDescription);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("reportBike_success"), bikeIdentifier)));
-            bikeIdentifier = "";
-            damageDescription = "";
         } catch (BaseApplicationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeIdentifier = "";
+            damageDescription = "";
         }
     }
 
