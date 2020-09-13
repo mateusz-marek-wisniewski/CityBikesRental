@@ -59,3 +59,21 @@ body {
     font-size: 1.5em;
     display: block;
 }
+
+.input-big {
+    height: 60px !important;
+    font-size:  44px !important;
+}
+
+.btn-big {
+    font-size: 39px !important;
+    padding: 12px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-right: 0.5em;
+}
+
+.small {
+    font-size: 0.7em;
+    text-transform: none;
+}

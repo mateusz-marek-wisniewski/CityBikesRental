@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pl.lodz.p.edu.s195738.cbr.entities.Bike;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeDoesNotExistException;
 
 /**
  *
@@ -27,6 +28,14 @@ public class BikeFacade extends AbstractFacade<Bike> {
 
     public BikeFacade() {
         super(Bike.class);
+    }
+    
+    public Bike findByIdentifier(int identifier) throws BikeDoesNotExistException {
+        try {
+            return (Bike) em.createNamedQuery("Bike.findByIdentifier").setParameter("identifier", identifier).getResultList().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BikeDoesNotExistException(e);
+        }
     }
     
 }

@@ -72,8 +72,8 @@
                 </b:row>
                 <b:row id="employeeUpdate" class="itemToUpdate">
                     <b:column col-md="6" styleClass="viewColumn" rendered="#{accountController.employee}">
-                        <h:outputText id="phone" styleClass="viewLabel" value="#{msg.phoneNumber}" />
-                        <b:inputText styleClass="viewValue" value="#{accountController.phone}">
+                        <h:outputText styleClass="viewLabel" value="#{msg.phoneNumber}" />
+                        <b:inputText id="phone" styleClass="viewValue" value="#{accountController.phone}">
                             <f:validateRegex pattern="^[0-9]{9}$" />
                         </b:inputText>
                         <b:message for="phone" />

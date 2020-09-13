@@ -6,6 +6,7 @@ import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.facades.RentFacade;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,10 +15,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("rentController")
 @SessionScoped
@@ -25,8 +29,17 @@ public class RentController implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.facades.RentFacade ejbFacade;
+    @EJB
+    private MOWEndpoint mow;
     private List<Rent> items = null;
     private Rent selected;
+
+    private String bikeStationIdentifier;
+    private String bikeIdentifier;
+
+    private List<Rent> customerToReturnList;
+
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public RentController() {
     }
@@ -37,6 +50,26 @@ public class RentController implements Serializable {
 
     public void setSelected(Rent selected) {
         this.selected = selected;
+    }
+
+    public String getBikeStationIdentifier() {
+        return bikeStationIdentifier;
+    }
+
+    public void setBikeStationIdentifier(String bikeStationIdentifier) {
+        this.bikeStationIdentifier = bikeStationIdentifier;
+    }
+
+    public String getBikeIdentifier() {
+        return bikeIdentifier;
+    }
+
+    public void setBikeIdentifier(String bikeIdentifier) {
+        this.bikeIdentifier = bikeIdentifier;
+    }
+
+    public List<Rent> getCustomerToReturnList() {
+        return mow.getCustomerRentsToReturn();
     }
 
     protected void setEmbeddableKeys() {
@@ -71,6 +104,25 @@ public class RentController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    public void rent() {
+        try {
+            mow.rent(bikeStationIdentifier, Integer.parseInt(bikeIdentifier));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("rent_success"), bikeIdentifier)));
+            bikeIdentifier = "";
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void returnBike() {
+        try {
+            Rent returnRent = mow.returnBike(selected, bikeStationIdentifier);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("return_success"), returnRent.getBike().getIdentifier())));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
         }
     }
 
