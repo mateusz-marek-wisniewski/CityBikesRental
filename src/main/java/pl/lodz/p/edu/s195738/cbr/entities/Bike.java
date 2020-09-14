@@ -7,6 +7,7 @@ package pl.lodz.p.edu.s195738.cbr.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -93,6 +94,17 @@ public class Bike implements Serializable {
         this.identifier = identifier;
         this.bikeStatus = bikeStatus;
         this.version = version;
+    }
+    
+    public boolean isRented(){
+        if (getRentCollection() == null) return false;
+        Rent notReturnedRent = getRentCollection().stream()
+                    .sorted((r1, r2) -> r2.getStartDate().compareTo(r1.getStartDate()))
+                    .filter(r -> r.getEndDate() == null)
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElse(null);
+        return notReturnedRent != null;
     }
 
     public Long getId() {

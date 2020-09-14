@@ -20,11 +20,11 @@
                              var="item"
                              onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:accountController.setSelected(item);"
                              ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:accountController.setSelected(null);"
-                             selection-mode="single"
                              responsive="true"
                              border="false"
                              lang="#{request.locale.language}"
                              update="@(.databuttons)" >
+                    <b:dataTableColumn selectionMode="multiple" />
                     <b:dataTableColumn value="#{item.login}" label="#{msg.username}" />
                     <b:dataTableColumn value="#{item.email}" label="#{msg.email}" />
                     <b:dataTableColumn value="#{item.name}" label="#{msg.name}" />

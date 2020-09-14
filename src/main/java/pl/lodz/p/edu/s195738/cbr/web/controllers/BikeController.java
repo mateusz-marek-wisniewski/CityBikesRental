@@ -7,10 +7,12 @@ import pl.lodz.p.edu.s195738.cbr.facades.BikeFacade;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -21,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("bikeController")
@@ -33,10 +36,13 @@ public class BikeController implements Serializable {
     private MOWEndpoint mow;
     private List<Bike> items = null;
     private Bike selected;
+    private List<Bike> bikesToAttach = null;
+    private List<Bike> bikesToDetach = null;
+    private List<Bike> bikesSelected = new ArrayList<>();
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
     
-    private String bikeIdentifier;
+    private String bikeIdentifier = "";
     private String damageDescription;
 
     public BikeController() {
@@ -66,6 +72,42 @@ public class BikeController implements Serializable {
         this.damageDescription = damageDescription;
     }
 
+    public List<Bike> getBikesToAttach() {
+        if (bikesToAttach == null) bikesToAttach = mow.getBikesToAttach();
+        return bikesToAttach;
+    }
+
+    public void setBikesToAttach(List<Bike> bikesToAttach) {
+        this.bikesToAttach = bikesToAttach;
+    }
+
+    public List<Bike> getBikesToDetach() {
+        return bikesToDetach;
+    }
+
+    public void getBikesToDetachOnChange() {
+        try {
+            if (bikeIdentifier.length() == 5) bikesToDetach = mow.getBikesToDetach(bikeIdentifier);
+            else bikesToDetach = null;
+        } catch (BikeStationDoesNotExistException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+            bikesToDetach = null;
+        }
+        bikesSelected.clear();
+    }
+
+    public void setBikesToDetach(List<Bike> bikesToDetach) {
+        this.bikesToDetach = bikesToDetach;
+    }
+
+    public List<Bike> getBikesSelected() {
+        return bikesSelected;
+    }
+
+    public void setBikesSelected(List<Bike> bikesSelected) {
+        this.bikesSelected = bikesSelected;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -74,6 +116,28 @@ public class BikeController implements Serializable {
 
     private BikeFacade getFacade() {
         return ejbFacade;
+    }
+    
+    public void onSelect(Bike bike) {
+        if (bike == null) {bikesSelected.addAll(bikesToAttach); return;}
+        bikesSelected.add(bike);
+        bikesSelected = bikesSelected.stream().distinct().collect(Collectors.toList());
+    }
+    
+    public void onDeselect(Bike bike) {
+        if (bike == null) {bikesSelected.removeAll(bikesToAttach); return;}
+        bikesSelected.remove(bike);
+    }
+    
+    public void onSelectDetach(Bike bike) {
+        if (bike == null) {bikesSelected.addAll(bikesToDetach); return;}
+        bikesSelected.add(bike);
+        bikesSelected = bikesSelected.stream().distinct().collect(Collectors.toList());
+    }
+    
+    public void onDeselectDetach(Bike bike) {
+        if (bike == null) {bikesSelected.removeAll(bikesToDetach); return;}
+        bikesSelected.remove(bike);
     }
 
     public Bike prepareCreate() {
@@ -110,6 +174,34 @@ public class BikeController implements Serializable {
         } finally {
             bikeIdentifier = "";
             damageDescription = "";
+        }
+    }
+    
+    public void attachBikes(){
+        try {
+            for (Bike bike : bikesSelected) {
+                mow.attachBike(bikeIdentifier, bike);
+            }
+            bikesSelected.clear();
+            bikesToAttach = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("attachBikes_success"), bikeIdentifier)));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+            bikesToAttach = null;
+        }
+    }
+    
+    public void detachBikes(){
+        try {
+            for (Bike bike : bikesSelected) {
+                mow.detachBike(bike);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("detachBikes_success"), bikeIdentifier)));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikesSelected.clear();
+            getBikesToDetachOnChange();
         }
     }
 

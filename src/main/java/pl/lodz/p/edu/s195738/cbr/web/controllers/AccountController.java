@@ -66,8 +66,9 @@ public class AccountController implements Serializable {
         return selected;
     }
 
-    public void setSelected(Account selected) {
-        this.selected = selected;
+    public void setSelected(Account sel) {
+        System.err.println("account dejavu");
+        this.selected = sel;
     }
     
     

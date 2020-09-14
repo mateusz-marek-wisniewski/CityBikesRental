@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -64,6 +65,57 @@ public class MOWEndpoint implements SessionSynchronization {
     CustomerRoleFacade customerRoleFacade;
     @EJB
     RentalOpinionFacade rentalOpinionFacade;
+
+
+
+    @RolesAllowed("EMPLOYEE")
+    public List<Bike> getBikesToAttach() {
+        return bikeFacade.findAll().stream()
+                .filter(b -> b.getBikeStation() == null)
+                .filter(b -> !b.isRented())
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * MOW.20 Dołącz rowery do stacji
+     * Pozwala pracownikowi dołączyć nieprzydzielony rower do wybranej stacji
+     * 
+     * @param bikeStationIdentifier identyfikator wybranej stacji
+     * @param selectedBike wybrany rower
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("EMPLOYEE")
+    public void attachBike(String bikeStationIdentifier, Bike selectedBike) throws BaseApplicationException {
+        
+        BikeStation bikeStation = bikeStationFacade.findByIdentifier(bikeStationIdentifier);
+        
+        selectedBike.setBikeStation(bikeStation);
+        bikeFacade.edit(selectedBike);
+    }
+    
+    @RolesAllowed("EMPLOYEE")
+    public List<Bike> getBikesToDetach(String bikeStationIdentifier) throws BikeStationDoesNotExistException {
+        BikeStation bikeStation = bikeStationFacade.findByIdentifier(bikeStationIdentifier);
+        return bikeFacade.findAll().stream()
+                .filter(b -> b.getBikeStation() != null)
+                .filter(b -> b.getBikeStation().getId().equals(bikeStation.getId()))
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * MOW.21 Odłącz rowery od stacji
+     * Pozwala pracownikowi na odłączenie wybranego roweru od dowolnej stacji
+     * 
+     * @param selectedBike wybrany rower
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("EMPLOYEE")
+    public void detachBike(Bike selectedBike) throws BaseApplicationException {
+        
+        selectedBike.setBikeStation(null);
+        bikeFacade.edit(selectedBike);
+    }
+    
     
     /**
      * MOW.27 Wypożycz rower
@@ -95,10 +147,9 @@ public class MOWEndpoint implements SessionSynchronization {
     
     @RolesAllowed("CUSTOMER")
     public List<Rent> getCustomerRentsToReturn() {
-        List<Rent> rents = customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
+        return customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
                 .filter(r -> r.getEndDate() == null)
                 .collect(Collectors.toList());
-        return rents;
     }
     
     @RolesAllowed("CUSTOMER")
@@ -132,13 +183,17 @@ public class MOWEndpoint implements SessionSynchronization {
     public Rent returnBike(Rent rentToReturn, String bikeStationIdentifier) throws BaseApplicationException {
         
         BikeStation bikeStation = bikeStationFacade.findByIdentifier(bikeStationIdentifier);
+        Bike bike = rentToReturn.getBike();
         
         rentToReturn.setEndDate(new Date());
         rentToReturn.setReturnStation(bikeStation);
         rentToReturn.setCharge(calculateCharge(rentToReturn.getStartDate(), rentToReturn.getEndDate()));
         if (rentToReturn.getCharge().compareTo(BigDecimal.ZERO) == 1) rentToReturn.setIsPaid(false);
+
+        bike.setBikeStation(bikeStation);
         
         rentFacade.edit(rentToReturn);
+        bikeFacade.edit(bike);
         
         return rentToReturn;
     }

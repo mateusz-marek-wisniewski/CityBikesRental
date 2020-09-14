@@ -7,8 +7,11 @@ package pl.lodz.p.edu.s195738.cbr.facades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import pl.lodz.p.edu.s195738.cbr.entities.Bike;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeConcurrentEditException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeDoesNotExistException;
 
 /**
@@ -28,6 +31,16 @@ public class BikeFacade extends AbstractFacade<Bike> {
 
     public BikeFacade() {
         super(Bike.class);
+    }
+
+    @Override
+    public void edit(Bike bike) throws BaseApplicationException {
+        try {
+            super.edit(bike);
+            getEntityManager().flush();
+        } catch (OptimisticLockException ex) {
+            throw new BikeConcurrentEditException(ex);
+        }
     }
     
     public Bike findByIdentifier(int identifier) throws BikeDoesNotExistException {

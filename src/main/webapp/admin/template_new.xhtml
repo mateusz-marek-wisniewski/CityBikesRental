@@ -11,6 +11,11 @@
 
         <ui:define name="body">
             <b:row>
+                <b:column col-sm="9" col-md="10" styleClass="main">
+                    <h1><ui:insert name="header" /></h1>
+                    <hr />
+                    <ui:insert name="mainContent" />
+                </b:column>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink value="#{msg.mainPage}" outcome="/admin/index.html" active="true" />
@@ -34,11 +39,6 @@
                         <b:navLink value="#{msg.rentalOpinions}" outcome="/admin/rentalOpinion/List" />
                         <b:navLink value="#{msg.repairs}" outcome="/admin/repair/List" />
                     </b:listLinks>
-                </b:column>
-                <b:column col-sm="9" col-md="10" styleClass="main">
-                    <h1><ui:insert name="header" /></h1>
-                    <hr />
-                    <ui:insert name="mainContent" />
                 </b:column>
             </b:row>
         </ui:define>
