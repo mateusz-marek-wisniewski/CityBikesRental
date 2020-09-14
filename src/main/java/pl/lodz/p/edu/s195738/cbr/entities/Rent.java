@@ -62,6 +62,11 @@ public class Rent implements Serializable {
     @Min(0)
     @Column(precision = 19, scale = 2)
     private BigDecimal charge;
+
+    @Basic(optional = true)
+    @NotNull
+    @Column(name = "is_paid", nullable = true)
+    private boolean isPaid;
     
     @Version
     private long version;
@@ -126,6 +131,14 @@ public class Rent implements Serializable {
 
     public void setCharge(BigDecimal charge) {
         this.charge = charge;
+    }
+
+    public boolean isIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     public long getVersion() {

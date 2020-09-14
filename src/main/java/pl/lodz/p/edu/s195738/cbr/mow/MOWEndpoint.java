@@ -95,13 +95,10 @@ public class MOWEndpoint implements SessionSynchronization {
     
     @RolesAllowed("CUSTOMER")
     public List<Rent> getCustomerRentsToReturn() {
-        return customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
+        List<Rent> rents = customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
                 .filter(r -> r.getEndDate() == null)
-                .map(r -> {
-                    r.setCharge(calculateCharge(r.getStartDate(), new Date()));
-                    return r;
-                })
                 .collect(Collectors.toList());
+        return rents;
     }
     
     @RolesAllowed("CUSTOMER")
@@ -139,6 +136,7 @@ public class MOWEndpoint implements SessionSynchronization {
         rentToReturn.setEndDate(new Date());
         rentToReturn.setReturnStation(bikeStation);
         rentToReturn.setCharge(calculateCharge(rentToReturn.getStartDate(), rentToReturn.getEndDate()));
+        if (rentToReturn.getCharge().compareTo(BigDecimal.ZERO) == 1) rentToReturn.setIsPaid(false);
         
         rentFacade.edit(rentToReturn);
         
@@ -194,7 +192,20 @@ public class MOWEndpoint implements SessionSynchronization {
     @RolesAllowed("CUSTOMER")
     public RentalOpinion getCustomerOpinion() {
         return rentalOpinionFacade.find(userSession.getAccount().getCustomerRole().getId());
-    } 
+    }
+
+    /**
+     * MOW.32 Opłać wypożyczenie
+     * Pozwala klientowi opłacić wypożyczenie
+     * 
+     * @param rent wypożyczenie do opłacenia
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("CUSTOMER")
+    public void payForRent(Rent rent) throws BaseApplicationException {
+        rent.setIsPaid(true);
+        rentFacade.edit(rent);
+    }
     
     /**
      * MOK.33 Dodaj/edytuj opinię o wypożyczalni

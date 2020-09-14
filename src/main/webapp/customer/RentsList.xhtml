@@ -20,7 +20,6 @@
                     <p:repeat value="#{rentController.customerRentList}" var="rent" >
                         <b:column>
                             <b:commandLink look="block" class="scroll-list-item" >
-                                <f:setPropertyActionListener value="#{rent}" target="#{rentController.selected}" />
                                 <b:row>
                                     <b:column colMd="5" colSm="12">
                                         <b:row>
@@ -47,8 +46,16 @@
                                     </b:column>
                                 </b:row>
                                 <h:outputText style="font-size: 39px;" value="#{rent.bike.identifier}" />
-                                <b:row>
-                                    <h:outputText styleClass="text-muted" value="#{msg.charge}: #{rent.charge} zł" />
+                                <b:row rendered="#{not empty rent.charge}">
+                                    <b:column class="payment" colMd="6" colSm="12">
+                                        <b:commandButton value="#{msg.pay}" action="#{rentController.pay()}" update="@(.payment)" rendered="#{not rent.isPaid}" >
+                                            <f:setPropertyActionListener value="#{rent}" target="#{rentController.selected}" />
+                                        </b:commandButton>
+                                        <h:outputText styleClass="text-muted" value="#{msg.paid}" rendered="#{rent.isPaid}" />
+                                    </b:column>
+                                    <b:column colMd="6" colSm="12">
+                                        <h:outputText styleClass="text-muted" value="#{msg.charge}: #{rent.charge} zł" />
+                                    </b:column>
                                 </b:row>
                             </b:commandLink>
                         </b:column>

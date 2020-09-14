@@ -33,13 +33,13 @@
                                 <f:setPropertyActionListener value="#{rent}" target="#{rentController.selected}" />
                                 <b:row>
                                     <h:outputText styleClass="text-muted" value="#{rent.startDate}">
-                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="" />
                                     </h:outputText>
                                 </b:row>
                                 <h:outputText style="font-size: 39px;" value="#{rent.bike.identifier}" />
-                                <b:row>
-                                    <h:outputText styleClass="text-muted" value="#{msg.currentCharge}: #{rent.charge} zł" />
-                                </b:row>
+                                <!--<b:row>
+                                    <h:outputText styleClass="text-muted" value="#{msg.currentCharge}: #{rent.charge} zł, vaersion: #{rent.version}" />
+                                </b:row>-->
                             </b:commandLink>
                         </b:column>
                     </p:repeat>
