@@ -177,6 +177,18 @@ public class BikeController implements Serializable {
         }
     }
     
+    public void saveBikeDamage() {
+        try {
+            mow.saveBikeDamage(Integer.parseInt(bikeIdentifier), damageDescription);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("saveBikeDamage_success"), bikeIdentifier)));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeIdentifier = "";
+            damageDescription = "";
+        }
+    }
+    
     public void attachBikes(){
         try {
             for (Bike bike : bikesSelected) {

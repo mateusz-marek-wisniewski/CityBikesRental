@@ -85,6 +85,12 @@ public class BikeStation implements Serializable {
     @NotNull
     @Column(name = "geoloc_longitude", nullable = false, precision = 10, scale = 6)
     private BigDecimal geolocLongitude;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(nullable = false, length = 10)
+    private String status;
     
     @Size(max = 255)
     @Column(name = "damage_desc", length = 255)
@@ -166,6 +172,14 @@ public class BikeStation implements Serializable {
 
     public void setGeolocLongitude(BigDecimal geolocLongitude) {
         this.geolocLongitude = geolocLongitude;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDamageDesc() {

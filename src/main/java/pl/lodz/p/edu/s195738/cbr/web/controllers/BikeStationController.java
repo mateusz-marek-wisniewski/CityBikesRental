@@ -112,6 +112,18 @@ public class BikeStationController implements Serializable {
             damageDescription = "";
         }
     }
+    
+    public void saveBikeStationDamage() {
+        try {
+            mow.saveBikeStationDamage(bikeStationIdentifier, damageDescription);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("saveBikeStationDamage_success"), bikeStationIdentifier)));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeStationIdentifier = "";
+            damageDescription = "";
+        }
+    }
 
     public List<BikeStation> getItems() {
         if (items == null) {

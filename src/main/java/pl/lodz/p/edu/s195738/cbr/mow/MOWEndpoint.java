@@ -115,6 +115,40 @@ public class MOWEndpoint implements SessionSynchronization {
         selectedBike.setBikeStation(null);
         bikeFacade.edit(selectedBike);
     }
+
+    /**
+     * MOW.22 Zapisz usterkę roweru
+     * Umożliwia pracownikowi zapisanie uszkodzenia roweru
+     * 
+     * @param identifier identyfikator roweru
+     * @param damageDescription opis uszkodzenia
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("EMPLOYEE")
+    public void saveBikeDamage(int identifier, String damageDescription) throws BaseApplicationException {
+        Bike bike = bikeFacade.findByIdentifier(identifier);
+        if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        bike.setDamageDesc(damageDescription);
+        bike.setBikeStatus("damaged");
+        bikeFacade.edit(bike);
+    }
+
+    /**
+     * MOW.23 Zapisz usterkę stacji
+     * Umożliwia pracownikowi zapisanie uszkodzenia stacji
+     * 
+     * @param identifier identyfikator stacji
+     * @param damageDescription opis uszkodzenia
+     * @throws BaseApplicationException
+     */
+    @RolesAllowed("EMPLOYEE")
+    public void saveBikeStationDamage(String identifier, String damageDescription) throws BaseApplicationException {
+        BikeStation bikeStation = bikeStationFacade.findByIdentifier(identifier);
+        if (bikeStation.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        bikeStation.setDamageDesc(damageDescription);
+        bikeStation.setStatus("damaged");
+        bikeStationFacade.edit(bikeStation);
+    }
     
     
     /**
