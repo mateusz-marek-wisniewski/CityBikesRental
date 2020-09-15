@@ -108,6 +108,9 @@ public class BikeStation implements Serializable {
     @OneToMany(mappedBy = "bikeStation", fetch = FetchType.LAZY)
     private Collection<Bike> bikeCollection;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bikeStation", fetch = FetchType.LAZY)
+    private Collection<BikeStationRepair> bikeStationRepairCollection;
+
     
     public BikeStation() {
     }
@@ -223,6 +226,15 @@ public class BikeStation implements Serializable {
 
     public void setBikeCollection(Collection<Bike> bikeCollection) {
         this.bikeCollection = bikeCollection;
+    }
+
+    @XmlTransient
+    public Collection<BikeStationRepair> getBikeStationRepairCollection() {
+        return bikeStationRepairCollection;
+    }
+
+    public void setBikeStationRepairCollection(Collection<BikeStationRepair> bikeStationRepairCollection) {
+        this.bikeStationRepairCollection = bikeStationRepairCollection;
     }
 
     @Override

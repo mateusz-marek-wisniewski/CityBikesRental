@@ -1,11 +1,12 @@
 package pl.lodz.p.edu.s195738.cbr.web.controllers;
 
-import pl.lodz.p.edu.s195738.cbr.entities.Repair;
+import pl.lodz.p.edu.s195738.cbr.entities.BikeRepair;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.RepairFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.BikeRepairFacade;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,29 +15,57 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.entities.Bike;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("repairController")
+@Named("bikeRepairController")
 @SessionScoped
-public class RepairController implements Serializable {
+public class BikeRepairController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.RepairFacade ejbFacade;
-    private List<Repair> items = null;
-    private Repair selected;
+    private pl.lodz.p.edu.s195738.cbr.facades.BikeRepairFacade ejbFacade;
+    @EJB
+    MOWEndpoint mow;
+    private List<BikeRepair> items = null;
+    private BikeRepair selected;
 
-    public RepairController() {
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
+    private List<Bike> bikesToRepair = null;
+    private Bike bikeSelected;
+
+    public BikeRepairController() {
     }
 
-    public Repair getSelected() {
+    public BikeRepair getSelected() {
         return selected;
     }
 
-    public void setSelected(Repair selected) {
+    public void setSelected(BikeRepair selected) {
         this.selected = selected;
+    }
+
+    public List<Bike> getBikesToRepair() {
+        bikesToRepair = mow.getBikesToRepair();
+        return bikesToRepair;
+    }
+
+    public void setBikesToRepair(List<Bike> bikesToRepair) {
+        this.bikesToRepair = bikesToRepair;
+    }
+
+    public Bike getBikeSelected() {
+        return bikeSelected;
+    }
+
+    public void setBikeSelected(Bike bikeSelected) {
+        this.bikeSelected = bikeSelected;
     }
 
     protected void setEmbeddableKeys() {
@@ -45,12 +74,12 @@ public class RepairController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private RepairFacade getFacade() {
+    private BikeRepairFacade getFacade() {
         return ejbFacade;
     }
 
-    public Repair prepareCreate() {
-        selected = new Repair();
+    public BikeRepair prepareCreate() {
+        selected = new BikeRepair();
         initializeEmbeddableKey();
         return selected;
     }
@@ -73,8 +102,21 @@ public class RepairController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+    public void createRepair() {
+        try {
+            mow.repairBike(bikeSelected, selected);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("describeBikeRepair_success"), bikeSelected.getIdentifier())));
+            prepareCreate();
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeSelected = null;
+            bikesToRepair = null;
+        }
+    }
 
-    public List<Repair> getItems() {
+    public List<BikeRepair> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,28 +151,28 @@ public class RepairController implements Serializable {
         }
     }
 
-    public Repair getRepair(java.lang.Long id) {
+    public BikeRepair getRepair(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Repair> getItemsAvailableSelectMany() {
+    public List<BikeRepair> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Repair> getItemsAvailableSelectOne() {
+    public List<BikeRepair> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Repair.class)
-    public static class RepairControllerConverter implements Converter {
+    @FacesConverter(forClass = BikeRepair.class)
+    public static class BikeRepairControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            RepairController controller = (RepairController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "repairController");
+            BikeRepairController controller = (BikeRepairController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "bikeRepairController");
             return controller.getRepair(getKey(value));
         }
 
@@ -151,11 +193,11 @@ public class RepairController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Repair) {
-                Repair o = (Repair) object;
+            if (object instanceof BikeRepair) {
+                BikeRepair o = (BikeRepair) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Repair.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), BikeRepair.class.getName()});
                 return null;
             }
         }

@@ -34,6 +34,10 @@
             <var>bundle</var>
         </resource-bundle>
         <resource-bundle>
+            <base-name>/settings</base-name>
+            <var>settings</var>
+        </resource-bundle>
+        <resource-bundle>
             <base-name>i18n.messages</base-name>
             <var>msg</var>
         </resource-bundle>

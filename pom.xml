@@ -9,7 +9,7 @@
     
     <developers>
         <developer>
-            <name>Mateusz Wi≈õniewski</name>
+            <name>Mateusz Wiúniewski</name>
             <id>195738</id>
         </developer>
     </developers>
@@ -46,6 +46,12 @@
             <groupId>org.primefaces.themes</groupId>
             <artifactId>all-themes</artifactId>
             <version>1.0.10</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.6</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

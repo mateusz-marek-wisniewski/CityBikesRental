@@ -23,15 +23,21 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.print.attribute.standard.DateTimeAtCompleted;
+import org.joda.time.DateTime;
 import pl.lodz.p.edu.s195738.cbr.entities.Bike;
+import pl.lodz.p.edu.s195738.cbr.entities.BikeRepair;
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStation;
+import pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair;
 import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
 import pl.lodz.p.edu.s195738.cbr.entities.Rent;
 import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.*;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.BikeRepairFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.BikeStationFacade;
+import pl.lodz.p.edu.s195738.cbr.facades.BikeStationRepairFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.RentFacade;
@@ -65,6 +71,10 @@ public class MOWEndpoint implements SessionSynchronization {
     CustomerRoleFacade customerRoleFacade;
     @EJB
     RentalOpinionFacade rentalOpinionFacade;
+    @EJB
+    BikeRepairFacade bikeRepairFacade;
+    @EJB
+    BikeStationRepairFacade bikeStationRepairFacade;
 
 
 
@@ -149,8 +159,46 @@ public class MOWEndpoint implements SessionSynchronization {
         bikeStation.setStatus("damaged");
         bikeStationFacade.edit(bikeStation);
     }
+
+    @RolesAllowed("EMPLOYEE")
+    public List<Bike> getBikesToRepair() {
+        return bikeFacade.findAll().stream()
+                .filter(b -> b.getBikeStatus().equals("damaged"))
+                .collect(Collectors.toList());
+    }
     
+    @RolesAllowed("EMPLOYEE")
+    public void repairBike(Bike bike, BikeRepair bikeRepair) throws BaseApplicationException {
+        bike.setBikeStatus("working");
+        bike.setDamageDesc(null);
+        bikeRepair.setBike(bike);
+        bikeRepair.setStartDate(new Date());
+        bikeRepair.setEndDate(DateTime.now().plusSeconds(5).toDate());
+        
+        bikeFacade.edit(bike);
+        bikeRepairFacade.create(bikeRepair);
+    }
     
+
+    @RolesAllowed("EMPLOYEE")
+    public List<BikeStation> getBikeStationsToRepair() {
+        return bikeStationFacade.findAll().stream()
+                .filter(s -> s.getStatus().equals("damaged"))
+                .collect(Collectors.toList());
+    }
+
+    @RolesAllowed("EMPLOYEE")
+    public void repairBikeStation(BikeStation bikeStation, BikeStationRepair bikeStationRepair) throws BaseApplicationException {
+        bikeStation.setStatus("working");
+        bikeStation.setDamageDesc(null);
+        bikeStationRepair.setBikeStation(bikeStation);
+        bikeStationRepair.setStartDate(new Date());
+        bikeStationRepair.setEndDate(DateTime.now().plusSeconds(5).toDate());
+        
+        bikeStationFacade.edit(bikeStation);
+        bikeStationRepairFacade.create(bikeStationRepair);
+    }
+
     /**
      * MOW.27 Wypożycz rower
      * Pozwala klientowi stacji wypożyczyć rower

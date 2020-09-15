@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -33,21 +34,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz Wiśniewski
  */
 @Entity
+@Table(name = "bike_repair")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Repair.findAll", query = "SELECT r FROM Repair r"),
-    @NamedQuery(name = "Repair.findById", query = "SELECT r FROM Repair r WHERE r.id = :id"),
-    @NamedQuery(name = "Repair.findByRepairCost", query = "SELECT r FROM Repair r WHERE r.repairCost = :repairCost"),
-    @NamedQuery(name = "Repair.findByRepairLog", query = "SELECT r FROM Repair r WHERE r.repairLog = :repairLog"),
-    @NamedQuery(name = "Repair.findByStartDate", query = "SELECT r FROM Repair r WHERE r.startDate = :startDate"),
-    @NamedQuery(name = "Repair.findByEndDate", query = "SELECT r FROM Repair r WHERE r.endDate = :endDate")})
-public class Repair implements Serializable {
+    @NamedQuery(name = "BikeRepair.findAll", query = "SELECT r FROM BikeRepair r"),
+    @NamedQuery(name = "BikeRepair.findById", query = "SELECT r FROM BikeRepair r WHERE r.id = :id"),
+    @NamedQuery(name = "BikeRepair.findByBikeRepairCost", query = "SELECT r FROM BikeRepair r WHERE r.repairCost = :repairCost"),
+    @NamedQuery(name = "BikeRepair.findByBikeRepairLog", query = "SELECT r FROM BikeRepair r WHERE r.repairLog = :repairLog"),
+    @NamedQuery(name = "BikeRepair.findByStartDate", query = "SELECT r FROM BikeRepair r WHERE r.startDate = :startDate"),
+    @NamedQuery(name = "BikeRepair.findByEndDate", query = "SELECT r FROM BikeRepair r WHERE r.endDate = :endDate")})
+public class BikeRepair implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name="repair_id_seq", sequenceName="repair_id_seq", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="repair_id_seq")
+    @SequenceGenerator(name="bike_repair_id_seq", sequenceName="bike_repair_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="bike_repair_id_seq")
     private Long id;
     
     @Min(0)
@@ -78,14 +80,14 @@ public class Repair implements Serializable {
     private Bike bike;
     
 
-    public Repair() {
+    public BikeRepair() {
     }
 
-    public Repair(Long id) {
+    public BikeRepair(Long id) {
         this.id = id;
     }
 
-    public Repair(Long id, String repairLog, Date startDate, long version) {
+    public BikeRepair(Long id, String repairLog, Date startDate, long version) {
         this.id = id;
         this.repairLog = repairLog;
         this.startDate = startDate;
@@ -158,10 +160,10 @@ public class Repair implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Repair)) {
+        if (!(object instanceof BikeRepair)) {
             return false;
         }
-        Repair other = (Repair) object;
+        BikeRepair other = (BikeRepair) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -170,7 +172,7 @@ public class Repair implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.lodz.p.edu.s195738.cbr.entites.Repair[ id=" + id + " ]";
+        return "pl.lodz.p.edu.s195738.cbr.entites.BikeRepair[ id=" + id + " ]";
     }
     
 }

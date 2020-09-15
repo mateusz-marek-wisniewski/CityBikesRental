@@ -72,7 +72,7 @@ public class Bike implements Serializable {
     private long version;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bike", fetch = FetchType.LAZY)
-    private Collection<Repair> repairCollection;
+    private Collection<BikeRepair> bikeRepairCollection;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bike", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
@@ -148,12 +148,12 @@ public class Bike implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Repair> getRepairCollection() {
-        return repairCollection;
+    public Collection<BikeRepair> getBikeRepairCollection() {
+        return bikeRepairCollection;
     }
 
-    public void setRepairCollection(Collection<Repair> repairCollection) {
-        this.repairCollection = repairCollection;
+    public void setBikeRepairCollection(Collection<BikeRepair> bikeRepairCollection) {
+        this.bikeRepairCollection = bikeRepairCollection;
     }
 
     @XmlTransient

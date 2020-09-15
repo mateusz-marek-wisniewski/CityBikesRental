@@ -8,14 +8,14 @@ package pl.lodz.p.edu.s195738.cbr.facades;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.edu.s195738.cbr.entities.Repair;
+import pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair;
 
 /**
  *
  * @author Mateusz Wiśniewski
  */
 @Stateless
-public class RepairFacade extends AbstractFacade<Repair> {
+public class BikeStationRepairFacade extends AbstractFacade<BikeStationRepair> {
 
     @PersistenceContext(unitName = "cbradminPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RepairFacade extends AbstractFacade<Repair> {
         return em;
     }
 
-    public RepairFacade() {
-        super(Repair.class);
+    public BikeStationRepairFacade() {
+        super(BikeStationRepair.class);
     }
     
 }
