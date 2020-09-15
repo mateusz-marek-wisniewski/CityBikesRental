@@ -25,6 +25,7 @@
                 </b:inputText>
                 <b:commandButton look="primary btn-block" value="#{msg.signin}" icon="log-in" size="lg" action="#{glassfishAuth.login}"/>
                 <b:commandLink id="register" look="btn-block mt-3" value="#{msg.signup}" icon="circle-arrow-up" outcome="register"/>
+                <b:commandLink id="forgot-password" look="btn-block mt-3" value="#{msg.forgotPasswordLinkLabel}" outcome="forgotPasswordPage"/>
                 <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
             </h:form>
         </b:container>

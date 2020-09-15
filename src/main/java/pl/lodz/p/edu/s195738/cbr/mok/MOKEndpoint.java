@@ -331,6 +331,45 @@ public class MOKEndpoint implements SessionSynchronization{
         accountFacade.remove(account);
     }
     
+    public void sendResetPasswordLink(String email) throws BaseApplicationException{
+        
+        Account account = accountFacade.findByEmail(email);
+        
+        String verkey = UUID.randomUUID().toString();
+        account.setEmailVerificationHash(PasswordUtil.hash(verkey));
+        accountFacade.edit(account);
+
+        // przygotowanie linku rejestracyjnego
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest req = (HttpServletRequest)context.getRequest();
+        String projectURI = String.format("http%s://%s:%d%s", (req.isSecure()?"s":""), req.getServerName(), req.getServerPort(), req.getContextPath());
+        String verlink = MessageFormat.format(msg.getString("passwordResetLinkTemplate"), projectURI, verkey);
+        
+        try {
+            emailUtil.sendEmail(email, msg.getString("passwordResetMsgTitle"), MessageFormat.format(msg.getString("passwordResetMsgBody"), verlink));
+        } catch (MessagingException ex) {
+            throw new EmailCanNotBeSentException(ex);
+        }
+    }
+    
+    public Account getAccountByVerificationHash(String verkey) throws BaseApplicationException {
+         return accountFacade.findByVerificationHash(PasswordUtil.hash(verkey));
+    }
+    
+    public void resetPassword(String newPassword, String newPasswordRepeat, Account account) throws BaseApplicationException{
+        if (!newPassword.equals(newPasswordRepeat)) throw new PasswordsDoNotMatchException();
+        if (account.getPassword().equals(PasswordUtil.hash(newPassword))) throw new PasswordsCurrentAndNewCanNotBeTheSameException();
+        if (account.isPasswordInAccountPasswordCollection(PasswordUtil.hash(newPassword))) throw new PasswordAlreadyUsedException();
+        
+        AccountPassword accountPassword = new AccountPassword();
+        accountPassword.setPassword(account.getPassword());
+        account.setPassword(PasswordUtil.hash(newPassword));
+        accountPassword.setAccount(account);
+        account.getAccountPasswordCollection().add(accountPassword);
+        account.setEmailVerificationHash(null);
+        accountFacade.edit(account);
+    }
+    
 
     
     /**

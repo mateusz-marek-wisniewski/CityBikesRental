@@ -6,14 +6,15 @@
 package pl.lodz.p.edu.s195738.cbr.web.controllers;
 
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mok.GlassfishAuth;
 import pl.lodz.p.edu.s195738.cbr.mok.MOKEndpoint;
 
 /**
@@ -36,6 +37,8 @@ public class RegistrationController {
     
     @EJB
     MOKEndpoint mok;
+    @Inject
+    GlassfishAuth userSession;
     
     public String create() {
         try {
@@ -57,6 +60,27 @@ public class RegistrationController {
             return "verificationError";
         }
         return "verificationSuccess";
+    }
+    
+    public String sendResetPasswordEmail() {
+        try {
+            mok.sendResetPasswordLink(email);
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+            return null;
+        }
+        return "sendResetPasswordEmailSuccess";
+    }
+    
+    public String accountToResetGet() {
+        if (key == null) 
+            return "getAccountToResetPasswordError";
+        try {
+            userSession.setAccount(mok.getAccountByVerificationHash(key));
+            return null;
+        } catch (BaseApplicationException ex) {
+            return "getAccountToResetPasswordError";
+        }
     }
 
     public String getUsername() {

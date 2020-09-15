@@ -101,6 +101,19 @@ public class GlassfishAuth implements Serializable {
         }
         return "accountRemovalSuccess";
     }
+    
+    public String resetPassword() {
+        try {
+            mokEndpoint.resetPassword(newPassword, newPasswordRepeat, account);
+            return "resetPasswordSuccess";
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, rb.getString("exceptionMessageTitle"), rb.getString(ex.getClass().getName())));
+            return null;
+        } finally {
+            newPassword = "";
+            newPasswordRepeat = "";
+        }
+    }
 
     public boolean isUserLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser() != null;

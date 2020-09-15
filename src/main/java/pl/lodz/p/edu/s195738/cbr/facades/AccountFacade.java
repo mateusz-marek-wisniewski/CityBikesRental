@@ -16,6 +16,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.AccountConcurrentEditException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailAddressAlreadyInUseException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailAddressIsNotInUseException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.EmailVerificationHashDoesNotExistException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameAlreadyExistsException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
@@ -87,6 +88,14 @@ public class AccountFacade extends AbstractFacade<Account> {
             return (Account) em.createNamedQuery("Account.findByEmailVerificationHash").setParameter("emailVerificationHash", hash).getResultList().get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new EmailVerificationHashDoesNotExistException(e);
+        }
+    }
+
+    public Account findByEmail(String email) throws EmailAddressIsNotInUseException {
+        try {
+            return (Account) em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new EmailAddressIsNotInUseException(e);
         }
     }
 }

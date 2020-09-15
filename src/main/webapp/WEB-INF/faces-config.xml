@@ -126,6 +126,40 @@
                 </redirect-param>
             </redirect>
         </navigation-case>
-        
+        <navigation-case>
+            <from-outcome>forgotPasswordPage</from-outcome>
+            <to-view-id>/forgot-password.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>sendResetPasswordEmailSuccess</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>sendResetPasswordEmail</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>getAccountToResetPasswordError</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>error</name>
+                    <value>getAccountToResetPassword</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>resetPasswordSuccess</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>success</name>
+                    <value>resetPassword</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
