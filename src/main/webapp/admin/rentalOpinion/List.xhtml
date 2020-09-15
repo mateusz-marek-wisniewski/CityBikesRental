@@ -1,58 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/admin/template_new.xhtml">
 
-    <ui:composition template="/admin/template.xhtml">>
+        <ui:define name="title">#{msg.rentalOpinions}</ui:define>
+        
+        <ui:define name="header">#{msg.rentalOpinions}</ui:define>
 
-
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListRentalOpinionTitle}"></h:outputText>
-        </ui:define>
-
-        <ui:define name="body">
-            <h:form id="RentalOpinionListForm">
-                <p:panel header="#{bundle.ListRentalOpinionTitle}">
-                    <p:dataTable id="datalist" value="#{rentalOpinionController.items}" var="item"
-                                 selectionMode="single" selection="#{rentalOpinionController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRentalOpinionTitle_content}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.content}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRentalOpinionTitle_customerRole}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.customerRole.account.login}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{rentalOpinionController.prepareCreate}" update=":RentalOpinionCreateForm" oncomplete="PF('RentalOpinionCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RentalOpinionViewForm" oncomplete="PF('RentalOpinionViewDialog').show()" disabled="#{empty rentalOpinionController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RentalOpinionEditForm" oncomplete="PF('RentalOpinionEditDialog').show()" disabled="#{empty rentalOpinionController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{rentalOpinionController.destroy}" update=":growl,datalist" disabled="#{empty rentalOpinionController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+        <ui:define name="mainContent">
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{rentalOpinionController.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentalOpinionController.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentalOpinionController.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn label="#{msg.rating}" >
+                        <p:rating value="#{item.rating}" cancel="false" readonly="true" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="#{msg.addedDate}" >
+                        <h:outputText value="#{item.addedDate}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn value="#{item.customerRole.account.login}" label="#{msg.username}" />
+                    <b:dataTableColumn value="#{item.content}" label="#{msg.rentalOpinionContent}" />
+                </b:dataTable>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentalOpinionController.selected}" update="RentalOpinionStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentalOpinionController.removeOpinion()}" update="datalist" disabled="#{empty rentalOpinionController.selected}"/>
             </h:form>
-
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
-
 </html>

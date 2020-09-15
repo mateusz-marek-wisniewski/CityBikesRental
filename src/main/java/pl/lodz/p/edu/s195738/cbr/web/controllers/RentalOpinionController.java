@@ -92,6 +92,12 @@ public class RentalOpinionController implements Serializable {
         }
     }
     
+    public void removeOpinion() {
+        mow.removeRentalOpinion(selected);
+        items = null;
+        selected = null;
+    }
+    
     public void updateOpinion() {
         try {
             mow.updateOpinion(customerOpinion);
@@ -107,7 +113,7 @@ public class RentalOpinionController implements Serializable {
 
     public List<RentalOpinion> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = mow.getRentalOpinionsList();
         }
         return items;
     }
