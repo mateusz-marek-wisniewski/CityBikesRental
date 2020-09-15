@@ -4,29 +4,51 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <ui:composition>
 
-        <p:dialog id="BikeStationViewDlg" widgetVar="BikeStationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBikeStationTitle}">
+        <b:modal id="BikeStationViewDlg" class="viewModal" title="#{msg.bikeStation}" closable="true" close-on-escape="true">
             <h:form id="BikeStationViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{bikeStationController.selected != null}">
-                        <h:outputText value="#{bundle.ViewBikeStationLabel_identifier}"/>
-                        <h:outputText value="#{bikeStationController.selected.identifier}" title="#{bundle.ViewBikeStationTitle_identifier}"/>
-                        <h:outputText value="#{bundle.ViewBikeStationLabel_city}"/>
-                        <h:outputText value="#{bikeStationController.selected.city}" title="#{bundle.ViewBikeStationTitle_city}"/>
-                        <h:outputText value="#{bundle.ViewBikeStationLabel_streetName}"/>
-                        <h:outputText value="#{bikeStationController.selected.streetName}" title="#{bundle.ViewBikeStationTitle_streetName}"/>
-                        <h:outputText value="#{bundle.ViewBikeStationLabel_geolocLatitude}"/>
-                        <h:outputText value="#{bikeStationController.selected.geolocLatitude}" title="#{bundle.ViewBikeStationTitle_geolocLatitude}"/>
-                        <h:outputText value="#{bundle.ViewBikeStationLabel_geolocLongitude}"/>
-                        <h:outputText value="#{bikeStationController.selected.geolocLongitude}" title="#{bundle.ViewBikeStationTitle_geolocLongitude}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="BikeStationViewDialog.hide()"/>
-                </h:panelGroup>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.identifier}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.city}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.city}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.streetName}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.streetName}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.status}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[bikeStationController.selected.status]}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.geolocLatitude}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.geolocLatitude}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.geolocLongitude}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.geolocLongitude}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.damageDesc}" />
+                    </b:column>
+                </b:row>
             </h:form>
-        </p:dialog>
+        </b:modal>
 
     </ui:composition>
 </html>

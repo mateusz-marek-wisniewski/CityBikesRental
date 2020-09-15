@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BikeStationEditDlg" widgetVar="BikeStationEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditBikeStationTitle}">
+            <h:form id="BikeStationEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bikeStationController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditBikeStationLabel_identifier}" for="identifier" />
+                        <p:inputText id="identifier" value="#{bikeStationController.selected.identifier}" title="#{bundle.EditBikeStationTitle_identifier}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_identifier}"/>
+                        <p:outputLabel value="#{bundle.EditBikeStationLabel_city}" for="city" />
+                        <p:inputText id="city" value="#{bikeStationController.selected.city}" title="#{bundle.EditBikeStationTitle_city}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_city}"/>
+                        <p:outputLabel value="#{bundle.EditBikeStationLabel_streetName}" for="streetName" />
+                        <p:inputText id="streetName" value="#{bikeStationController.selected.streetName}" title="#{bundle.EditBikeStationTitle_streetName}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_streetName}"/>
+                        <p:outputLabel value="#{bundle.EditBikeStationLabel_geolocLatitude}" for="geolocLatitude" />
+                        <p:inputText id="geolocLatitude" value="#{bikeStationController.selected.geolocLatitude}" title="#{bundle.EditBikeStationTitle_geolocLatitude}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_geolocLatitude}"/>
+                        <p:outputLabel value="#{bundle.EditBikeStationLabel_geolocLongitude}" for="geolocLongitude" />
+                        <p:inputText id="geolocLongitude" value="#{bikeStationController.selected.geolocLongitude}" title="#{bundle.EditBikeStationTitle_geolocLongitude}" required="true" requiredMessage="#{bundle.EditBikeStationRequiredMessage_geolocLongitude}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bikeStationController.update}" value="#{bundle.Save}" update="display,:BikeStationListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BikeStationEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BikeStationEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -76,7 +76,61 @@ public class MOWEndpoint implements SessionSynchronization {
     @EJB
     BikeStationRepairFacade bikeStationRepairFacade;
 
+    /**
+     * MOW.1
+     * @return
+     */
+    @RolesAllowed("ADMIN")
+    public List<Bike> getBikesList() {
+        return bikeFacade.findAll();
+    }
 
+    @RolesAllowed("ADMIN")
+    public void createBike(Bike bike) throws BaseApplicationException {
+        if ("".equals(bike.getDamageDesc())) bike.setDamageDesc(null);
+        bikeFacade.create(bike);
+    }
+
+    @RolesAllowed("ADMIN")
+    public Bike getBikeCopyBeforeEdit(Bike bike) {
+        return bikeFacade.find(bike.getId());
+    }
+
+    @RolesAllowed("ADMIN")
+    public void editBike(Bike bike) throws BaseApplicationException {
+        bikeFacade.edit(bike);
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeBike(Bike bike) throws BaseApplicationException {
+        bikeFacade.remove(bike);
+    }
+
+    @RolesAllowed("ADMIN")
+    public List<BikeStation> getBikeStationsList() {
+        return bikeStationFacade.findAll();
+    }
+
+    @RolesAllowed("ADMIN")
+    public void createBikeStation(BikeStation bikeStation) throws BaseApplicationException {
+        if ("".equals(bikeStation.getDamageDesc())) bikeStation.setDamageDesc(null);
+        bikeStationFacade.create(bikeStation);
+    }
+
+    @RolesAllowed("ADMIN")
+    public BikeStation getBikeStationCopyBeforeEdit(BikeStation bikeStation) {
+        return bikeStationFacade.find(bikeStation.getId());
+    }
+
+    @RolesAllowed("ADMIN")
+    public void editBikeStation(BikeStation bikeStation) throws BaseApplicationException {
+        bikeStationFacade.edit(bikeStation);
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeBikeStation(BikeStation bikeStation) throws BaseApplicationException {
+        bikeStationFacade.remove(bikeStation);
+    }
 
     @RolesAllowed("EMPLOYEE")
     public List<Bike> getBikesToAttach() {
@@ -135,7 +189,7 @@ public class MOWEndpoint implements SessionSynchronization {
      * @throws BaseApplicationException
      */
     @RolesAllowed("EMPLOYEE")
-    public void saveBikeDamage(int identifier, String damageDescription) throws BaseApplicationException {
+    public void saveBikeDamage(String identifier, String damageDescription) throws BaseApplicationException {
         Bike bike = bikeFacade.findByIdentifier(identifier);
         if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
         bike.setDamageDesc(damageDescription);
@@ -208,7 +262,7 @@ public class MOWEndpoint implements SessionSynchronization {
      * @throws BaseApplicationException
      */
     @RolesAllowed("CUSTOMER")
-    public void rent(String bikeStationIdentifier, int bikeIdentifier) throws BaseApplicationException {
+    public void rent(String bikeStationIdentifier, String bikeIdentifier) throws BaseApplicationException {
         
         BikeStation bikeStation = bikeStationFacade.findByIdentifier(bikeStationIdentifier);
         Bike bike = bikeFacade.findByIdentifier(bikeIdentifier);
@@ -289,7 +343,7 @@ public class MOWEndpoint implements SessionSynchronization {
      * @throws BaseApplicationException
      */
     @RolesAllowed("CUSTOMER")
-    public void reportBike(int identifier, String damageDescription) throws BaseApplicationException {
+    public void reportBike(String identifier, String damageDescription) throws BaseApplicationException {
         Bike bike = bikeFacade.findByIdentifier(identifier);
         if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
         bike.setDamageDesc(damageDescription);

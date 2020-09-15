@@ -4,33 +4,53 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <ui:composition>
 
-        <p:dialog id="BikeEditDlg" widgetVar="BikeEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditBikeTitle}">
+        <b:modal id="BikeEditDlg" class="editModal" title="#{msg.editBike}" closable="true" close-on-escape="true">
             <h:form id="BikeEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{bikeController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditBikeLabel_identifier}" for="identifier" />
-                        <p:inputText id="identifier" value="#{bikeController.selected.identifier}" title="#{bundle.EditBikeTitle_identifier}" required="true" requiredMessage="#{bundle.EditBikeRequiredMessage_identifier}"/>
-                        <p:outputLabel value="#{bundle.EditBikeLabel_bikeStatus}" for="bikeStatus" />
-                        <p:inputText id="bikeStatus" value="#{bikeController.selected.bikeStatus}" title="#{bundle.EditBikeTitle_bikeStatus}" required="true" requiredMessage="#{bundle.EditBikeRequiredMessage_bikeStatus}"/>
-                        <p:outputLabel value="#{bundle.EditBikeLabel_damageDesc}" for="damageDesc" />
-                        <p:inputText id="damageDesc" value="#{bikeController.selected.damageDesc}" title="#{bundle.EditBikeTitle_damageDesc}" />
-                        <p:outputLabel value="#{bundle.EditBikeLabel_bikeStation}" for="bikeStation" />
-                        <p:selectOneMenu id="bikeStation" value="#{bikeController.selected.bikeStation}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                <b:messages id="editMessages" globalOnly="true" />
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
+                        <b:inputText id="identifier" value="#{bikeController.editBike.identifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                            <f:validateRegex pattern="^[0-9]{5}$" />
+                        </b:inputText>
+                        <b:message for="identifier" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStation}" />
+                        <b:selectOneMenu id="bikeStation" value="#{bikeController.editBike.bikeStation}"  >
+                            <f:selectItem itemValue="#{null}" itemLabel="#{msg.detached}"/>
                             <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"
                                            var="bikeStationItem"
-                                           itemValue="#{bikeStationItem}"/>
-                        </p:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{bikeController.update}" value="#{bundle.Save}" update="display,:BikeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BikeEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="BikeEditDialog.hide()"/>
-                </h:panelGroup>
+                                           itemValue="#{bikeStationItem}"
+                                           itemLabel="#{bikeStationItem.identifier}, #{bikeStationItem.city} #{bikeStationItem.streetName}"
+                                           />
+                        </b:selectOneMenu>
+                        <b:message for="bikeStation" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.status}" />
+                        <b:selectOneMenu id="bikeStatus" value="#{bikeController.editBike.bikeStatus}" >
+                            <f:selectItem itemValue="working" itemLabel="#{msg.working}"/>
+                            <f:selectItem itemValue="damaged" itemLabel="#{msg.damaged}"/>
+                        </b:selectOneMenu>
+                        <b:message for="bikeStatus" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
+                        <b:inputTextarea id="damageDesc" value="#{bikeController.editBike.damageDesc}" size="255" />
+                        <b:message for="damageDesc" />
+                    </b:column>
+                </b:row>
+                <b:commandButton value="#{msg.edit}" icon="pencil" actionListener="#{bikeController.editBike()}" update="BikeEditForm, editMessages, @(.datalist)"  />
             </h:form>
-        </p:dialog>
+        </b:modal>
 
     </ui:composition>
 </html>

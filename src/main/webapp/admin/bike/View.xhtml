@@ -4,27 +4,35 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <ui:composition>
 
-        <p:dialog id="BikeViewDlg" widgetVar="BikeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBikeTitle}">
+        <b:modal id="BikeViewDlg" class="viewModal" title="#{msg.bike}" closable="true" close-on-escape="true">
             <h:form id="BikeViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{bikeController.selected != null}">
-                        <h:outputText value="#{bundle.ViewBikeLabel_identifier}"/>
-                        <h:outputText value="#{bikeController.selected.identifier}" title="#{bundle.ViewBikeTitle_identifier}"/>
-                        <h:outputText value="#{bundle.ViewBikeLabel_bikeStatus}"/>
-                        <h:outputText value="#{bikeController.selected.bikeStatus}" title="#{bundle.ViewBikeTitle_bikeStatus}"/>
-                        <h:outputText value="#{bundle.ViewBikeLabel_damageDesc}"/>
-                        <h:outputText value="#{bikeController.selected.damageDesc}" title="#{bundle.ViewBikeTitle_damageDesc}"/>
-                        <h:outputText value="#{bundle.ViewBikeLabel_bikeStation}"/>
-                        <h:outputText value="#{bikeController.selected.bikeStation}" title="#{bundle.ViewBikeTitle_bikeStation}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="BikeViewDialog.hide()"/>
-                </h:panelGroup>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.identifier}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStation}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.bikeStation.identifier}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.status}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[bikeController.selected.bikeStatus]}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.damageDesc}" />
+                    </b:column>
+                </b:row>
             </h:form>
-        </p:dialog>
+        </b:modal>
 
     </ui:composition>
 </html>

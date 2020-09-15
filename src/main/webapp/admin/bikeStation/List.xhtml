@@ -1,76 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/admin/template_new.xhtml">
 
-    <ui:composition template="/admin/template.xhtml">>
+        <ui:define name="title">#{msg.bikeStations}</ui:define>
+        
+        <ui:define name="header">#{msg.bikeStations}</ui:define>
 
-
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListBikeStationTitle}"></h:outputText>
-        </ui:define>
-
-        <ui:define name="body">
-            <h:form id="BikeStationListForm">
-                <p:panel header="#{bundle.ListBikeStationTitle}">
-                    <p:dataTable id="datalist" value="#{bikeStationController.items}" var="item"
-                                 selectionMode="single" selection="#{bikeStationController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_identifier}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.identifier}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_city}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.city}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_streetName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.streetName}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_geolocLatitude}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.geolocLatitude}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListBikeStationTitle_geolocLongitude}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.geolocLongitude}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{bikeStationController.prepareCreate}" update=":BikeStationCreateForm" oncomplete="PF('BikeStationCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":BikeStationViewForm" oncomplete="PF('BikeStationViewDialog').show()" disabled="#{empty bikeStationController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":BikeStationEditForm" oncomplete="PF('BikeStationEditDialog').show()" disabled="#{empty bikeStationController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{bikeStationController.destroy}" update=":growl,datalist" disabled="#{empty bikeStationController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+        <ui:define name="mainContent">
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeStationController.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeStationIdentifier}" />
+                    <b:dataTableColumn value="#{item.city}" label="#{msg.city}" />
+                    <b:dataTableColumn value="#{item.streetName}" label="#{msg.streetName}" />
+                    <b:dataTableColumn value="#{item.geolocLatitude}" label="#{msg.geolocLatitude}" />
+                    <b:dataTableColumn value="#{item.geolocLongitude}" label="#{msg.geolocLongitude}" />
+                    <b:dataTableColumn value="#{msg[item.status]}" label="#{msg.status}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                </b:dataTable>
+                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{bikeStationController.prepareCreate}" update="BikeStationCreateForm" oncomplete="$('.createModal').modal();return false;" />
+                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{bikeStationController.prepareEdit}" update="BikeStationEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty bikeStationController.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationController.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationController.removeBikeStation()}" update="datalist" disabled="#{empty bikeStationController.selected}"/>
             </h:form>
-
             <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
         </ui:define>
     </ui:composition>
-
 </html>

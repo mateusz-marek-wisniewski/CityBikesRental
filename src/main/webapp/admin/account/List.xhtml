@@ -41,9 +41,9 @@
                 <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{accountController.prepareEdit}" update="AccountEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty accountController.selected}"/>
                 <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{accountController.removeAccount()}" update="datalist" disabled="#{empty accountController.selected}"/>
             </h:form>
-            <ui:include src="ViewNew.xhtml"/>
-            <ui:include src="CreateNew.xhtml"/>
-            <ui:include src="EditNew.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
         </ui:define>
     </ui:composition>
 </html>

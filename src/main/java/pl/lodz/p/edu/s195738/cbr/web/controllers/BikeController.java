@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
@@ -36,6 +37,8 @@ public class BikeController implements Serializable {
     private MOWEndpoint mow;
     private List<Bike> items = null;
     private Bike selected;
+    private Bike newBike = new Bike();
+    private Bike editBike = new Bike();
     private List<Bike> bikesToAttach = null;
     private List<Bike> bikesToDetach = null;
     private List<Bike> bikesSelected = new ArrayList<>();
@@ -54,6 +57,22 @@ public class BikeController implements Serializable {
 
     public void setSelected(Bike selected) {
         this.selected = selected;
+    }
+
+    public Bike getNewBike() {
+        return newBike;
+    }
+
+    public void setNewBike(Bike newBike) {
+        this.newBike = newBike;
+    }
+
+    public Bike getEditBike() {
+        return editBike;
+    }
+
+    public void setEditBike(Bike editBike) {
+        this.editBike = editBike;
     }
 
     public String getBikeIdentifier() {
@@ -142,8 +161,15 @@ public class BikeController implements Serializable {
 
     public Bike prepareCreate() {
         selected = new Bike();
+        newBike = new Bike();
         initializeEmbeddableKey();
-        return selected;
+        return newBike;
+    }
+
+    public Bike prepareEdit() {
+        editBike = mow.getBikeCopyBeforeEdit(selected);
+        initializeEmbeddableKey();
+        return editBike;
     }
 
     public void create() {
@@ -151,6 +177,37 @@ public class BikeController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+    
+    public void createBike() {
+        try {
+            mow.createBike(newBike);
+            items = null;
+            prepareCreate();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("createBike_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void editBike() {
+        try {
+            mow.editBike(editBike);
+            items = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("editBike_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void removeBike() {
+        try {
+            mow.removeBike(selected);
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+        selected = null;
+        items = null;
     }
 
     public void update() {
@@ -167,7 +224,7 @@ public class BikeController implements Serializable {
     
     public void report() {
         try {
-            mow.reportBike(Integer.parseInt(bikeIdentifier), damageDescription);
+            mow.reportBike(bikeIdentifier, damageDescription);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("reportBike_success"), bikeIdentifier)));
         } catch (BaseApplicationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
@@ -179,7 +236,7 @@ public class BikeController implements Serializable {
     
     public void saveBikeDamage() {
         try {
-            mow.saveBikeDamage(Integer.parseInt(bikeIdentifier), damageDescription);
+            mow.saveBikeDamage(bikeIdentifier, damageDescription);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("saveBikeDamage_success"), bikeIdentifier)));
         } catch (BaseApplicationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));

@@ -55,8 +55,8 @@ public class Bike implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int identifier;
+    @Column(nullable = false, length = 5)
+    private String identifier;
     
     @Basic(optional = false)
     @NotNull
@@ -65,7 +65,7 @@ public class Bike implements Serializable {
     private String bikeStatus;
     
     @Size(max = 255)
-    @Column(name = "damage_desc", length = 255)
+    @Column(name = "damage_desc", length = 255, nullable = true)
     private String damageDesc;
     
     @Version
@@ -77,8 +77,8 @@ public class Bike implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bike", fetch = FetchType.LAZY)
     private Collection<Rent> rentCollection;
     
-    @JoinColumn(name = "bike_station_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bike_station_id", referencedColumnName = "id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private BikeStation bikeStation;
 
     
@@ -89,7 +89,7 @@ public class Bike implements Serializable {
         this.id = id;
     }
 
-    public Bike(Long id, int identifier, String bikeStatus, long version) {
+    public Bike(Long id, String identifier, String bikeStatus, long version) {
         this.id = id;
         this.identifier = identifier;
         this.bikeStatus = bikeStatus;
@@ -115,11 +115,11 @@ public class Bike implements Serializable {
         this.id = id;
     }
 
-    public int getIdentifier() {
+    public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(int identifier) {
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 

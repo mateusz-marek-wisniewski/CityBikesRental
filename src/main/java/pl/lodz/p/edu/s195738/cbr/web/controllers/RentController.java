@@ -114,7 +114,7 @@ public class RentController implements Serializable {
 
     public void rent() {
         try {
-            mow.rent(bikeStationIdentifier, Integer.parseInt(bikeIdentifier));
+            mow.rent(bikeStationIdentifier, bikeIdentifier);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("rent_success"), bikeIdentifier)));
             bikeIdentifier = "";
         } catch (BaseApplicationException ex) {

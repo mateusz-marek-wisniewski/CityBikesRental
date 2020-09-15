@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BikeStationViewDlg" widgetVar="BikeStationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBikeStationTitle}">
+            <h:form id="BikeStationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bikeStationController.selected != null}">
+                        <h:outputText value="#{bundle.ViewBikeStationLabel_identifier}"/>
+                        <h:outputText value="#{bikeStationController.selected.identifier}" title="#{bundle.ViewBikeStationTitle_identifier}"/>
+                        <h:outputText value="#{bundle.ViewBikeStationLabel_city}"/>
+                        <h:outputText value="#{bikeStationController.selected.city}" title="#{bundle.ViewBikeStationTitle_city}"/>
+                        <h:outputText value="#{bundle.ViewBikeStationLabel_streetName}"/>
+                        <h:outputText value="#{bikeStationController.selected.streetName}" title="#{bundle.ViewBikeStationTitle_streetName}"/>
+                        <h:outputText value="#{bundle.ViewBikeStationLabel_geolocLatitude}"/>
+                        <h:outputText value="#{bikeStationController.selected.geolocLatitude}" title="#{bundle.ViewBikeStationTitle_geolocLatitude}"/>
+                        <h:outputText value="#{bundle.ViewBikeStationLabel_geolocLongitude}"/>
+                        <h:outputText value="#{bikeStationController.selected.geolocLongitude}" title="#{bundle.ViewBikeStationTitle_geolocLongitude}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="BikeStationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

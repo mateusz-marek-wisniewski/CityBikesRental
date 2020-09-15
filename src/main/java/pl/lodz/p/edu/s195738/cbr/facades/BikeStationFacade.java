@@ -9,8 +9,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStation;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeAlreadyExistsException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationConcurrentEditException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
 
@@ -32,6 +34,20 @@ public class BikeStationFacade extends AbstractFacade<BikeStation> {
     public BikeStationFacade() {
         super(BikeStation.class);
     }
+    
+    @Override
+    public void create(BikeStation bikeStation) throws BaseApplicationException {
+        try {
+            super.create(bikeStation);
+            getEntityManager().flush();
+        } catch (PersistenceException pe) {
+            if (pe.getCause().toString().contains("bike_station_identifier_key")) {
+                throw new BikeAlreadyExistsException(pe);
+            } else {
+                throw new BaseApplicationException(pe);
+            }
+        }
+    }
 
     @Override
     public void edit(BikeStation bikeStation) throws BaseApplicationException {
@@ -40,6 +56,12 @@ public class BikeStationFacade extends AbstractFacade<BikeStation> {
             getEntityManager().flush();
         } catch (OptimisticLockException ex) {
             throw new BikeStationConcurrentEditException(ex);
+        } catch (PersistenceException pe) {
+            if (pe.getCause().toString().contains("bike_station_identifier_key")) {
+                throw new BikeAlreadyExistsException(pe);
+            } else {
+                throw new BaseApplicationException(pe);
+            }
         }
     }
     

@@ -33,6 +33,8 @@ public class BikeStationController implements Serializable {
     private MOWEndpoint mow;
     private List<BikeStation> items = null;
     private BikeStation selected;
+    private BikeStation newBikeStation = new BikeStation();
+    private BikeStation editBikeStation = new BikeStation();
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
     
@@ -48,6 +50,22 @@ public class BikeStationController implements Serializable {
 
     public void setSelected(BikeStation selected) {
         this.selected = selected;
+    }
+
+    public BikeStation getNewBikeStation() {
+        return newBikeStation;
+    }
+
+    public void setNewBikeStation(BikeStation newBikeStation) {
+        this.newBikeStation = newBikeStation;
+    }
+
+    public BikeStation getEditBikeStation() {
+        return editBikeStation;
+    }
+
+    public void setEditBikeStation(BikeStation editBikeStation) {
+        this.editBikeStation = editBikeStation;
     }
 
     public String getBikeStationIdentifier() {
@@ -78,8 +96,15 @@ public class BikeStationController implements Serializable {
 
     public BikeStation prepareCreate() {
         selected = new BikeStation();
+        newBikeStation = new BikeStation();
         initializeEmbeddableKey();
-        return selected;
+        return newBikeStation;
+    }
+
+    public BikeStation prepareEdit() {
+        editBikeStation = mow.getBikeStationCopyBeforeEdit(selected);
+        initializeEmbeddableKey();
+        return editBikeStation;
     }
 
     public void create() {
@@ -87,6 +112,37 @@ public class BikeStationController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+    
+    public void createBikeStation() {
+        try {
+            mow.createBikeStation(newBikeStation);
+            items = null;
+            prepareCreate();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("createBikeStation_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void editBikeStation() {
+        try {
+            mow.editBikeStation(editBikeStation);
+            items = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("editBikeStation_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void removeBikeStation() {
+        try {
+            mow.removeBikeStation(selected);
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+        selected = null;
+        items = null;
     }
 
     public void update() {
