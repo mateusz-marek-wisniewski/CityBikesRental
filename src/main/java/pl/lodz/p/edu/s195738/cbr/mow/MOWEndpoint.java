@@ -201,7 +201,7 @@ public class MOWEndpoint implements SessionSynchronization {
     @RolesAllowed("EMPLOYEE")
     public void saveBikeDamage(String identifier, String damageDescription) throws BaseApplicationException {
         Bike bike = bikeFacade.findByIdentifier(identifier);
-        if (bike.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        if (bike.getBikeStatus().equals("damaged")) throw new DamageAlreadySavedException();
         bike.setDamageDesc(damageDescription);
         bike.setBikeStatus("damaged");
         bikeFacade.edit(bike);
@@ -218,7 +218,7 @@ public class MOWEndpoint implements SessionSynchronization {
     @RolesAllowed("EMPLOYEE")
     public void saveBikeStationDamage(String identifier, String damageDescription) throws BaseApplicationException {
         BikeStation bikeStation = bikeStationFacade.findByIdentifier(identifier);
-        if (bikeStation.getDamageDesc() != null) throw new DamageAlreadyReportedException();
+        if (bikeStation.getStatus().equals("damaged")) throw new DamageAlreadySavedException();
         bikeStation.setDamageDesc(damageDescription);
         bikeStation.setStatus("damaged");
         bikeStationFacade.edit(bikeStation);
@@ -262,6 +262,24 @@ public class MOWEndpoint implements SessionSynchronization {
         bikeStationFacade.edit(bikeStation);
         bikeStationRepairFacade.create(bikeStationRepair);
     }
+    
+    @RolesAllowed("EMPLOYEE")
+    public List<Bike> getReportedBikes() {
+        return bikeFacade.findAll().stream()
+                .filter(s -> s.getBikeStatus().equals("working"))
+                .filter(s -> s.getDamageDesc() != null)
+                .collect(Collectors.toList());
+    }
+    
+    @RolesAllowed("EMPLOYEE")
+    public List<BikeStation> getReportedBikeStations() {
+        return bikeStationFacade.findAll().stream()
+                .filter(s -> s.getStatus().equals("working"))
+                .filter(s -> s.getDamageDesc() != null)
+                .collect(Collectors.toList());
+    }
+    
+    
 
     /**
      * MOW.27 Wypożycz rower

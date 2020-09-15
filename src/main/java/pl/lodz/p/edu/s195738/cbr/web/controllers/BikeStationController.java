@@ -35,6 +35,7 @@ public class BikeStationController implements Serializable {
     private BikeStation selected;
     private BikeStation newBikeStation = new BikeStation();
     private BikeStation editBikeStation = new BikeStation();
+    private List<BikeStation> bikeStationsReported = null;
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
     
@@ -82,6 +83,14 @@ public class BikeStationController implements Serializable {
 
     public void setDamageDescription(String damageDescription) {
         this.damageDescription = damageDescription;
+    }
+
+    public List<BikeStation> getBikeStationsReported() {
+        return mow.getReportedBikeStations();
+    }
+
+    public void setBikeStationsReported(List<BikeStation> bikeStationsReported) {
+        this.bikeStationsReported = bikeStationsReported;
     }
 
     protected void setEmbeddableKeys() {

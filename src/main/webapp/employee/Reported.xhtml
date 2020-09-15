@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.failureReportsList}</ui:define>
+
+        <ui:define name="body">
+            <h1>#{msg.failureReportsList}</h1>
+            <hr />
+            <h:form>
+                <h:outputText class="viewLabel" value="#{msg.bikes}" />
+                <br />
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeController.bikesReported}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             select="false"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeIdentifier}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                </b:dataTable>
+                <br />
+                <h:outputText class="viewLabel" value="#{msg.bikeStations}" />
+                <br />
+                <b:dataTable id="datalistStations" class="datalist"
+                             value="#{bikeStationController.bikeStationsReported}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             select="false"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeIdentifier}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                </b:dataTable>
+                <br />
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

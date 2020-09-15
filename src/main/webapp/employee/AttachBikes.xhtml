@@ -20,7 +20,7 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
-                        <b:inputText id="bikeStation" class="input-big" value="#{bikeController.bikeIdentifier}" required="true" mask="aa999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}" update="@form">
+                        <b:inputText id="bikeStation" class="input-big" value="#{bikeController.bikeIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}" update="@form">
                             <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
                         </b:inputText>
                         <b:message for="bikeStation" />

@@ -22,7 +22,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeStationDoesNotExistException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
@@ -41,6 +40,7 @@ public class BikeController implements Serializable {
     private Bike editBike = new Bike();
     private List<Bike> bikesToAttach = null;
     private List<Bike> bikesToDetach = null;
+    private List<Bike> bikesReported = null;
     private List<Bike> bikesSelected = new ArrayList<>();
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
@@ -125,6 +125,14 @@ public class BikeController implements Serializable {
 
     public void setBikesSelected(List<Bike> bikesSelected) {
         this.bikesSelected = bikesSelected;
+    }
+
+    public List<Bike> getBikesReported() {
+        return mow.getReportedBikes();
+    }
+
+    public void setBikesReported(List<Bike> bikesReported) {
+        this.bikesReported = bikesReported;
     }
 
     protected void setEmbeddableKeys() {
