@@ -10,7 +10,6 @@ import java.rmi.RemoteException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -22,8 +21,7 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.print.attribute.standard.DateTimeAtCompleted;
+import javax.interceptor.Interceptors;
 import org.joda.time.DateTime;
 import pl.lodz.p.edu.s195738.cbr.entities.Bike;
 import pl.lodz.p.edu.s195738.cbr.entities.BikeRepair;
@@ -42,6 +40,7 @@ import pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.RentFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.RentalOpinionFacade;
+import pl.lodz.p.edu.s195738.cbr.interceptors.TrackerInterceptor;
 import pl.lodz.p.edu.s195738.cbr.mok.GlassfishAuth;
 
 /**
@@ -50,6 +49,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.GlassfishAuth;
  */
 
 @Stateful
+@Interceptors(TrackerInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOWEndpoint implements SessionSynchronization {
     

@@ -5,7 +5,6 @@
  */
 package pl.lodz.p.edu.s195738.cbr.mok;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -26,11 +25,11 @@ import javax.ejb.TransactionAttributeType;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.mail.MessagingException;
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import pl.lodz.p.edu.s195738.cbr.interceptors.TrackerInterceptor;
 import pl.lodz.p.edu.s195738.cbr.entities.*;
 import pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole;
 import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
@@ -38,7 +37,6 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.*;
 import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
-import pl.lodz.p.edu.s195738.cbr.facades.AccountRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.AdminRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.facades.EmployeeRoleFacade;
@@ -52,6 +50,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.utils.PasswordUtil;
  */
 
 @Stateful
+@Interceptors(TrackerInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOKEndpoint implements SessionSynchronization{
     

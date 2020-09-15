@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.lodz.p.edu.s195738</groupId>
     <artifactId>cbr</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>CityBikesRental</name>
     
     <developers>
         <developer>
-            <name>Mateusz Wiœniewski</name>
+            <name>Mateusz Wiï¿½niewski</name>
             <id>195738</id>
         </developer>
     </developers>
