@@ -122,6 +122,10 @@ public class BikeStationRepairController implements Serializable {
         selected = null;
     }
 
+    public double getRepairCost() {
+        return getItems().stream().mapToDouble(b -> b.getRepairCost().doubleValue()).sum();
+    }
+
     public List<BikeStationRepair> getItems() {
         if (items == null) {
             items = mow.getBikeStationRepairsList();

@@ -33,6 +33,7 @@ public class RentalOpinionController implements Serializable {
     private List<RentalOpinion> items = null;
     private RentalOpinion selected;
     private RentalOpinion customerOpinion;
+    
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
@@ -109,6 +110,10 @@ public class RentalOpinionController implements Serializable {
         } catch (BaseApplicationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
         }
+    }
+    
+    public double getAverageRating() {
+        return getItems().stream().mapToInt(r -> r.getRating()).average().getAsDouble();
     }
 
     public List<RentalOpinion> getItems() {

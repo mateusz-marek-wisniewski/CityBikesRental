@@ -144,6 +144,10 @@ public class RentController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
         }
     }
+    
+    public double getMoneyEarned() {
+        return getItems().stream().mapToDouble(r -> r.getCharge().doubleValue()).sum();
+    }
 
     public List<Rent> getItems() {
         if (items == null) {

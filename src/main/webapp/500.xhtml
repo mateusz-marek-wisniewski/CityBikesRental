@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>#{msg.error500} - #{msg.appName}</title>
+        <h:outputStylesheet library="css" name="login.css"/>
+    </h:head>
+    <h:body class="text-center">
+        <b:container>
+            <h:form styleClass="form-register">
+                <h1 class="font-weight-normal" style="margin-bottom: 1em;">#{msg.error500}</h1>
+                <b:commandLink look="btn-block mt-3" value="#{msg.backToTheMainPage}" outcome="/index"/>
+                <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
+            </h:form>
+        </b:container>
+    </h:body>
+</html>

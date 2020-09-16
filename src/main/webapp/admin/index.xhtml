@@ -14,7 +14,42 @@
         <ui:define name="header">#{msg.mainPage}</ui:define>
 
         <ui:define name="mainContent">
-            
+            <b:row>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Liczba rowerów" />
+                    <h:outputText styleClass="viewValue" value="#{bikeController.items.size()}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Liczba stacji" />
+                    <h:outputText styleClass="viewValue" value="#{bikeStationController.items.size()}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Średnia ocen " />
+                    <h:outputText styleClass="viewValue" value="#{rentalOpinionController.averageRating}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Liczba wypożyczeń " />
+                    <h:outputText styleClass="viewValue" value="#{rentController.items.size()}" />
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Obrót z wypożyczeń " />
+                    <h:outputText styleClass="viewValue" value="#{rentController.moneyEarned} #{settings.currency}" >
+                            <f:convertNumber type="#0.00" />
+                    </h:outputText>
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Koszt napraw rowerów " />
+                    <h:outputText styleClass="viewValue" value="#{bikeRepairController.repairCost} #{settings.currency}" >
+                            <f:convertNumber type="#0.00" />
+                    </h:outputText>
+                </b:column>
+                <b:column col-md="6" styleClass="viewColumn">
+                    <h:outputText styleClass="viewLabel" value="Koszt napraw stacji " />
+                    <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.repairCost} #{settings.currency}" >
+                            <f:convertNumber type="#0.00" />
+                    </h:outputText>
+                </b:column>
+            </b:row>
         </ui:define>
     </ui:composition>
 </html>

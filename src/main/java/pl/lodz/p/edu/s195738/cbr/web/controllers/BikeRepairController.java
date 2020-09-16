@@ -121,6 +121,10 @@ public class BikeRepairController implements Serializable {
         items = null;
         selected = null;
     }
+    
+    public double getRepairCost() {
+        return getItems().stream().mapToDouble(b -> b.getRepairCost().doubleValue()).sum();
+    }
 
     public List<BikeRepair> getItems() {
         if (items == null) {
