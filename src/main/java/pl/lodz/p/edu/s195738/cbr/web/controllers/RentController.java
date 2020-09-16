@@ -111,6 +111,12 @@ public class RentController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+    public void removeRent() {
+        mow.removeRent(selected);
+        items = null;
+        selected = null;
+    }
 
     public void rent() {
         try {
