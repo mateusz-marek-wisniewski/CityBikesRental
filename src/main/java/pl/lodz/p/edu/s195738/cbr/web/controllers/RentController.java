@@ -147,7 +147,7 @@ public class RentController implements Serializable {
 
     public List<Rent> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = mow.getRentsList();
         }
         return items;
     }

@@ -152,6 +152,26 @@ public class MOWEndpoint implements SessionSynchronization {
         rentFacade.remove(rent);
     }
 
+    @RolesAllowed("ADMIN")
+    public List<BikeRepair> getBikeRepairsList() {
+        return bikeRepairFacade.findAll();
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeBikeRepair(BikeRepair bikeRepair) {
+        bikeRepairFacade.remove(bikeRepair);
+    }
+
+    @RolesAllowed("ADMIN")
+    public List<BikeStationRepair> getBikeStationRepairsList() {
+        return bikeStationRepairFacade.findAll();
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeBikeStationRepair(BikeStationRepair bikeStationRepair) {
+        bikeStationRepairFacade.remove(bikeStationRepair);
+    }
+
     @RolesAllowed("EMPLOYEE")
     public List<Bike> getBikesToAttach() {
         return bikeFacade.findAll().stream()

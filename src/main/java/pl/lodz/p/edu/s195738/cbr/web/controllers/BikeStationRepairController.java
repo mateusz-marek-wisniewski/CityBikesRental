@@ -115,10 +115,16 @@ public class BikeStationRepairController implements Serializable {
             bikeStationsToRepair = null;
         }
     }
+    
+    public void removeBikeStationRepair() {
+        mow.removeBikeStationRepair(selected);
+        items = null;
+        selected = null;
+    }
 
     public List<BikeStationRepair> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = mow.getBikeStationRepairsList();
         }
         return items;
     }
