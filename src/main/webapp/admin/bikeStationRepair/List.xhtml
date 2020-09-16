@@ -35,7 +35,7 @@
                     <b:dataTableColumn value="#{item.repairLog}" label="#{msg.log}" />
                 </b:dataTable>
                 <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationRepairController.selected}" update="BikeStationRepairViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationRepairController.removeBikeStationRepair()}" update="datalist" disabled="#{empty bikeStationRepairController.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationRepairController.removeBikeStationRepair()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationRepairController.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>

@@ -36,7 +36,7 @@
                 <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{bikeStationController.prepareCreate}" update="BikeStationCreateForm" oncomplete="$('.createModal').modal();return false;" />
                 <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{bikeStationController.prepareEdit}" update="BikeStationEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty bikeStationController.selected}"/>
                 <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationController.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationController.removeBikeStation()}" update="datalist" disabled="#{empty bikeStationController.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationController.removeBikeStation()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationController.selected}"/>
             </h:form>
             <ui:include src="Create.xhtml"/>
             <ui:include src="View.xhtml"/>

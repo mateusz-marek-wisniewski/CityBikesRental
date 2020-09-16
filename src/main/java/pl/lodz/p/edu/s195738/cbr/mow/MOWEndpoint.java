@@ -172,6 +172,33 @@ public class MOWEndpoint implements SessionSynchronization {
         bikeStationRepairFacade.remove(bikeStationRepair);
     }
 
+    @RolesAllowed("ADMIN")
+    public List<ChargeRate> getChargeRatesList() {
+        return chargeRateFacade.findAll().stream()
+                .sorted(Comparator.comparingInt(ChargeRate::getTimeLimit))
+                .collect(Collectors.toList());
+    }
+
+    @RolesAllowed("ADMIN")
+    public void createChargeRate(ChargeRate chargeRate) throws BaseApplicationException {
+        chargeRateFacade.create(chargeRate);
+    }
+
+    @RolesAllowed("ADMIN")
+    public ChargeRate getChargeRateCopyBeforeEdit(ChargeRate chargeRate) {
+        return chargeRateFacade.find(chargeRate.getId());
+    }
+
+    @RolesAllowed("ADMIN")
+    public void editChargeRate(ChargeRate chargeRate) throws BaseApplicationException {
+        chargeRateFacade.edit(chargeRate);
+    }
+
+    @RolesAllowed("ADMIN")
+    public void removeChargeRate(ChargeRate chargeRate) throws BaseApplicationException {
+        chargeRateFacade.remove(chargeRate);
+    }
+
     @RolesAllowed("EMPLOYEE")
     public List<Bike> getBikesToAttach() {
         return bikeFacade.findAll().stream()

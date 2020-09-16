@@ -37,7 +37,7 @@
                     <b:dataTableColumn value="#{item.content}" label="#{msg.rentalOpinionContent}" />
                 </b:dataTable>
                 <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentalOpinionController.selected}" update="RentalOpinionStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentalOpinionController.removeOpinion()}" update="datalist" disabled="#{empty rentalOpinionController.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentalOpinionController.removeOpinion()}" update="datalist @(.databuttons)" disabled="#{empty rentalOpinionController.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>

@@ -49,7 +49,7 @@
                     <b:row>
                         <b:column col-md="6" styleClass="viewColumn">
                             <h:outputText styleClass="viewLabel" value="#{msg.cost}" />
-                            <b:inputText id="cost" value="#{bikeRepairController.selected.repairCost}" required="true" validatorMessage="#{msg.invalidIdentifier}" >
+                            <b:inputText id="cost" value="#{bikeRepairController.selected.repairCost}" required="true" mask="9{1,3}[ 999].99" validatorMessage="#{msg.invalidIdentifier}" >
                                 <f:facet name="append">
                                     <h:outputText value="#{settings.currency}" />
                                 </f:facet>

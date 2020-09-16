@@ -7,8 +7,16 @@ package pl.lodz.p.edu.s195738.cbr.facades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import pl.lodz.p.edu.s195738.cbr.entities.Bike;
 import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeAlreadyExistsException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.BikeConcurrentEditException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.ChargeRateAlreadyExistsException;
+import pl.lodz.p.edu.s195738.cbr.exceptions.mow.ChargeRateConcurrentEditException;
 
 /**
  *
@@ -27,6 +35,36 @@ public class ChargeRateFacade extends AbstractFacade<ChargeRate> {
 
     public ChargeRateFacade() {
         super(ChargeRate.class);
+    }
+    
+    @Override
+    public void create(ChargeRate chargeRate) throws BaseApplicationException {
+        try {
+            super.create(chargeRate);
+            getEntityManager().flush();
+        } catch (PersistenceException pe) {
+            if (pe.getCause().toString().contains("charge_rate_time_limit_key")) {
+                throw new ChargeRateAlreadyExistsException(pe);
+            } else {
+                throw new BaseApplicationException(pe);
+            }
+        }
+    }
+
+    @Override
+    public void edit(ChargeRate chargeRate) throws BaseApplicationException {
+        try {
+            super.edit(chargeRate);
+            getEntityManager().flush();
+        } catch (OptimisticLockException ex) {
+            throw new ChargeRateConcurrentEditException(ex);
+        } catch (PersistenceException pe) {
+            if (pe.getCause().toString().contains("charge_rate_time_limit_key")) {
+                throw new ChargeRateAlreadyExistsException(pe);
+            } else {
+                throw new BaseApplicationException(pe);
+            }
+        }
     }
     
 }

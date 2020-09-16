@@ -14,10 +14,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
+import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
 @Named("chargeRateController")
 @SessionScoped
@@ -25,8 +28,14 @@ public class ChargeRateController implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade ejbFacade;
+    @EJB
+    private MOWEndpoint mow;
     private List<ChargeRate> items = null;
     private ChargeRate selected;
+    private ChargeRate newChargeRate = new ChargeRate();
+    private ChargeRate editChargeRate = new ChargeRate();
+    
+    ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public ChargeRateController() {
     }
@@ -37,6 +46,22 @@ public class ChargeRateController implements Serializable {
 
     public void setSelected(ChargeRate selected) {
         this.selected = selected;
+    }
+
+    public ChargeRate getNewChargeRate() {
+        return newChargeRate;
+    }
+
+    public void setNewChargeRate(ChargeRate newChargeRate) {
+        this.newChargeRate = newChargeRate;
+    }
+
+    public ChargeRate getEditChargeRate() {
+        return editChargeRate;
+    }
+
+    public void setEditChargeRate(ChargeRate editChargeRate) {
+        this.editChargeRate = editChargeRate;
     }
 
     protected void setEmbeddableKeys() {
@@ -51,8 +76,15 @@ public class ChargeRateController implements Serializable {
 
     public ChargeRate prepareCreate() {
         selected = new ChargeRate();
+        newChargeRate = new ChargeRate();
         initializeEmbeddableKey();
         return selected;
+    }
+    
+    public ChargeRate prepareEdit() {
+        editChargeRate = mow.getChargeRateCopyBeforeEdit(selected);
+        initializeEmbeddableKey();
+        return editChargeRate;
     }
 
     public void create() {
@@ -60,6 +92,36 @@ public class ChargeRateController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }    
+    public void createChargeRate() {
+        try {
+            mow.createChargeRate(newChargeRate);
+            items = null;
+            prepareCreate();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("createChargeRate_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void editChargeRate() {
+        try {
+            mow.editChargeRate(editChargeRate);
+            items = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("editChargeRate_success")));
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+    }
+    
+    public void removeChargeRate() {
+        try {
+            mow.removeChargeRate(selected);
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        }
+        selected = null;
+        items = null;
     }
 
     public void update() {
@@ -76,7 +138,7 @@ public class ChargeRateController implements Serializable {
 
     public List<ChargeRate> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = mow.getChargeRatesList();
         }
         return items;
     }

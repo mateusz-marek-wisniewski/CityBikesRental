@@ -41,7 +41,7 @@
                     <b:dataTableColumn value="#{item.charge}" label="#{msg.charge}" />
                 </b:dataTable>
                 <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentController.selected}" update="RentViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentController.removeRent()}" update="datalist" disabled="#{empty rentController.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentController.removeRent()}" update="datalist @(.databuttons)" disabled="#{empty rentController.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>
