@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.facades;
+package pl.lodz.p.edu.s195738.cbr.mow.facades;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

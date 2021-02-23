@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.ChargeRateFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +27,7 @@ import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 public class ChargeRateController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.ChargeRateFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.ChargeRateFacade ejbFacade;
     @EJB
     private MOWEndpoint mow;
     private List<ChargeRate> items = null;

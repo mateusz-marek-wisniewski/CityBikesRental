@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.BikeStationRepairFacade;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationRepairFacade;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -29,7 +29,7 @@ import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 public class BikeStationRepairController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.BikeStationRepairFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationRepairFacade ejbFacade;
     @EJB
     MOWEndpoint mow;
     private List<BikeStationRepair> items = null;

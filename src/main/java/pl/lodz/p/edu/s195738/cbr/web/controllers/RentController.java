@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.Rent;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.RentFacade;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.RentFacade;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -28,7 +28,7 @@ import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 public class RentController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.RentFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.RentFacade ejbFacade;
     @EJB
     private MOWEndpoint mow;
     private List<Rent> items = null;

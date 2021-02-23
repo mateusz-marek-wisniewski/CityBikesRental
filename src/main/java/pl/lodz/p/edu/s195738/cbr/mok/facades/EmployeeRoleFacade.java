@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.facades;
+package pl.lodz.p.edu.s195738.cbr.mok.facades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
+import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 
 /**
  *
  * @author Mateusz Wiśniewski
  */
 @Stateless
-public class RentalOpinionFacade extends AbstractFacade<RentalOpinion> {
+public class EmployeeRoleFacade extends AbstractFacade<EmployeeRole> {
 
     @PersistenceContext(unitName = "cbradminPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RentalOpinionFacade extends AbstractFacade<RentalOpinion> {
         return em;
     }
 
-    public RentalOpinionFacade() {
-        super(RentalOpinion.class);
+    public EmployeeRoleFacade() {
+        super(EmployeeRole.class);
     }
     
 }

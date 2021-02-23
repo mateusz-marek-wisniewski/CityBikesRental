@@ -20,7 +20,7 @@ import javax.inject.Named;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
-import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.AccountFacade;
 
 /**
  *

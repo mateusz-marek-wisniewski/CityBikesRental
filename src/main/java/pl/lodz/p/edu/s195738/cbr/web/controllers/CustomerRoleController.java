@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class CustomerRoleController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade ejbFacade;
     private List<CustomerRole> items = null;
     private CustomerRole selected;
 

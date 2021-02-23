@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.LoginAttemptFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.LoginAttemptFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class LoginAttemptController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.LoginAttemptFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mok.facades.LoginAttemptFacade ejbFacade;
     private List<LoginAttempt> items = null;
     private LoginAttempt selected;
 

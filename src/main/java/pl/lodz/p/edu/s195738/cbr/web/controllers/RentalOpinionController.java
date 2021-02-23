@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.RentalOpinionFacade;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.RentalOpinionFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +27,7 @@ import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 public class RentalOpinionController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.RentalOpinionFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.RentalOpinionFacade ejbFacade;
     @EJB
     private MOWEndpoint mow;
     private List<RentalOpinion> items = null;

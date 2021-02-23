@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.facades;
+package pl.lodz.p.edu.s195738.cbr.mok.facades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.edu.s195738.cbr.entities.BikeRepair;
+import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
 
 /**
  *
  * @author Mateusz Wiśniewski
  */
 @Stateless
-public class BikeRepairFacade extends AbstractFacade<BikeRepair> {
+public class AccountRoleFacade extends AbstractFacade<AccountRole> {
 
     @PersistenceContext(unitName = "cbradminPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class BikeRepairFacade extends AbstractFacade<BikeRepair> {
         return em;
     }
 
-    public BikeRepairFacade() {
-        super(BikeRepair.class);
+    public AccountRoleFacade() {
+        super(AccountRole.class);
     }
     
 }

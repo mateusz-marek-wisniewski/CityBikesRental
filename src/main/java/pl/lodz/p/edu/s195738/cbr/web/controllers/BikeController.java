@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.Bike;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.BikeFacade;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.BikeFacade;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -31,7 +31,7 @@ import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 public class BikeController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.BikeFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.BikeFacade ejbFacade;
     @EJB
     private MOWEndpoint mow;
     private List<Bike> items = null;

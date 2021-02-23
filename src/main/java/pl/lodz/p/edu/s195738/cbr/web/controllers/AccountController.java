@@ -3,7 +3,7 @@ package pl.lodz.p.edu.s195738.cbr.web.controllers;
 import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
 import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.AccountFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.MOKEndpoint;
 public class AccountController implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.facades.AccountFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mok.facades.AccountFacade ejbFacade;
     @EJB
     private MOKEndpoint mok;
     private List<Account> items = null;

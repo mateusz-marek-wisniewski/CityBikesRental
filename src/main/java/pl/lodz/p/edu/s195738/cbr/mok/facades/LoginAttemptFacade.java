@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.facades;
+package pl.lodz.p.edu.s195738.cbr.mok.facades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole;
+import pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt;
 
 /**
  *
  * @author Mateusz Wiśniewski
  */
 @Stateless
-public class AdminRoleFacade extends AbstractFacade<AdminRole> {
+public class LoginAttemptFacade extends AbstractFacade<LoginAttempt> {
 
     @PersistenceContext(unitName = "cbradminPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class AdminRoleFacade extends AbstractFacade<AdminRole> {
         return em;
     }
 
-    public AdminRoleFacade() {
-        super(AdminRole.class);
+    public LoginAttemptFacade() {
+        super(LoginAttempt.class);
     }
     
 }

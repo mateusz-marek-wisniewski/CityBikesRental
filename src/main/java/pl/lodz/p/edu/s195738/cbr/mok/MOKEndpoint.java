@@ -36,11 +36,11 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
 import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.*;
-import pl.lodz.p.edu.s195738.cbr.facades.AccountFacade;
-import pl.lodz.p.edu.s195738.cbr.facades.AdminRoleFacade;
-import pl.lodz.p.edu.s195738.cbr.facades.CustomerRoleFacade;
-import pl.lodz.p.edu.s195738.cbr.facades.EmployeeRoleFacade;
-import pl.lodz.p.edu.s195738.cbr.facades.LoginAttemptFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.AccountFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.AdminRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.EmployeeRoleFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.LoginAttemptFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.utils.EmailUtil;
 import pl.lodz.p.edu.s195738.cbr.mok.utils.PasswordUtil;
 
