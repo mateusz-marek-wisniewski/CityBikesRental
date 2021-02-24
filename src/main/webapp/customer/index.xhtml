@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.customerPanel}</ui:define>
+
+        <ui:define name="body">
+            <h:form id="CustomerPanelForm">
+                <b:row>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="primary btn-block" style-class="btn-enormous" value="#{msg.rent}" outcome="Rent" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.return}" outcome="Return" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.myRents}" outcome="RentsList" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12" rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.addOpinion}" outcome="UpdateOpinion" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12" rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.editOpinion}" outcome="UpdateOpinion" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.reportBikeFailure}" outcome="ReportBike" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <b:commandLink look="btn-block" style-class="btn-enormous" value="#{msg.reportStationFailure}" outcome="ReportStation" />
+                    </b:column>
+                </b:row>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

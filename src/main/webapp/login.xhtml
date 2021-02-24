@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>#{msg.signin} - #{msg.appName}</title>
+        <h:outputStylesheet library="css" name="login.css"/>
+    </h:head>
+    <h:body class="text-center">
+        <b:container>
+            <h:form styleClass="form-signin">
+                <h1 class="form-signin-heading mb-3 font-weight-normal" style="margin-bottom: 1em;">#{msg.signinFormTitle}</h1>
+                <b:messages globalOnly="true" />
+                <b:inputText id="username" placeholder="#{msg.username}" value="#{glassfishAuth.username}" required="true">
+                    <f:facet name="prepend">
+                        <b:icon name="user" />
+                    </f:facet>
+                </b:inputText>
+                <b:inputText id="password" placeholder="#{msg.password}" type="password" value="#{glassfishAuth.password}" required="true">
+                    <f:facet name="prepend">
+                        <b:icon name="lock" />
+                    </f:facet>
+                </b:inputText>
+                <b:commandButton look="primary btn-block" value="#{msg.signin}" icon="log-in" size="lg" action="#{glassfishAuth.login}"/>
+                <b:commandLink id="register" look="btn-block mt-3" value="#{msg.signup}" icon="circle-arrow-up" outcome="register"/>
+                <b:commandLink id="forgot-password" look="btn-block mt-3" value="#{msg.forgotPasswordLinkLabel}" outcome="forgotPasswordPage"/>
+                <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
+            </h:form>
+        </b:container>
+    </h:body>
+</html>
+

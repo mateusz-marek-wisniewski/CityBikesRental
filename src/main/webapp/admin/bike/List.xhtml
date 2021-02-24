@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/admin/template_new.xhtml">
+
+        <ui:define name="title">#{msg.bikes}</ui:define>
+        
+        <ui:define name="header">#{msg.bikes}</ui:define>
+
+        <ui:define name="mainContent">
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeBean.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeBean.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeIdentifier}" />
+                    <b:dataTableColumn value="#{item.bikeStation.identifier}" label="#{msg.bikeStationIdentifier}" />
+                    <b:dataTableColumn value="#{msg[item.bikeStatus]}" label="#{msg.status}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                </b:dataTable>
+                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{bikeBean.prepareCreate}" update="BikeCreateForm" oncomplete="$('.createModal').modal();return false;" />
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeBean.selected}" update="BikeViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{bikeBean.prepareEdit}" update="BikeEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty bikeBean.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeBean.removeBike()}" update="datalist @(.databuttons)" disabled="#{empty bikeBean.selected}"/>
+            </h:form>
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

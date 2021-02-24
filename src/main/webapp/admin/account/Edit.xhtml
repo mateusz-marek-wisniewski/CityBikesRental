@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition>
+
+        <b:modal id="AccountEditDlg" class="editModal" title="#{msg.editAccount}" closable="true" close-on-escape="true">
+            <h:form id="AccountEditForm">
+                <b:messages id="editMessages" globalOnly="true" />
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.username}" />
+                        <b:inputText id="username" value="#{accountBean.editAccount.login}" required="true">
+                            <f:validateRegex pattern="^[a-zA-Z0-9_]+$" />
+                        </b:inputText>
+                        <b:message for="username" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.email}" />
+                        <b:inputText id="email" value="#{accountBean.editAccount.email}" required="true">
+                            <f:validateRegex pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+                        </b:inputText>
+                        <b:message for="email" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.activeAccount}" />
+                        <b:switch value="#{accountBean.editAccount.active}" on-text="#{msg['true']}" off-text="#{msg['false']}" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.confirmed}" />
+                        <b:switch value="#{accountBean.editAccount.confirmed}" on-text="#{msg['true']}" off-text="#{msg['false']}" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.name}" />
+                        <b:inputText id="name" value="#{accountBean.editAccount.name}" required="true">
+                            <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð]+$" />
+                        </b:inputText>
+                        <b:message for="name" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.surname}" />
+                        <b:inputText id="surname" value="#{accountBean.editAccount.surname}" required="true">
+                            <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð ,.'-]+$" />
+                        </b:inputText>
+                        <b:message for="surname" />
+                    </b:column>
+                </b:row>
+                <b:row id="employeeUpdate" class="itemToUpdate">
+                    <b:column col-md="6" styleClass="viewColumn" rendered="#{accountBean.employeeEdit}">
+                        <h:outputText id="phone" styleClass="viewLabel" value="#{msg.phoneNumber}" />
+                        <b:inputText styleClass="viewValue" value="#{accountBean.phoneEdit}">
+                            <f:validateRegex pattern="^[0-9]{9}$" />
+                        </b:inputText>
+                        <b:message for="phone" />
+                    </b:column>
+                </b:row>
+                <b:row class="itemToUpdate">
+                    <b:column styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.roles}" />
+                        <br />
+                        <b:row>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <h:outputText value="#{roles.ADMIN}" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.adminEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.enabledRole}" update="@(.itemToUpdate)" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.adminActiveEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.activeRole}" class="itemToUpdate" />
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <h:outputText value="#{roles.EMPLOYEE}" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.employeeEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.enabledRole}" update="@(.itemToUpdate)" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.employeeActiveEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.activeRole}" class="itemToUpdate" />
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <h:outputText value="#{roles.CUSTOMER}" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.customerEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.enabledRole}" update="@(.itemToUpdate)" />
+                            </b:column>
+                            <b:column col-md="4" styleClass="viewColumn">
+                                <b:switch value="#{accountBean.customerActiveEdit}" on-text="#{msg['true']}" off-text="#{msg['false']}" caption="#{msg.activeRole}" class="itemToUpdate" />
+                            </b:column>
+                        </b:row>
+                    </b:column>
+                </b:row>
+                <b:commandButton value="#{msg.edit}" icon="pencil" actionListener="#{accountBean.editAccount()}" update="AccountEditForm, editMessages, @(.datalist)"  />
+            </h:form>
+        </b:modal>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title" rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}">#{msg.addOpinion}</ui:define>
+        <ui:define name="title" rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}">#{msg.editOpinion}</ui:define>
+
+        <ui:define name="body">
+            <h1><h:outputText value="#{msg.addOpinion}" rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}"></h:outputText>
+                <h:outputText value="#{msg.editOpinion}" rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}"></h:outputText></h1>
+            <hr />
+            <h:form id="OpinionForm">
+                <b:messages globalOnly="true" />
+                <h:outputText styleClass="viewLabel" value="#{msg.rating}" />
+                <p:rating id="rating" value="#{rentalOpinionBean.customerOpinion.rating}" required="true" cancel="false" />
+                <b:message for="rating" />
+                <br />
+                <h:outputText styleClass="viewLabel" value="#{msg.rentalOpinionContent}" />
+                <b:inputTextarea id="content" placeholder="#{msg.rentalOpinionContent}" value="#{rentalOpinionBean.customerOpinion.content}" required="true" maxlength="500" />
+                <b:message for="content" />
+                <br/>
+                <b:commandButton look="primary " class="btn-big" value="#{msg.addOpinion}" action="#{rentalOpinionBean.updateOpinion()}"  rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.editOpinion}" action="#{rentalOpinionBean.updateOpinion()}"  rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}"/>
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition>
+
+        <b:modal id="ChargeRateCreateDlg" class="createModal" title="#{msg.createChargeRate}" closable="true" close-on-escape="true">
+            <h:form id="ChargeRateCreateForm">
+                <b:messages id="createMessages" globalOnly="true" />
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.timeLimit} (min)" />
+                        <b:inputText id="timeLimit" value="#{chargeRateBean.newChargeRate.timeLimit}" required="true" >
+                            <f:validateLongRange minimum="0" />
+                        </b:inputText>
+                        <b:message for="timeLimit" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.chargeValue}" />
+                        <b:inputText id="chargeValue" value="#{chargeRateBean.newChargeRate.chargeValue}" required="true"  mask="9{1,3}[ 999].99" validatorMessage="#{msg.invalidIdentifier}" >
+                            <f:facet name="append">
+                                <h:outputText value="#{settings.currency}" />
+                            </f:facet>
+                        </b:inputText>
+                        <b:message for="chargeValue" />
+                    </b:column>
+                </b:row>
+                    
+                <b:commandButton value="#{msg.create}" icon="plus" actionListener="#{chargeRateBean.createChargeRate()}" update="ChargeRateCreateForm, @(.datalist)"  />
+            </h:form>
+        </b:modal>
+
+    </ui:composition>
+</html>

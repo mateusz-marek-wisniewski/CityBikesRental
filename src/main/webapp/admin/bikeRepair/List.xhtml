@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/admin/template_new.xhtml">
+
+        <ui:define name="title">#{msg.bikeRepairs}</ui:define>
+        
+        <ui:define name="header">#{msg.bikeRepairs}</ui:define>
+
+        <ui:define name="mainContent">
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeRepairBean.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeRepairBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeRepairBean.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.bike.identifier}" label="#{msg.bikeIdentifier}" />
+                    <b:dataTableColumn label="#{msg.repairDate}" >
+                        <h:outputText value="#{item.startDate}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn value="#{item.repairCost}" label="#{msg.cost} #{settings.currency}" />
+                    <b:dataTableColumn value="#{item.repairLog}" label="#{msg.log}" />
+                </b:dataTable>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeRepairBean.selected}" update="BikeRepairViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeRepairBean.removeBikeRepair()}" update="datalist @(.databuttons)" disabled="#{empty bikeRepairBean.selected}"/>
+            </h:form>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

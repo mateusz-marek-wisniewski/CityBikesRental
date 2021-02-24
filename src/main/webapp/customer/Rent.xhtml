@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.rentBike}</ui:define>
+
+        <ui:define name="body">
+            <h1>#{msg.rentBike}</h1>
+            <hr />
+            <h:form id="RentForm">
+                <b:messages globalOnly="true" />
+                <b:row>
+                    <b:column colMd="6" colSm="12">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
+                        <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
+                        <b:inputText id="bikeStation" class="input-big" value="#{rentBean.bikeStationIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                            <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
+                        </b:inputText>
+                        <b:message for="bikeStation" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
+                        <h:outputText styleClass="viewLabel small" value="#{msg.bikeIdentifierLocation}" />
+                        <b:inputText id="bike" class="input-big" value="#{rentBean.bikeIdentifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                            <f:validateRegex pattern="^[0-9]{5}$" />
+                        </b:inputText>
+                        <b:message for="bike" />
+                    </b:column>
+                </b:row>
+                <br />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.rent}" action="#{rentBean.rent()}" />
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

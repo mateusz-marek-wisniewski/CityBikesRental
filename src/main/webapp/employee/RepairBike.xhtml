@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.describeBikeRepair}</ui:define>
+
+        <ui:define name="body">
+            <h1>#{msg.describeBikeRepair}</h1>
+            <hr />
+            <h:form id="RepairBikeForm">
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeRepairBean.bikesToRepair}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeRepairBean.setBikeSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeRepairBean.setBikeSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeIdentifier}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                </b:dataTable>
+                <b:commandButton look="primary" id="createBikeRepairButton" icon="pencil" class="databuttons btn-big" value="#{msg.describe}" actionListener="#{bikeRepairBean.prepareCreate}" update="BikeRepairCreateDlg" oncomplete="$('.createModal').modal();return false;" disabled="#{empty bikeRepairBean.bikeSelected}"/>
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
+            </h:form>
+        <b:modal id="BikeRepairCreateDlg" class="createModal" title="#{msg.describeBikeRepair}" closable="true" close-on-escape="true">
+            <h:form id="BikeRepairCreateForm">
+                <b:messages id="createMessages" globalOnly="true" />
+                <h:panelGroup rendered="#{not empty bikeRepairBean.bikeSelected}">
+                    <b:row>
+                        <b:column col-md="6" styleClass="viewColumn">
+                            <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
+                            <h:outputText styleClass="viewValue" value="#{bikeRepairBean.bikeSelected.identifier}" />
+                        </b:column>
+                        <b:column col-md="6" styleClass="viewColumn">
+                            <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
+                            <h:outputText styleClass="viewValue" value="#{bikeRepairBean.bikeSelected.damageDesc}" />
+                        </b:column>
+                    </b:row>
+                    <br />
+                    <b:row>
+                        <b:column col-md="6" styleClass="viewColumn">
+                            <h:outputText styleClass="viewLabel" value="#{msg.cost}" />
+                            <b:inputText id="cost" value="#{bikeRepairBean.selected.repairCost}" required="true" mask="9{1,3}[ 999].99" validatorMessage="#{msg.invalidIdentifier}" >
+                                <f:facet name="append">
+                                    <h:outputText value="#{settings.currency}" />
+                                </f:facet>
+                            </b:inputText>
+                            <b:message for="cost" />
+                        </b:column>
+                        <b:column col-md="6" styleClass="viewColumn">
+                            <h:outputText styleClass="viewLabel" value="#{msg.log}" />
+                            <b:inputTextarea id="log" value="#{bikeRepairBean.selected.repairLog}" required="true" size="255" />
+                            <b:message for="log" />
+                        </b:column>
+                    </b:row>
+                    <b:commandButton look="primary" value="#{msg.describe}" icon="pencil" actionListener="#{bikeRepairBean.createRepair()}" update="BikeRepairCreateForm, createMessages, @(.datalist) @(.databuttons)" />
+                </h:panelGroup>
+            </h:form>
+        </b:modal>
+        </ui:define>
+    </ui:composition>
+</html>

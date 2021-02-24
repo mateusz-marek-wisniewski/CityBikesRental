@@ -1,7 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-    <!-- Define Persistence Unit -->
-    <persistence-unit name="my_persistence_unit">
-        
-    </persistence-unit>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="cbradminPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbradminDS</jta-data-source>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Bike</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Rent</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.AccountPassword</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStation</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.ChargeRate</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeRepair</class>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbradminPU"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="cbrmokPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbrmokDS</jta-data-source>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.AccountPassword</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole</class>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbrmokPU"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="cbrmowPU">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/cbrmowDS</jta-data-source>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Bike</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeRepair</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.Rent</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStation</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.ChargeRate</class>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="cbrmowPU"/>
+    </properties>
+  </persistence-unit>
 </persistence>

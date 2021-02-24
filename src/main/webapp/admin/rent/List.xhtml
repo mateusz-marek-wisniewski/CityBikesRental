@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/admin/template_new.xhtml">
+
+        <ui:define name="title">#{msg.rents}</ui:define>
+        
+        <ui:define name="header">#{msg.rents}</ui:define>
+
+        <ui:define name="mainContent">
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{rentBean.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentBean.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn label="#{msg.startDate}" >
+                        <h:outputText value="#{item.startDate}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="#{msg.endDate}" >
+                        <h:outputText value="#{item.endDate}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn value="#{item.rentStation.identifier}" label="#{msg.rentStationIdentifier}" />
+                    <b:dataTableColumn value="#{item.returnStation.identifier}" label="#{msg.returnStationIdentifier}" />
+                    <b:dataTableColumn value="#{item.customerRole.account.login}" label="#{msg.username}" />
+                    <b:dataTableColumn value="#{item.charge}" label="#{msg.charge}" />
+                </b:dataTable>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentBean.selected}" update="RentViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentBean.removeRent()}" update="datalist @(.databuttons)" disabled="#{empty rentBean.selected}"/>
+            </h:form>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

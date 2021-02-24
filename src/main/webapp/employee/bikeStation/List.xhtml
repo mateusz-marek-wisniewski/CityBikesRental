@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.bikeStationList}</ui:define>
+
+        <ui:define name="body">
+            <h1>#{msg.bikeStationList}</h1>
+            <hr />
+            <h:form>
+                <b:dataTable id="datalist" class="datalist"
+                             value="#{bikeStationBean.items}"
+                             var="item"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationBean.setSelected(null);"
+                             selection-mode="single"
+                             responsive="true"
+                             border="false"
+                             lang="#{request.locale.language}"
+                             update="@(.databuttons)" >
+                    <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeStationIdentifier}" />
+                    <b:dataTableColumn value="#{item.city}" label="#{msg.city}" />
+                    <b:dataTableColumn value="#{item.streetName}" label="#{msg.streetName}" />
+                    <b:dataTableColumn value="#{msg[item.status]}" label="#{msg.status}" />
+                    <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
+                    <b:dataTableColumn value="#{item.bikeCollection.size()}" label="#{msg.bikesCount}" />
+                    <b:dataTableColumn value="#{item.rentCollection.size()}" label="#{msg.rents}" />
+                    <b:dataTableColumn value="#{item.returnCollection.size()}" label="#{msg.returns}" />
+                </b:dataTable>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationBean.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <br />
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
+            </h:form>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

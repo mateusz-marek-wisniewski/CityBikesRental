@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition>
+
+        <b:modal id="BikeEditDlg" class="editModal" title="#{msg.editBike}" closable="true" close-on-escape="true">
+            <h:form id="BikeEditForm">
+                <b:messages id="editMessages" globalOnly="true" />
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
+                        <b:inputText id="identifier" value="#{bikeBean.editBike.identifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                            <f:validateRegex pattern="^[0-9]{5}$" />
+                        </b:inputText>
+                        <b:message for="identifier" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStation}" />
+                        <b:selectOneMenu id="bikeStation" value="#{bikeBean.editBike.bikeStation}"  >
+                            <f:selectItem itemValue="#{null}" itemLabel="#{msg.detached}"/>
+                            <f:selectItems value="#{bikeStationBean.itemsAvailableSelectOne}"
+                                           var="bikeStationItem"
+                                           itemValue="#{bikeStationItem}"
+                                           itemLabel="#{bikeStationItem.identifier}, #{bikeStationItem.city} #{bikeStationItem.streetName}"
+                                           />
+                        </b:selectOneMenu>
+                        <b:message for="bikeStation" />
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.status}" />
+                        <b:selectOneMenu id="bikeStatus" value="#{bikeBean.editBike.bikeStatus}" >
+                            <f:selectItem itemValue="working" itemLabel="#{msg.working}"/>
+                            <f:selectItem itemValue="damaged" itemLabel="#{msg.damaged}"/>
+                        </b:selectOneMenu>
+                        <b:message for="bikeStatus" />
+                    </b:column>
+                    <b:column col-md="6" styleClass="viewColumn">
+                        <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
+                        <b:inputTextarea id="damageDesc" value="#{bikeBean.editBike.damageDesc}" size="255" />
+                        <b:message for="damageDesc" />
+                    </b:column>
+                </b:row>
+                <b:commandButton value="#{msg.edit}" icon="pencil" actionListener="#{bikeBean.editBike()}" update="BikeEditForm, editMessages, @(.datalist)"  />
+            </h:form>
+        </b:modal>
+
+    </ui:composition>
+</html>

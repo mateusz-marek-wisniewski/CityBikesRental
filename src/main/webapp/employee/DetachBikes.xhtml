@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">#{msg.detachBikes}</ui:define>
+
+        <ui:define name="body">
+            <h1>#{msg.detachBikes}</h1>
+            <hr />
+            <h:form id="DetachBikeForm">
+                <b:messages class="messages" globalOnly="true" />
+                <b:row>
+                    <b:column colMd="6" colSm="12">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
+                        <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
+                        <b:inputText id="bikeStation" class="input-big" value="#{bikeBean.bikeIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}" onchange="ajax:bikeBean.getBikesToDetachOnChange();" update="@form">
+                            <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
+                        </b:inputText>
+                        <b:message for="bikeStation" />
+                    </b:column>
+                    <b:column colMd="6" colSm="12" rendered="#{not empty bikeBean.bikesToDetach}">
+                        <h:outputText styleClass="viewLabel" value="#{msg.bikesToDetach}" />
+                        <b:dataTable id="bikesToAttachList" class="datalist"
+                                     value="#{bikeBean.bikesToDetach}"
+                                     var="item"
+                                     onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeBean.onSelectDetach(item);"
+                                     ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeBean.onDeselectDetach(item);"
+                                     responsive="true"
+                                     border="false"
+                                     lang="#{request.locale.language}"
+                                     selectionInfo="false"
+                                     update="@(.viewLabel) @(.datalist2)" >
+                            <b:dataTableColumn selectionMode="multiple" />
+                            <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeIdentifier}" />
+                        </b:dataTable>
+                    </b:column>
+                </b:row>
+                <br />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.detach}" action="#{bikeBean.detachBikes()}" rendered="#{not empty bikeBean.bikesToDetach}" />
+                <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

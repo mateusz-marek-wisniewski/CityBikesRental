@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>#{msg.signup} - #{msg.appName}</title>
+        <h:outputStylesheet library="css" name="login.css"/>
+    </h:head>
+    <h:body class="text-center">
+        <b:container>
+            <h:form styleClass="form-register">
+                <h1 class="font-weight-normal" style="margin-bottom: 1em;">#{msg.signup}</h1>
+                
+                <b:messages globalOnly="true" />
+                
+                <b:inputText id="username" placeholder="#{msg.username} *" value="#{registrationBean.username}" required="true">
+                    <f:validateRegex pattern="^[a-zA-Z0-9_]+$" />
+                </b:inputText>
+                <b:message for="username" />
+                
+                <b:inputSecret id="password" placeholder="#{msg.password} *" value="#{registrationBean.password}" required="true">
+                    <f:validateLength minimum="8" />
+                </b:inputSecret>
+                <b:message for="password" />
+                
+                <b:inputSecret id="password2" placeholder="#{msg.password2} *" value="#{registrationBean.password2}"  required="true" />
+                <b:message for="password2" />
+                
+                <b:inputText id="email" placeholder="#{msg.email} *" value="#{registrationBean.email}" required="true">
+                    <f:validateRegex pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+                </b:inputText>
+                <b:message for="email" />
+                
+                <b:inputText id="name" placeholder="#{msg.name} *" value="#{registrationBean.name}" required="true">
+                    <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð]+$" />
+                </b:inputText>
+                <b:message for="name" />
+                
+                <b:inputText id="surname" placeholder="#{msg.surname} *" value="#{registrationBean.surname}" required="true">
+                    <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð ,.'-]+$" />
+                </b:inputText>
+                <b:message for="surname" />
+                
+                <b:commandButton look="primary btn-block" value="#{msg.signup} *" icon="circle-arrow-up" size="lg" action="#{registrationBean.create}"/>
+                <p id="footer" class="text-muted">#{msg.cbr_footer_simple}</p>
+            </h:form>
+        </b:container>
+    </h:body>
+</html>
+
