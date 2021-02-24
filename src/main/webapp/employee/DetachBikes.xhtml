@@ -20,18 +20,18 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
-                        <b:inputText id="bikeStation" class="input-big" value="#{bikeController.bikeIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}" onchange="ajax:bikeController.getBikesToDetachOnChange();" update="@form">
+                        <b:inputText id="bikeStation" class="input-big" value="#{bikeBean.bikeIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}" onchange="ajax:bikeBean.getBikesToDetachOnChange();" update="@form">
                             <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
                         </b:inputText>
                         <b:message for="bikeStation" />
                     </b:column>
-                    <b:column colMd="6" colSm="12" rendered="#{not empty bikeController.bikesToDetach}">
+                    <b:column colMd="6" colSm="12" rendered="#{not empty bikeBean.bikesToDetach}">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikesToDetach}" />
                         <b:dataTable id="bikesToAttachList" class="datalist"
-                                     value="#{bikeController.bikesToDetach}"
+                                     value="#{bikeBean.bikesToDetach}"
                                      var="item"
-                                     onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeController.onSelectDetach(item);"
-                                     ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeController.onDeselectDetach(item);"
+                                     onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeBean.onSelectDetach(item);"
+                                     ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeBean.onDeselectDetach(item);"
                                      responsive="true"
                                      border="false"
                                      lang="#{request.locale.language}"
@@ -43,7 +43,7 @@
                     </b:column>
                 </b:row>
                 <br />
-                <b:commandButton look="primary " class="btn-big" value="#{msg.detach}" action="#{bikeController.detachBikes()}" rendered="#{not empty bikeController.bikesToDetach}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.detach}" action="#{bikeBean.detachBikes()}" rendered="#{not empty bikeBean.bikesToDetach}" />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
             </h:form>
         </ui:define>

@@ -16,10 +16,10 @@
             <hr />
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{bikeStationController.items}"
+                             value="#{bikeStationBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -34,7 +34,7 @@
                     <b:dataTableColumn value="#{item.rentCollection.size()}" label="#{msg.rents}" />
                     <b:dataTableColumn value="#{item.returnCollection.size()}" label="#{msg.returns}" />
                 </b:dataTable>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationController.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationBean.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
                 <br />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
             </h:form>

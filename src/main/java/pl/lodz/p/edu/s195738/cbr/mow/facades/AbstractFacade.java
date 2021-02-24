@@ -14,7 +14,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
 
 /**
  *

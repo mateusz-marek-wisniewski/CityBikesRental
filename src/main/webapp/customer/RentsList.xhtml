@@ -17,7 +17,7 @@
                 <hr />
                 <b:messages globalOnly="true" />
                 <b:row>
-                    <p:repeat value="#{rentController.customerRentList}" var="rent" >
+                    <p:repeat value="#{rentBean.customerRentList}" var="rent" >
                         <b:column>
                             <b:commandLink look="block" class="scroll-list-item" >
                                 <b:row>
@@ -48,8 +48,8 @@
                                 <h:outputText style="font-size: 39px;" value="#{rent.bike.identifier}" />
                                 <b:row rendered="#{not empty rent.charge}">
                                     <b:column class="payment" colMd="6" colSm="12">
-                                        <b:commandButton value="#{msg.pay}" action="#{rentController.pay()}" update="@(.payment)" rendered="#{not rent.isPaid}" >
-                                            <f:setPropertyActionListener value="#{rent}" target="#{rentController.selected}" />
+                                        <b:commandButton value="#{msg.pay}" action="#{rentBean.pay()}" update="@(.payment)" rendered="#{not rent.isPaid}" >
+                                            <f:setPropertyActionListener value="#{rent}" target="#{rentBean.selected}" />
                                         </b:commandButton>
                                         <h:outputText styleClass="text-muted" value="#{msg.paid}" rendered="#{rent.isPaid}" />
                                     </b:column>

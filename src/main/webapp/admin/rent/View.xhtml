@@ -14,13 +14,13 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.startDate}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.startDate}" >
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.startDate}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.endDate}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.endDate}" >
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.endDate}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
@@ -28,21 +28,21 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.rentStationIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.rentStation.identifier}" />
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.rentStation.identifier}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.returnStationIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.returnStation.identifier}" />
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.returnStation.identifier}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.username}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.customerRole.account.login}" />
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.customerRole.account.login}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.charge}" />
-                        <h:outputText styleClass="viewValue" value="#{rentController.selected.charge}" />
+                        <h:outputText styleClass="viewValue" value="#{rentBean.selected.charge}" />
                     </b:column>
                 </b:row>
             </h:form>

@@ -18,10 +18,10 @@
                 <h:outputText class="viewLabel" value="#{msg.bikes}" />
                 <br />
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{bikeController.bikesReported}"
+                             value="#{bikeBean.bikesReported}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationBean.setSelected(null);"
                              select="false"
                              responsive="true"
                              border="false"
@@ -34,10 +34,10 @@
                 <h:outputText class="viewLabel" value="#{msg.bikeStations}" />
                 <br />
                 <b:dataTable id="datalistStations" class="datalist"
-                             value="#{bikeStationController.bikeStationsReported}"
+                             value="#{bikeStationBean.bikeStationsReported}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationBean.setSelected(null);"
                              select="false"
                              responsive="true"
                              border="false"

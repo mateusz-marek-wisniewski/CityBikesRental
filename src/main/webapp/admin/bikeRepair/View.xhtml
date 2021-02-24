@@ -14,13 +14,13 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeRepairController.selected.bike.identifier}" >
+                        <h:outputText styleClass="viewValue" value="#{bikeRepairBean.selected.bike.identifier}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.repairDate}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeRepairController.selected.startDate}" >
+                        <h:outputText styleClass="viewValue" value="#{bikeRepairBean.selected.startDate}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
@@ -28,11 +28,11 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.cost}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeRepairController.selected.repairCost} #{settings.currency}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeRepairBean.selected.repairCost} #{settings.currency}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.log}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeRepairController.selected.repairLog}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeRepairBean.selected.repairLog}" />
                     </b:column>
                 </b:row>
             </h:form>

@@ -14,13 +14,13 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.selected.bikeStation.identifier}" >
+                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.selected.bikeStation.identifier}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.repairDate}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.selected.startDate}" >
+                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.selected.startDate}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
@@ -28,11 +28,11 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.cost}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.selected.repairCost} #{settings.currency}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.selected.repairCost} #{settings.currency}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.log}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.selected.repairLog}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.selected.repairLog}" />
                     </b:column>
                 </b:row>
             </h:form>

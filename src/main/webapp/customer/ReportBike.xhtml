@@ -20,19 +20,19 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeIdentifierLocation}" />
-                        <b:inputText id="bike" class="input-big" value="#{bikeController.bikeIdentifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="bike" class="input-big" value="#{bikeBean.bikeIdentifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[0-9]{5}$" />
                         </b:inputText>
                         <b:message for="bike" />
                     </b:column>
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <b:inputTextarea id="description" placeholder="#{msg.damageDescription}" value="#{bikeController.damageDescription}" required="true" maxlength="255" />
+                        <b:inputTextarea id="description" placeholder="#{msg.damageDescription}" value="#{bikeBean.damageDescription}" required="true" maxlength="255" />
                         <b:message for="description" />
                     </b:column>
                 </b:row>
                 <br />
-                <b:commandButton look="primary " class="btn-big" value="#{msg.report}" action="#{bikeController.report()}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.report}" action="#{bikeBean.report()}" />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
             </h:form>
         </ui:define>

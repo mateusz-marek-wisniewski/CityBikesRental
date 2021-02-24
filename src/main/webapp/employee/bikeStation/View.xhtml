@@ -14,37 +14,37 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.identifier}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.identifier}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.city}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.city}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.city}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.streetName}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.streetName}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.streetName}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.status}" />
-                        <h:outputText styleClass="viewValue" value="#{msg[bikeStationController.selected.status]}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[bikeStationBean.selected.status]}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.geolocLatitude}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.geolocLatitude}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.geolocLatitude}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.geolocLongitude}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.geolocLongitude}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.geolocLongitude}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeStationController.selected.damageDesc}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeStationBean.selected.damageDesc}" />
                     </b:column>
                 </b:row>
             </h:form>

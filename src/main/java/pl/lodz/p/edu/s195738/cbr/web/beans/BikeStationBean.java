@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStation;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationFacade;
 
 import java.io.Serializable;
@@ -23,9 +23,9 @@ import javax.faces.convert.FacesConverter;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("bikeStationController")
+@Named("bikeStationBean")
 @SessionScoped
-public class BikeStationController implements Serializable {
+public class BikeStationBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationFacade ejbFacade;
@@ -42,7 +42,7 @@ public class BikeStationController implements Serializable {
     private String bikeStationIdentifier;
     private String damageDescription;
 
-    public BikeStationController() {
+    public BikeStationBean() {
     }
 
     public BikeStation getSelected() {
@@ -238,16 +238,16 @@ public class BikeStationController implements Serializable {
     }
 
     @FacesConverter(forClass = BikeStation.class)
-    public static class BikeStationControllerConverter implements Converter {
+    public static class BikeStationBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            BikeStationController controller = (BikeStationController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "bikeStationController");
-            return controller.getBikeStation(getKey(value));
+            BikeStationBean bean = (BikeStationBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "bikeStationBean");
+            return bean.getBikeStation(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

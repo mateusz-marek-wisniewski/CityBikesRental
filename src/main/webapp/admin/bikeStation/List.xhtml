@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{bikeStationController.items}"
+                             value="#{bikeStationBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -33,10 +33,10 @@
                     <b:dataTableColumn value="#{msg[item.status]}" label="#{msg.status}" />
                     <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
                 </b:dataTable>
-                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{bikeStationController.prepareCreate}" update="BikeStationCreateForm" oncomplete="$('.createModal').modal();return false;" />
-                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{bikeStationController.prepareEdit}" update="BikeStationEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty bikeStationController.selected}"/>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationController.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationController.removeBikeStation()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationController.selected}"/>
+                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{bikeStationBean.prepareCreate}" update="BikeStationCreateForm" oncomplete="$('.createModal').modal();return false;" />
+                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{bikeStationBean.prepareEdit}" update="BikeStationEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty bikeStationBean.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationBean.selected}" update="BikeStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationBean.removeBikeStation()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationBean.selected}"/>
             </h:form>
             <ui:include src="Create.xhtml"/>
             <ui:include src="View.xhtml"/>

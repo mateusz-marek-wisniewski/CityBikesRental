@@ -16,10 +16,10 @@
             <hr />
             <h:form id="RepairBikeStationForm">
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{bikeStationRepairController.bikeStationsToRepair}"
+                             value="#{bikeStationRepairBean.bikeStationsToRepair}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationRepairController.setBikeStationSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationRepairController.setBikeStationSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationRepairBean.setBikeStationSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationRepairBean.setBikeStationSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -28,28 +28,28 @@
                     <b:dataTableColumn value="#{item.identifier}" label="#{msg.bikeStationIdentifier}" />
                     <b:dataTableColumn value="#{item.damageDesc}" label="#{msg.damageDescription}" />
                 </b:dataTable>
-                <b:commandButton look="primary" id="createBikeStationRepairButton" icon="pencil" class="databuttons btn-big" value="#{msg.describe}" actionListener="#{bikeStationRepairController.prepareCreate}" update="BikeStationRepairCreateDlg" oncomplete="$('.createModal').modal();return false;" disabled="#{empty bikeStationRepairController.bikeStationSelected}"/>
+                <b:commandButton look="primary" id="createBikeStationRepairButton" icon="pencil" class="databuttons btn-big" value="#{msg.describe}" actionListener="#{bikeStationRepairBean.prepareCreate}" update="BikeStationRepairCreateDlg" oncomplete="$('.createModal').modal();return false;" disabled="#{empty bikeStationRepairBean.bikeStationSelected}"/>
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
             </h:form>
         <b:modal id="BikeStationRepairCreateDlg" class="createModal" title="#{msg.describeStationRepair}" closable="true" close-on-escape="true">
             <h:form id="BikeStationRepairCreateForm">
                 <b:messages id="createMessages" globalOnly="true" />
-                <h:panelGroup rendered="#{not empty bikeStationRepairController.bikeStationSelected}">
+                <h:panelGroup rendered="#{not empty bikeStationRepairBean.bikeStationSelected}">
                     <b:row>
                         <b:column col-md="6" styleClass="viewColumn">
                             <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
-                            <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.bikeStationSelected.identifier}" />
+                            <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.bikeStationSelected.identifier}" />
                         </b:column>
                         <b:column col-md="6" styleClass="viewColumn">
                             <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                            <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.bikeStationSelected.damageDesc}" />
+                            <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.bikeStationSelected.damageDesc}" />
                         </b:column>
                     </b:row>
                     <br />
                     <b:row>
                         <b:column col-md="6" styleClass="viewColumn">
                             <h:outputText styleClass="viewLabel" value="#{msg.cost}" />
-                            <b:inputText id="cost" value="#{bikeStationRepairController.selected.repairCost}" required="true" mask="9{1,3}[ 999].99" validatorMessage="#{msg.invalidIdentifier}" >
+                            <b:inputText id="cost" value="#{bikeStationRepairBean.selected.repairCost}" required="true" mask="9{1,3}[ 999].99" validatorMessage="#{msg.invalidIdentifier}" >
                                 <f:facet name="append">
                                     <h:outputText value="#{settings.currency}" />
                                 </f:facet>
@@ -58,11 +58,11 @@
                         </b:column>
                         <b:column col-md="6" styleClass="viewColumn">
                             <h:outputText styleClass="viewLabel" value="#{msg.log}" />
-                            <b:inputTextarea id="log" value="#{bikeStationRepairController.selected.repairLog}" required="true" size="255" />
+                            <b:inputTextarea id="log" value="#{bikeStationRepairBean.selected.repairLog}" required="true" size="255" />
                             <b:message for="log" />
                         </b:column>
                     </b:row>
-                    <b:commandButton look="primary" value="#{msg.describe}" icon="pencil" actionListener="#{bikeStationRepairController.createRepair()}" update="BikeStationRepairCreateForm, createMessages, @(.datalist) @(.databuttons)" />
+                    <b:commandButton look="primary" value="#{msg.describe}" icon="pencil" actionListener="#{bikeStationRepairBean.createRepair()}" update="BikeStationRepairCreateForm, createMessages, @(.datalist) @(.databuttons)" />
                 </h:panelGroup>
             </h:form>
         </b:modal>

@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.ChargeRate;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mow.facades.ChargeRateFacade;
 
 import java.io.Serializable;
@@ -22,9 +22,9 @@ import javax.faces.convert.FacesConverter;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("chargeRateController")
+@Named("chargeRateBean")
 @SessionScoped
-public class ChargeRateController implements Serializable {
+public class ChargeRateBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mow.facades.ChargeRateFacade ejbFacade;
@@ -37,7 +37,7 @@ public class ChargeRateController implements Serializable {
     
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-    public ChargeRateController() {
+    public ChargeRateBean() {
     }
 
     public ChargeRate getSelected() {
@@ -184,16 +184,16 @@ public class ChargeRateController implements Serializable {
     }
 
     @FacesConverter(forClass = ChargeRate.class)
-    public static class ChargeRateControllerConverter implements Converter {
+    public static class ChargeRateBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ChargeRateController controller = (ChargeRateController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "chargeRateController");
-            return controller.getChargeRate(getKey(value));
+            ChargeRateBean bean = (ChargeRateBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "chargeRateBean");
+            return bean.getChargeRate(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

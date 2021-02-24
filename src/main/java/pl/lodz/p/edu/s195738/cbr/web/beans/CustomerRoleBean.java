@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade;
 
 import java.io.Serializable;
@@ -19,16 +19,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("customerRoleController")
+@Named("customerRoleBean")
 @SessionScoped
-public class CustomerRoleController implements Serializable {
+public class CustomerRoleBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade ejbFacade;
     private List<CustomerRole> items = null;
     private CustomerRole selected;
 
-    public CustomerRoleController() {
+    public CustomerRoleBean() {
     }
 
     public CustomerRole getSelected() {
@@ -122,16 +122,16 @@ public class CustomerRoleController implements Serializable {
     }
 
     @FacesConverter(forClass = CustomerRole.class)
-    public static class CustomerRoleControllerConverter implements Converter {
+    public static class CustomerRoleBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CustomerRoleController controller = (CustomerRoleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "customerRoleController");
-            return controller.getCustomerRole(getKey(value));
+            CustomerRoleBean bean = (CustomerRoleBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "customerRoleBean");
+            return bean.getCustomerRole(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

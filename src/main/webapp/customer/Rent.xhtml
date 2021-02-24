@@ -20,7 +20,7 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
-                        <b:inputText id="bikeStation" class="input-big" value="#{rentController.bikeStationIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="bikeStation" class="input-big" value="#{rentBean.bikeStationIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
                         </b:inputText>
                         <b:message for="bikeStation" />
@@ -28,14 +28,14 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeIdentifierLocation}" />
-                        <b:inputText id="bike" class="input-big" value="#{rentController.bikeIdentifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="bike" class="input-big" value="#{rentBean.bikeIdentifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[0-9]{5}$" />
                         </b:inputText>
                         <b:message for="bike" />
                     </b:column>
                 </b:row>
                 <br />
-                <b:commandButton look="primary " class="btn-big" value="#{msg.rent}" action="#{rentController.rent()}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.rent}" action="#{rentBean.rent()}" />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
             </h:form>
         </ui:define>

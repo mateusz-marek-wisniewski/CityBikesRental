@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.LoginAttemptFacade;
 
 import java.io.Serializable;
@@ -19,16 +19,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("loginAttemptController")
+@Named("loginAttemptBean")
 @SessionScoped
-public class LoginAttemptController implements Serializable {
+public class LoginAttemptBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mok.facades.LoginAttemptFacade ejbFacade;
     private List<LoginAttempt> items = null;
     private LoginAttempt selected;
 
-    public LoginAttemptController() {
+    public LoginAttemptBean() {
     }
 
     public LoginAttempt getSelected() {
@@ -122,16 +122,16 @@ public class LoginAttemptController implements Serializable {
     }
 
     @FacesConverter(forClass = LoginAttempt.class)
-    public static class LoginAttemptControllerConverter implements Converter {
+    public static class LoginAttemptBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            LoginAttemptController controller = (LoginAttemptController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "loginAttemptController");
-            return controller.getLoginAttempt(getKey(value));
+            LoginAttemptBean bean = (LoginAttemptBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "loginAttemptBean");
+            return bean.getLoginAttempt(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

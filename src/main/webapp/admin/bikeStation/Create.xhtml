@@ -15,14 +15,14 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
-                        <b:inputText id="bikeStationIdentifier" value="#{bikeStationController.newBikeStation.identifier}" required="true" mask="AA999" placeholder="#{msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="bikeStationIdentifier" value="#{bikeStationBean.newBikeStation.identifier}" required="true" mask="AA999" placeholder="#{msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
                         </b:inputText>
                         <b:message for="bikeStationIdentifier" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.city}" />
-                        <b:inputText id="city" value="#{bikeStationController.newBikeStation.city}" required="true">
+                        <b:inputText id="city" value="#{bikeStationBean.newBikeStation.city}" required="true">
                             <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð ,.'-]+$" />
                         </b:inputText>
                         <b:message for="city" />
@@ -31,14 +31,14 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.streetName}" />
-                        <b:inputText id="streetName" value="#{bikeStationController.newBikeStation.streetName}" required="true" >
+                        <b:inputText id="streetName" value="#{bikeStationBean.newBikeStation.streetName}" required="true" >
                             <f:validateRegex pattern="^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšśžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŚŽ∂ð ,.'-]+$" />
                         </b:inputText>
                         <b:message for="streetName" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.status}" />
-                        <b:selectOneMenu id="bikeStatus" value="#{bikeStationController.newBikeStation.status}" >
+                        <b:selectOneMenu id="bikeStatus" value="#{bikeStationBean.newBikeStation.status}" >
                             <f:selectItem itemValue="working" itemLabel="#{msg.working}"/>
                             <f:selectItem itemValue="damaged" itemLabel="#{msg.damaged}"/>
                         </b:selectOneMenu>
@@ -48,24 +48,24 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.geolocLatitude}" />
-                        <b:inputText id="geolocLatitude" value="#{bikeStationController.newBikeStation.geolocLatitude}" required="true" mask="9{1,3}.999999" />
+                        <b:inputText id="geolocLatitude" value="#{bikeStationBean.newBikeStation.geolocLatitude}" required="true" mask="9{1,3}.999999" />
                         <b:message for="geolocLatitude" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.geolocLongitude}" />
-                        <b:inputText id="geolocLongitude" value="#{bikeStationController.newBikeStation.geolocLongitude}" required="true" mask="9{1,3}.999999" />
+                        <b:inputText id="geolocLongitude" value="#{bikeStationBean.newBikeStation.geolocLongitude}" required="true" mask="9{1,3}.999999" />
                         <b:message for="geolocLongitude" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <b:inputTextarea id="damageDescription" value="#{bikeStationController.newBikeStation.damageDesc}" size="255"  />
+                        <b:inputTextarea id="damageDescription" value="#{bikeStationBean.newBikeStation.damageDesc}" size="255"  />
                         <b:message for="damageDescription" />
                     </b:column>
                 </b:row>
                     
-                <b:commandButton value="#{msg.create}" icon="plus" actionListener="#{bikeStationController.createBikeStation()}" update="BikeStationCreateForm, @(.datalist)"  />
+                <b:commandButton value="#{msg.create}" icon="plus" actionListener="#{bikeStationBean.createBikeStation()}" update="BikeStationCreateForm, @(.datalist)"  />
             </h:form>
         </b:modal>
 

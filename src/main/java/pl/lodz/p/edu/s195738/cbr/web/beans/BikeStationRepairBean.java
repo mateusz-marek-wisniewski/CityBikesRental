@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.BikeStationRepair;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationRepairFacade;
 
 import java.io.Serializable;
@@ -24,9 +24,9 @@ import pl.lodz.p.edu.s195738.cbr.entities.BikeStation;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("bikeStationRepairController")
+@Named("bikeStationRepairBean")
 @SessionScoped
-public class BikeStationRepairController implements Serializable {
+public class BikeStationRepairBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mow.facades.BikeStationRepairFacade ejbFacade;
@@ -40,7 +40,7 @@ public class BikeStationRepairController implements Serializable {
     private List<BikeStation> bikeStationsToRepair = null;
     private BikeStation bikeStationSelected;
 
-    public BikeStationRepairController() {
+    public BikeStationRepairBean() {
     }
 
     public BikeStationRepair getSelected() {
@@ -174,16 +174,16 @@ public class BikeStationRepairController implements Serializable {
     }
 
     @FacesConverter(forClass = BikeStationRepair.class)
-    public static class BikeStationRepairControllerConverter implements Converter {
+    public static class BikeStationRepairBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            BikeStationRepairController controller = (BikeStationRepairController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "bikeStationRepairController");
-            return controller.getRepair(getKey(value));
+            BikeStationRepairBean bean = (BikeStationRepairBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "bikeStationRepairBean");
+            return bean.getRepair(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

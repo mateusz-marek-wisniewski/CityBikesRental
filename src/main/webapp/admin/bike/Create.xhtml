@@ -15,16 +15,16 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
-                        <b:inputText id="identifier" value="#{bikeController.newBike.identifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="identifier" value="#{bikeBean.newBike.identifier}" required="true" mask="99999" placeholder="#{msg.bikeIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[0-9]{5}$" />
                         </b:inputText>
                         <b:message for="identifier" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStation}" />
-                        <b:selectOneMenu id="bikeStation" value="#{bikeController.newBike.bikeStation}" hideNoSelectionOption="false" >
+                        <b:selectOneMenu id="bikeStation" value="#{bikeBean.newBike.bikeStation}" hideNoSelectionOption="false" >
                             <f:selectItem itemValue="#{null}" itemLabel="#{msg.detached}" noSelectionOption="true"/>
-                            <f:selectItems value="#{bikeStationController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{bikeStationBean.itemsAvailableSelectOne}"
                                            var="bikeStationItem"
                                            itemValue="#{bikeStationItem}"
                                            itemLabel="#{bikeStationItem.identifier}, #{bikeStationItem.city} #{bikeStationItem.streetName}"
@@ -36,7 +36,7 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.status}" />
-                        <b:selectOneMenu id="bikeStatus" value="#{bikeController.newBike.bikeStatus}" >
+                        <b:selectOneMenu id="bikeStatus" value="#{bikeBean.newBike.bikeStatus}" >
                             <f:selectItem itemValue="working" itemLabel="#{msg.working}"/>
                             <f:selectItem itemValue="damaged" itemLabel="#{msg.damaged}"/>
                         </b:selectOneMenu>
@@ -44,12 +44,12 @@
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <b:inputTextarea id="damageDesc" value="#{bikeController.newBike.damageDesc}" size="255" />
+                        <b:inputTextarea id="damageDesc" value="#{bikeBean.newBike.damageDesc}" size="255" />
                         <b:message for="damageDesc" />
                     </b:column>
                 </b:row>
                     
-                <b:commandButton value="#{msg.create}" icon="plus" actionListener="#{bikeController.createBike()}" update="BikeCreateForm, @(.datalist)"  />
+                <b:commandButton value="#{msg.create}" icon="plus" actionListener="#{bikeBean.createBike()}" update="BikeCreateForm, @(.datalist)"  />
             </h:form>
         </b:modal>
 

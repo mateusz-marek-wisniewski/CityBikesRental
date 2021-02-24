@@ -14,11 +14,11 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.timeLimit} (min)" />
-                        <h:outputText styleClass="viewValue" value="#{chargeRateController.selected.timeLimit}" />
+                        <h:outputText styleClass="viewValue" value="#{chargeRateBean.selected.timeLimit}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.chargeValue}" />
-                        <h:outputText styleClass="viewValue" value="#{chargeRateController.selected.chargeValue} #{settings.currency}" />
+                        <h:outputText styleClass="viewValue" value="#{chargeRateBean.selected.chargeValue} #{settings.currency}" />
                     </b:column>
                 </b:row>
             </h:form>

@@ -14,21 +14,21 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeIdentifier}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.identifier}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeBean.selected.identifier}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStation}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.bikeStation.identifier}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeBean.selected.bikeStation.identifier}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.status}" />
-                        <h:outputText styleClass="viewValue" value="#{msg[bikeController.selected.bikeStatus]}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[bikeBean.selected.bikeStatus]}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <h:outputText styleClass="viewValue" value="#{bikeController.selected.damageDesc}" />
+                        <h:outputText styleClass="viewValue" value="#{bikeBean.selected.damageDesc}" />
                     </b:column>
                 </b:row>
             </h:form>

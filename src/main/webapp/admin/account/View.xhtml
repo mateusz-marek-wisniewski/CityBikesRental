@@ -14,45 +14,45 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.username}" />
-                        <h:outputText styleClass="viewValue" value="#{accountController.selected.login}" />
+                        <h:outputText styleClass="viewValue" value="#{accountBean.selected.login}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.email}" />
-                        <h:outputText styleClass="viewValue" value="#{accountController.selected.email}" />
+                        <h:outputText styleClass="viewValue" value="#{accountBean.selected.email}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.name}" />
-                        <h:outputText styleClass="viewValue" value="#{accountController.selected.name}" />
+                        <h:outputText styleClass="viewValue" value="#{accountBean.selected.name}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.surname}" />
-                        <h:outputText styleClass="viewValue" value="#{accountController.selected.surname}" />
+                        <h:outputText styleClass="viewValue" value="#{accountBean.selected.surname}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.activeAccount}" />
-                        <h:outputText styleClass="viewValue" value="#{msg[accountController.selected.active]}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[accountBean.selected.active]}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.confirmed}" />
-                        <h:outputText styleClass="viewValue" value="#{msg[accountController.selected.confirmed]}" />
+                        <h:outputText styleClass="viewValue" value="#{msg[accountBean.selected.confirmed]}" />
                     </b:column>
                 </b:row>
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.roles}" />
-                        <h:outputText style="display:block;" value="#{roles.ADMIN} (#{accountController.selected.adminRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.adminRole}" />
-                        <h:outputText style="display:block;" value="#{roles.EMPLOYEE} (#{accountController.selected.employeeRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.employeeRole}" />
-                        <h:outputText style="display:block;" value="#{roles.CUSTOMER} (#{accountController.selected.customerRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountController.selected.customerRole}" />
+                        <h:outputText style="display:block;" value="#{roles.ADMIN} (#{accountBean.selected.adminRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountBean.selected.adminRole}" />
+                        <h:outputText style="display:block;" value="#{roles.EMPLOYEE} (#{accountBean.selected.employeeRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountBean.selected.employeeRole}" />
+                        <h:outputText style="display:block;" value="#{roles.CUSTOMER} (#{accountBean.selected.customerRole.active ? msg.active_true : msg.active_false})" rendered="#{not empty accountBean.selected.customerRole}" />
                     </b:column>
                 </b:row>
                 <b:row>
-                    <b:column col-md="6" styleClass="viewColumn" rendered="#{not empty accountController.selected.employeeRole}">
+                    <b:column col-md="6" styleClass="viewColumn" rendered="#{not empty accountBean.selected.employeeRole}">
                         <h:outputText styleClass="viewLabel" value="#{msg.phoneNumber}" />
-                        <h:outputText styleClass="viewValue" value="#{accountController.selected.employeeRole.phone}" />
+                        <h:outputText styleClass="viewValue" value="#{accountBean.selected.employeeRole.phone}" />
                     </b:column>
                 </b:row>
                 <br />
@@ -62,12 +62,12 @@
                         <h:outputText styleClass="viewLabel" value="#{msg.latestSuccessulLoginAttempt}" />
                     </b:column>
                     <b:column col-md="4">
-                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(true).loginDate}">
+                        <h:outputText styleClass="text-muted" value="#{accountBean.selected.getLatestLoginAttemptBySuccess(true).loginDate}">
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
                     <b:column col-md="3">
-                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(true).ipAddress}" />
+                        <h:outputText styleClass="text-muted" value="#{accountBean.selected.getLatestLoginAttemptBySuccess(true).ipAddress}" />
                     </b:column>
                 </b:row>
                 <b:row>
@@ -75,12 +75,12 @@
                         <h:outputText styleClass="viewLabel" value="#{msg.latestUnsuccessulLoginAttempt}" />
                     </b:column>
                     <b:column col-md="4">
-                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(false).loginDate}">
+                        <h:outputText styleClass="text-muted" value="#{accountBean.selected.getLatestLoginAttemptBySuccess(false).loginDate}">
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
                     <b:column col-md="3">
-                        <h:outputText styleClass="text-muted" value="#{accountController.selected.getLatestLoginAttemptBySuccess(false).ipAddress}" />
+                        <h:outputText styleClass="text-muted" value="#{accountBean.selected.getLatestLoginAttemptBySuccess(false).ipAddress}" />
                     </b:column>
                 </b:row>
             </h:form>

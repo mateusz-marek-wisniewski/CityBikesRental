@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{chargeRateController.items}"
+                             value="#{chargeRateBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:chargeRateController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:chargeRateController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:chargeRateBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:chargeRateBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -28,10 +28,10 @@
                     <b:dataTableColumn value="#{item.timeLimit}" label="#{msg.timeLimit} (min)" />
                     <b:dataTableColumn value="#{item.chargeValue}" label="#{msg.chargeValue} (#{settings.currency})" />
                 </b:dataTable>
-                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{chargeRateController.prepareCreate}" update="ChargeRateCreateForm" oncomplete="$('.createModal').modal();return false;" />
-                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{chargeRateController.prepareEdit}" update="ChargeRateEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty chargeRateController.selected}"/>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty chargeRateController.selected}" update="ChargeRateViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{chargeRateController.removeChargeRate()}" update="datalist @(.databuttons)" disabled="#{empty chargeRateController.selected}"/>
+                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{chargeRateBean.prepareCreate}" update="ChargeRateCreateForm" oncomplete="$('.createModal').modal();return false;" />
+                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{chargeRateBean.prepareEdit}" update="ChargeRateEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty chargeRateBean.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty chargeRateBean.selected}" update="ChargeRateViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{chargeRateBean.removeChargeRate()}" update="datalist @(.databuttons)" disabled="#{empty chargeRateBean.selected}"/>
             </h:form>
             <ui:include src="Create.xhtml"/>
             <ui:include src="View.xhtml"/>

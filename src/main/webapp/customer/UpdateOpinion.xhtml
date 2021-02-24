@@ -9,25 +9,25 @@
     
     <ui:composition template="/template.xhtml">
 
-        <ui:define name="title" rendered="#{empty rentalOpinionController.customerOpinion.addedDate}">#{msg.addOpinion}</ui:define>
-        <ui:define name="title" rendered="#{not empty rentalOpinionController.customerOpinion.addedDate}">#{msg.editOpinion}</ui:define>
+        <ui:define name="title" rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}">#{msg.addOpinion}</ui:define>
+        <ui:define name="title" rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}">#{msg.editOpinion}</ui:define>
 
         <ui:define name="body">
-            <h1><h:outputText value="#{msg.addOpinion}" rendered="#{empty rentalOpinionController.customerOpinion.addedDate}"></h:outputText>
-                <h:outputText value="#{msg.editOpinion}" rendered="#{not empty rentalOpinionController.customerOpinion.addedDate}"></h:outputText></h1>
+            <h1><h:outputText value="#{msg.addOpinion}" rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}"></h:outputText>
+                <h:outputText value="#{msg.editOpinion}" rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}"></h:outputText></h1>
             <hr />
             <h:form id="OpinionForm">
                 <b:messages globalOnly="true" />
                 <h:outputText styleClass="viewLabel" value="#{msg.rating}" />
-                <p:rating id="rating" value="#{rentalOpinionController.customerOpinion.rating}" required="true" cancel="false" />
+                <p:rating id="rating" value="#{rentalOpinionBean.customerOpinion.rating}" required="true" cancel="false" />
                 <b:message for="rating" />
                 <br />
                 <h:outputText styleClass="viewLabel" value="#{msg.rentalOpinionContent}" />
-                <b:inputTextarea id="content" placeholder="#{msg.rentalOpinionContent}" value="#{rentalOpinionController.customerOpinion.content}" required="true" maxlength="500" />
+                <b:inputTextarea id="content" placeholder="#{msg.rentalOpinionContent}" value="#{rentalOpinionBean.customerOpinion.content}" required="true" maxlength="500" />
                 <b:message for="content" />
                 <br/>
-                <b:commandButton look="primary " class="btn-big" value="#{msg.addOpinion}" action="#{rentalOpinionController.updateOpinion()}"  rendered="#{empty rentalOpinionController.customerOpinion.addedDate}" />
-                <b:commandButton look="primary " class="btn-big" value="#{msg.editOpinion}" action="#{rentalOpinionController.updateOpinion()}"  rendered="#{not empty rentalOpinionController.customerOpinion.addedDate}"/>
+                <b:commandButton look="primary " class="btn-big" value="#{msg.addOpinion}" action="#{rentalOpinionBean.updateOpinion()}"  rendered="#{empty rentalOpinionBean.customerOpinion.addedDate}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.editOpinion}" action="#{rentalOpinionBean.updateOpinion()}"  rendered="#{not empty rentalOpinionBean.customerOpinion.addedDate}"/>
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="customerPanel" />
             </h:form>
         </ui:define>

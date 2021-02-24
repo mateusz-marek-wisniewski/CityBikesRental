@@ -1,11 +1,12 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
-import pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
-import pl.lodz.p.edu.s195738.cbr.mow.facades.RentalOpinionFacade;
+import pl.lodz.p.edu.s195738.cbr.entities.BikeRepair;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.mow.facades.BikeRepairFacade;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,43 +20,52 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.lodz.p.edu.s195738.cbr.entities.Bike;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("rentalOpinionController")
+@Named("bikeRepairBean")
 @SessionScoped
-public class RentalOpinionController implements Serializable {
+public class BikeRepairBean implements Serializable {
 
     @EJB
-    private pl.lodz.p.edu.s195738.cbr.mow.facades.RentalOpinionFacade ejbFacade;
+    private pl.lodz.p.edu.s195738.cbr.mow.facades.BikeRepairFacade ejbFacade;
     @EJB
-    private MOWEndpoint mow;
-    private List<RentalOpinion> items = null;
-    private RentalOpinion selected;
-    private RentalOpinion customerOpinion;
-    
+    MOWEndpoint mow;
+    private List<BikeRepair> items = null;
+    private BikeRepair selected;
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-    public RentalOpinionController() {
+    private List<Bike> bikesToRepair = null;
+    private Bike bikeSelected;
+
+    public BikeRepairBean() {
     }
 
-    public RentalOpinion getSelected() {
+    public BikeRepair getSelected() {
         return selected;
     }
 
-    public void setSelected(RentalOpinion selected) {
+    public void setSelected(BikeRepair selected) {
         this.selected = selected;
     }
 
-    public RentalOpinion getCustomerOpinion() {
-        if (customerOpinion == null) customerOpinion = mow.getCustomerOpinion();
-        if (customerOpinion == null) customerOpinion = new RentalOpinion();
-        return customerOpinion;
+    public List<Bike> getBikesToRepair() {
+        bikesToRepair = mow.getBikesToRepair();
+        return bikesToRepair;
     }
 
-    public void setCustomerOpinion(RentalOpinion customerOpinion) {
-        this.customerOpinion = customerOpinion;
+    public void setBikesToRepair(List<Bike> bikesToRepair) {
+        this.bikesToRepair = bikesToRepair;
+    }
+
+    public Bike getBikeSelected() {
+        return bikeSelected;
+    }
+
+    public void setBikeSelected(Bike bikeSelected) {
+        this.bikeSelected = bikeSelected;
     }
 
     protected void setEmbeddableKeys() {
@@ -64,61 +74,61 @@ public class RentalOpinionController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private RentalOpinionFacade getFacade() {
+    private BikeRepairFacade getFacade() {
         return ejbFacade;
     }
 
-    public RentalOpinion prepareCreate() {
-        selected = new RentalOpinion();
+    public BikeRepair prepareCreate() {
+        selected = new BikeRepair();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RentalOpinionCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RepairCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RentalOpinionUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RepairUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("RentalOpinionDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("RepairDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
     
-    public void removeOpinion() {
-        mow.removeRentalOpinion(selected);
+    public void createRepair() {
+        try {
+            mow.repairBike(bikeSelected, selected);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), MessageFormat.format(msg.getString("describeBikeRepair_success"), bikeSelected.getIdentifier())));
+            prepareCreate();
+        } catch (BaseApplicationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
+        } finally {
+            bikeSelected = null;
+            bikesToRepair = null;
+        }
+    }
+    
+    public void removeBikeRepair() {
+        mow.removeBikeRepair(selected);
         items = null;
         selected = null;
     }
     
-    public void updateOpinion() {
-        try {
-            mow.updateOpinion(customerOpinion);
-            if (customerOpinion.getAddedDate() == null)
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("addOpinion_success")));
-            else
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getString("success"), msg.getString("editOpinion_success")));
-            customerOpinion = null;
-        } catch (BaseApplicationException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getString("exceptionMessageTitle"), msg.getString(ex.getClass().getName())));
-        }
-    }
-    
-    public double getAverageRating() {
-        return getItems().stream().mapToInt(r -> r.getRating()).average().getAsDouble();
+    public double getRepairCost() {
+        return getItems().stream().mapToDouble(b -> b.getRepairCost().doubleValue()).sum();
     }
 
-    public List<RentalOpinion> getItems() {
+    public List<BikeRepair> getItems() {
         if (items == null) {
-            items = mow.getRentalOpinionsList();
+            items = mow.getBikeRepairsList();
         }
         return items;
     }
@@ -151,29 +161,29 @@ public class RentalOpinionController implements Serializable {
         }
     }
 
-    public RentalOpinion getRentalOpinion(java.lang.Long id) {
+    public BikeRepair getRepair(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<RentalOpinion> getItemsAvailableSelectMany() {
+    public List<BikeRepair> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<RentalOpinion> getItemsAvailableSelectOne() {
+    public List<BikeRepair> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = RentalOpinion.class)
-    public static class RentalOpinionControllerConverter implements Converter {
+    @FacesConverter(forClass = BikeRepair.class)
+    public static class BikeRepairBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            RentalOpinionController controller = (RentalOpinionController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "rentalOpinionController");
-            return controller.getRentalOpinion(getKey(value));
+            BikeRepairBean bean = (BikeRepairBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "bikeRepairBean");
+            return bean.getRepair(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -193,11 +203,11 @@ public class RentalOpinionController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof RentalOpinion) {
-                RentalOpinion o = (RentalOpinion) object;
+            if (object instanceof BikeRepair) {
+                BikeRepair o = (BikeRepair) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), RentalOpinion.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), BikeRepair.class.getName()});
                 return null;
             }
         }

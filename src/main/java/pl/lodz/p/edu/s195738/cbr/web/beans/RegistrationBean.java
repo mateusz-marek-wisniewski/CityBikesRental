@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -24,7 +24,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.MOKEndpoint;
 
 @Named
 @RequestScoped
-public class RegistrationController {
+public class RegistrationBean {
     private String username;
     private String name;
     private String surname;

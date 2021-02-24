@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers;
+package pl.lodz.p.edu.s195738.cbr.web.beans;
 
 import pl.lodz.p.edu.s195738.cbr.entities.Rent;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil;
-import pl.lodz.p.edu.s195738.cbr.web.controllers.util.JsfUtil.PersistAction;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil;
+import pl.lodz.p.edu.s195738.cbr.web.beans.util.JsfUtil.PersistAction;
 import pl.lodz.p.edu.s195738.cbr.mow.facades.RentFacade;
 
 import java.io.Serializable;
@@ -23,9 +23,9 @@ import javax.faces.convert.FacesConverter;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.mow.MOWEndpoint;
 
-@Named("rentController")
+@Named("rentBean")
 @SessionScoped
-public class RentController implements Serializable {
+public class RentBean implements Serializable {
 
     @EJB
     private pl.lodz.p.edu.s195738.cbr.mow.facades.RentFacade ejbFacade;
@@ -42,7 +42,7 @@ public class RentController implements Serializable {
 
     ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-    public RentController() {
+    public RentBean() {
     }
 
     public Rent getSelected() {
@@ -197,16 +197,16 @@ public class RentController implements Serializable {
     }
 
     @FacesConverter(forClass = Rent.class)
-    public static class RentControllerConverter implements Converter {
+    public static class RentBeanConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            RentController controller = (RentController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "rentController");
-            return controller.getRent(getKey(value));
+            RentBean bean = (RentBean) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "rentBean");
+            return bean.getRent(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{accountController.items}"
+                             value="#{accountBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:accountController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:accountController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:accountBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:accountBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -36,10 +36,10 @@
                         <p:selectBooleanCheckbox value="#{item.confirmed}" disabled="true"/>
                     </b:dataTableColumn>
                 </b:dataTable>
-                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{accountController.prepareCreate}" update="AccountCreateForm" oncomplete="$('.createModal').modal();return false;" />
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty accountController.selected}" update="AccountViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{accountController.prepareEdit}" update="AccountEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty accountController.selected}"/>
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{accountController.removeAccount()}" update="datalist @(.databuttons)" disabled="#{empty accountController.selected}"/>
+                <b:commandButton id="createButton" icon="plus" value="#{msg.create}" actionListener="#{accountBean.prepareCreate}" update="AccountCreateForm" oncomplete="$('.createModal').modal();return false;" />
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty accountBean.selected}" update="AccountViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="editButton" icon="pencil" class="databuttons" value="#{msg.edit}" actionListener="#{accountBean.prepareEdit}" update="AccountEditForm" oncomplete="$('.editModal').modal();return false;" disabled="#{empty accountBean.selected}"/>
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{accountBean.removeAccount()}" update="datalist @(.databuttons)" disabled="#{empty accountBean.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
             <ui:include src="Create.xhtml"/>

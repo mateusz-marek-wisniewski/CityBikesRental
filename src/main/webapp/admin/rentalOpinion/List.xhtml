@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{rentalOpinionController.items}"
+                             value="#{rentalOpinionBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentalOpinionController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentalOpinionController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentalOpinionBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentalOpinionBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -36,8 +36,8 @@
                     <b:dataTableColumn value="#{item.customerRole.account.login}" label="#{msg.username}" />
                     <b:dataTableColumn value="#{item.content}" label="#{msg.rentalOpinionContent}" />
                 </b:dataTable>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentalOpinionController.selected}" update="RentalOpinionStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentalOpinionController.removeOpinion()}" update="datalist @(.databuttons)" disabled="#{empty rentalOpinionController.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentalOpinionBean.selected}" update="RentalOpinionStationViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentalOpinionBean.removeOpinion()}" update="datalist @(.databuttons)" disabled="#{empty rentalOpinionBean.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>

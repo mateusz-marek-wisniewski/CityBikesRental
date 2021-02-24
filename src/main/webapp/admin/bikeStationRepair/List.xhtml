@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{bikeStationRepairController.items}"
+                             value="#{bikeStationRepairBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationRepairController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationRepairController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:bikeStationRepairBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:bikeStationRepairBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -34,8 +34,8 @@
                     <b:dataTableColumn value="#{item.repairCost}" label="#{msg.cost} #{settings.currency}" />
                     <b:dataTableColumn value="#{item.repairLog}" label="#{msg.log}" />
                 </b:dataTable>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationRepairController.selected}" update="BikeStationRepairViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationRepairController.removeBikeStationRepair()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationRepairController.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty bikeStationRepairBean.selected}" update="BikeStationRepairViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{bikeStationRepairBean.removeBikeStationRepair()}" update="datalist @(.databuttons)" disabled="#{empty bikeStationRepairBean.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>

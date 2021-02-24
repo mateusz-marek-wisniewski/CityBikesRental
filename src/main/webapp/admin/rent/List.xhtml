@@ -16,10 +16,10 @@
         <ui:define name="mainContent">
             <h:form>
                 <b:dataTable id="datalist" class="datalist"
-                             value="#{rentController.items}"
+                             value="#{rentBean.items}"
                              var="item"
-                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentController.setSelected(item);"
-                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentController.setSelected(null);"
+                             onselect="console.log(typeOfSelection + ' ' + indexes + ' has been selected');ajax:rentBean.setSelected(item);"
+                             ondeselect="console.log(typeOfSelection + ' ' + indexes + ' has been deselected');ajax:rentBean.setSelected(null);"
                              selection-mode="single"
                              responsive="true"
                              border="false"
@@ -40,8 +40,8 @@
                     <b:dataTableColumn value="#{item.customerRole.account.login}" label="#{msg.username}" />
                     <b:dataTableColumn value="#{item.charge}" label="#{msg.charge}" />
                 </b:dataTable>
-                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentController.selected}" update="RentViewForm" oncomplete="$('.viewModal').modal();return false;" />
-                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentController.removeRent()}" update="datalist @(.databuttons)" disabled="#{empty rentController.selected}"/>
+                <b:commandButton id="viewButton" icon="search" class="databuttons" value="#{msg.view}" disabled="#{empty rentBean.selected}" update="RentViewForm" oncomplete="$('.viewModal').modal();return false;" />
+                <b:commandButton id="deleteButton" icon="trash" class="databuttons" value="#{msg.delete}" actionListener="#{rentBean.removeRent()}" update="datalist @(.databuttons)" disabled="#{empty rentBean.selected}"/>
             </h:form>
             <ui:include src="View.xhtml"/>
         </ui:define>

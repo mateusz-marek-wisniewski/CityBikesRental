@@ -14,12 +14,12 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.rating}" />
-                        <p:rating value="#{rentalOpinionController.selected.rating}" cancel="false" readonly="true" />
-                        <h:outputText styleClass="viewValue" value="(#{rentalOpinionController.selected.rating}/5)" />
+                        <p:rating value="#{rentalOpinionBean.selected.rating}" cancel="false" readonly="true" />
+                        <h:outputText styleClass="viewValue" value="(#{rentalOpinionBean.selected.rating}/5)" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.addedDate}" />
-                        <h:outputText styleClass="viewValue" value="#{rentalOpinionController.selected.addedDate}" >
+                        <h:outputText styleClass="viewValue" value="#{rentalOpinionBean.selected.addedDate}" >
                             <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
                         </h:outputText>
                     </b:column>
@@ -27,11 +27,11 @@
                 <b:row>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.username}" />
-                        <h:outputText styleClass="viewValue" value="#{rentalOpinionController.selected.customerRole.account.login}" />
+                        <h:outputText styleClass="viewValue" value="#{rentalOpinionBean.selected.customerRole.account.login}" />
                     </b:column>
                     <b:column col-md="6" styleClass="viewColumn">
                         <h:outputText styleClass="viewLabel" value="#{msg.rentalOpinionContent}" />
-                        <h:outputText styleClass="viewValue" value="#{rentalOpinionController.selected.content}" />
+                        <h:outputText styleClass="viewValue" value="#{rentalOpinionBean.selected.content}" />
                     </b:column>
                 </b:row>
             </h:form>

@@ -20,19 +20,19 @@
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.bikeStationIdentifier}" />
                         <h:outputText styleClass="viewLabel small" value="#{msg.bikeStationIdentifierLocation}" />
-                        <b:inputText id="bikeStation" class="input-big" value="#{bikeStationController.bikeStationIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
+                        <b:inputText id="bikeStation" class="input-big" value="#{bikeStationBean.bikeStationIdentifier}" required="true" mask="AA999" placeholder="${msg.bikeStationIdentifierPlaceholder}" validatorMessage="#{msg.invalidIdentifier}">
                             <f:validateRegex pattern="^[A-Z]{2}[0-9]{3}$" />
                         </b:inputText>
                         <b:message for="bikeStation" />
                     </b:column>
                     <b:column colMd="6" colSm="12">
                         <h:outputText styleClass="viewLabel" value="#{msg.damageDescription}" />
-                        <b:inputTextarea id="description" placeholder="#{msg.damageDescription}" value="#{bikeStationController.damageDescription}" required="true" maxlength="255" />
+                        <b:inputTextarea id="description" placeholder="#{msg.damageDescription}" value="#{bikeStationBean.damageDescription}" required="true" maxlength="255" />
                         <b:message for="description" />
                     </b:column>
                 </b:row>
                 <br />
-                <b:commandButton look="primary " class="btn-big" value="#{msg.save}" action="#{bikeStationController.saveBikeStationDamage()}" />
+                <b:commandButton look="primary " class="btn-big" value="#{msg.save}" action="#{bikeStationBean.saveBikeStationDamage()}" />
                 <b:commandLink class="btn-big" value="#{msg.back}" outcome="employeePanel" />
             </h:form>
         </ui:define>

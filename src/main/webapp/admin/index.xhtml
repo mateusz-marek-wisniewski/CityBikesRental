@@ -17,35 +17,35 @@
             <b:row>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Liczba rowerów" />
-                    <h:outputText styleClass="viewValue" value="#{bikeController.items.size()}" />
+                    <h:outputText styleClass="viewValue" value="#{bikeBean.items.size()}" />
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Liczba stacji" />
-                    <h:outputText styleClass="viewValue" value="#{bikeStationController.items.size()}" />
+                    <h:outputText styleClass="viewValue" value="#{bikeStationBean.items.size()}" />
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Średnia ocen " />
-                    <h:outputText styleClass="viewValue" value="#{rentalOpinionController.averageRating}" />
+                    <h:outputText styleClass="viewValue" value="#{rentalOpinionBean.averageRating}" />
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Liczba wypożyczeń " />
-                    <h:outputText styleClass="viewValue" value="#{rentController.items.size()}" />
+                    <h:outputText styleClass="viewValue" value="#{rentBean.items.size()}" />
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Obrót z wypożyczeń " />
-                    <h:outputText styleClass="viewValue" value="#{rentController.moneyEarned} #{settings.currency}" >
+                    <h:outputText styleClass="viewValue" value="#{rentBean.moneyEarned} #{settings.currency}" >
                             <f:convertNumber type="#0.00" />
                     </h:outputText>
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Koszt napraw rowerów " />
-                    <h:outputText styleClass="viewValue" value="#{bikeRepairController.repairCost} #{settings.currency}" >
+                    <h:outputText styleClass="viewValue" value="#{bikeRepairBean.repairCost} #{settings.currency}" >
                             <f:convertNumber type="#0.00" />
                     </h:outputText>
                 </b:column>
                 <b:column col-md="6" styleClass="viewColumn">
                     <h:outputText styleClass="viewLabel" value="Koszt napraw stacji " />
-                    <h:outputText styleClass="viewValue" value="#{bikeStationRepairController.repairCost} #{settings.currency}" >
+                    <h:outputText styleClass="viewValue" value="#{bikeStationRepairBean.repairCost} #{settings.currency}" >
                             <f:convertNumber type="#0.00" />
                     </h:outputText>
                 </b:column>

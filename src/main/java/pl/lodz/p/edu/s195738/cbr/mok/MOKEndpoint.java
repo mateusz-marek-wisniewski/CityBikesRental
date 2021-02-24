@@ -105,7 +105,7 @@ public class MOKEndpoint implements SessionSynchronization{
         account.setConfirmed(false);
         account.setCustomerRole(new CustomerRole());
         account.getCustomerRole().setAccount(account);
-        
+
         accountFacade.create(account);
 
         // przygotowanie linku rejestracyjnego
@@ -148,7 +148,7 @@ public class MOKEndpoint implements SessionSynchronization{
 
         Account account;
         
-        // sprawdź konto o podanej nazwie użytkownika istnieje
+        // sprawdź czy konto o podanej nazwie użytkownika istnieje
         try {
             account = accountFacade.findByLogin(username);
         } catch (UsernameDoesNotExistException ex) {
@@ -170,7 +170,7 @@ public class MOKEndpoint implements SessionSynchronization{
         try {
             // spróbuj zalogowac się do serwera aplikacji
             request.login(username, password);
-            // jeśli sukces, zajerstruj pomyślne logowanie
+            // jeśli sukces, zarejestruj pomyślne logowanie
             loginAttempt.setSucceded(true);
             loginAttemptFacade.create(loginAttempt);
         } catch (ServletException ex) {

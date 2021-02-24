@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.s195738.cbr.web.controllers.util;
+package pl.lodz.p.edu.s195738.cbr.web.beans.util;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;
