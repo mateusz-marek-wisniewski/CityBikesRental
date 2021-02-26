@@ -26,12 +26,10 @@
     <jta-data-source>jdbc/cbrmokDS</jta-data-source>
     <shared-cache-mode>NONE</shared-cache-mode>
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountPassword</class>
+    <class>pl.lodz.p.edu.s195738.cbr.entities.RentalOpinion</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.Account</class>
     <class>pl.lodz.p.edu.s195738.cbr.entities.AccountRole</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole</class>
-    <class>pl.lodz.p.edu.s195738.cbr.entities.roles.CustomerRole</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="cbrmokPU"/>

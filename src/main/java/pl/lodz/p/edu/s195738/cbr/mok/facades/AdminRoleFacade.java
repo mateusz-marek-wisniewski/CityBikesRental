@@ -17,7 +17,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.AdminRole;
 @Stateless
 public class AdminRoleFacade extends AbstractFacade<AdminRole> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmokPU")
     private EntityManager em;
 
     @Override

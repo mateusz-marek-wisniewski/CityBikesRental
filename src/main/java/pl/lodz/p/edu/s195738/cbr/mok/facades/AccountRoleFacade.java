@@ -17,7 +17,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
 @Stateless
 public class AccountRoleFacade extends AbstractFacade<AccountRole> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmokPU")
     private EntityManager em;
 
     @Override

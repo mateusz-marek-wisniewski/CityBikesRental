@@ -18,7 +18,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.facades.AbstractFacade;
 @Stateless
 public class RentFacade extends AbstractFacade<Rent> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmowPU")
     private EntityManager em;
 
     @Override

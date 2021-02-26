@@ -17,7 +17,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.LoginAttempt;
 @Stateless
 public class LoginAttemptFacade extends AbstractFacade<LoginAttempt> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmokPU")
     private EntityManager em;
 
     @Override

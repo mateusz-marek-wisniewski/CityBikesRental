@@ -27,7 +27,7 @@ import pl.lodz.p.edu.s195738.cbr.exceptions.mok.UsernameDoesNotExistException;
 @Stateless
 public class AccountFacade extends AbstractFacade<Account> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmokPU")
     private EntityManager em;
 
     @Override

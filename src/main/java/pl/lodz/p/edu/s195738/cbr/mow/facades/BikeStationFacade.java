@@ -24,7 +24,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.facades.AbstractFacade;
 @Stateless
 public class BikeStationFacade extends AbstractFacade<BikeStation> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmowPU")
     private EntityManager em;
 
     @Override

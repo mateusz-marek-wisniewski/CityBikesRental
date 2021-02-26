@@ -26,7 +26,7 @@ import pl.lodz.p.edu.s195738.cbr.mok.facades.AbstractFacade;
 @Stateless
 public class ChargeRateFacade extends AbstractFacade<ChargeRate> {
 
-    @PersistenceContext(unitName = "cbradminPU")
+    @PersistenceContext(unitName = "cbrmowPU")
     private EntityManager em;
 
     @Override
