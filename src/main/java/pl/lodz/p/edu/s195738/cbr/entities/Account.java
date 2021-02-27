@@ -108,10 +108,10 @@ public class Account implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.EAGER)
     private CustomerRole customerRole;
     
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<AccountPassword> accountPasswordCollection;
     
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
     private Collection<LoginAttempt> loginAttemptCollection;
     
     @Basic(optional = false)
