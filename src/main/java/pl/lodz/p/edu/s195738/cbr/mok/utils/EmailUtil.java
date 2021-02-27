@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 @Named
 @RequestScoped
 public class EmailUtil {
-    @Resource(lookup = "glassfishEmailSender")
+    @Resource(lookup = "mail/mailSession")
     private Session mailSession;
 
     public void sendEmail(String to, String subject, String body) throws MessagingException {
