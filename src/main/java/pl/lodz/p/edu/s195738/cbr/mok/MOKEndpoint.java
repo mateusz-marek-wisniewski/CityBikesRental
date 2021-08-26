@@ -37,6 +37,7 @@ import pl.lodz.p.edu.s195738.cbr.entities.roles.EmployeeRole;
 import pl.lodz.p.edu.s195738.cbr.exceptions.BaseApplicationException;
 import pl.lodz.p.edu.s195738.cbr.exceptions.mok.*;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.AccountFacade;
+import pl.lodz.p.edu.s195738.cbr.mok.facades.AccountRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.AdminRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.CustomerRoleFacade;
 import pl.lodz.p.edu.s195738.cbr.mok.facades.EmployeeRoleFacade;
@@ -57,12 +58,13 @@ public class MOKEndpoint implements SessionSynchronization{
     @EJB
     AccountFacade accountFacade;
     @EJB
+    AccountRoleFacade accountRoleFacade;
+    @EJB
     AdminRoleFacade adminRoleFacade;
     @EJB
     EmployeeRoleFacade employeeRoleFacade;
     @EJB
     CustomerRoleFacade customerRoleFacade;
-    
     @EJB
     LoginAttemptFacade loginAttemptFacade;
     
@@ -205,11 +207,17 @@ public class MOKEndpoint implements SessionSynchronization{
      * @throws BaseApplicationException
      */
     @RolesAllowed({"ADMIN", "EMPLOYEE", "CUSTOMER"})
-    public void changeMyPassword(String oldPassword, String newPassword, String newPasswordRepeat, Account account) throws BaseApplicationException{
-        if (!account.getPassword().equals(PasswordUtil.hash(oldPassword))) throw new CurrentPasswordIsInvalidException();
-        if (!newPassword.equals(newPasswordRepeat)) throw new PasswordsDoNotMatchException();
-        if (newPassword.equals(oldPassword)) throw new PasswordsCurrentAndNewCanNotBeTheSameException();
-        if (account.isPasswordInAccountPasswordCollection(PasswordUtil.hash(newPassword))) throw new PasswordAlreadyUsedException();
+    public void changeMyPassword(String oldPassword, String newPassword,
+            String newPasswordRepeat, Account account)
+            throws BaseApplicationException {
+        if (!account.getPassword().equals(PasswordUtil.hash(oldPassword)))
+            throw new CurrentPasswordIsInvalidException();
+        if (!newPassword.equals(newPasswordRepeat))
+            throw new PasswordsDoNotMatchException();
+        if (newPassword.equals(oldPassword))
+            throw new PasswordsCurrentAndNewCanNotBeTheSameException();
+        if (account.isPasswordInAccountPasswordCollection(PasswordUtil.hash(newPassword)))
+            throw new PasswordAlreadyUsedException();
         
         account.setPassword(PasswordUtil.hash(newPassword));
         AccountPassword accountPassword = new AccountPassword();
@@ -254,21 +262,25 @@ public class MOKEndpoint implements SessionSynchronization{
     }
     
     @RolesAllowed("ADMIN")
-    public void createAccount(Account account, String password2, String phone) throws BaseApplicationException {
+    public void createAccount(Account account, String password2, String phone)
+            throws BaseApplicationException {
         
         // sprawdź poprawność hasła
-        if (!account.getPassword().equals(password2)) throw new PasswordsDoNotMatchException();
+        if (!account.getPassword().equals(password2))
+            throw new PasswordsDoNotMatchException();
         
         //zaszyfruj hasło
         account.setPassword(PasswordUtil.hash(account.getPassword()));
         
         // ustaw powiązanie dwustronne
-        if (account.getAdminRole() != null) account.getAdminRole().setAccount(account);        
+        if (account.getAdminRole() != null)
+            account.getAdminRole().setAccount(account);        
         if (account.getEmployeeRole() != null) {
             account.getEmployeeRole().setAccount(account);
             account.getEmployeeRole().setPhone(phone);
         }
-        if (account.getCustomerRole() != null) account.getCustomerRole().setAccount(account);
+        if (account.getCustomerRole() != null)
+            account.getCustomerRole().setAccount(account);
         
         accountFacade.create(account);
     }
@@ -279,50 +291,42 @@ public class MOKEndpoint implements SessionSynchronization{
     }
     
     @RolesAllowed("ADMIN")
-    public void editAccount(Account account, boolean a1, boolean a2, boolean e1, boolean e2, boolean c1, boolean c2, String phone) throws BaseApplicationException {
-
-        if (a1 && account.getAdminRole() == null) {
-            AdminRole aR = new AdminRole();
-            aR.setActive(a2);
-            aR.setAccount(account);
-            account.setAdminRole(aR);
-            adminRoleFacade.create(aR);
-        } else if (a1 && account.getAdminRole() != null) {
-            account.getAdminRole().setActive(a2);
-        } else if (!a1 && account.getAdminRole() != null) {
-            adminRoleFacade.remove(account.getAdminRole());
-            account.setAdminRole(null);
-        }
-
-        if (e1 && account.getEmployeeRole() == null) {
-            EmployeeRole eR = new EmployeeRole();
-            eR.setActive(e2);
-            eR.setAccount(account);
-            eR.setPhone(phone);
-            account.setEmployeeRole(eR);
-            employeeRoleFacade.create(eR);
-        } else if (e1 && account.getEmployeeRole() != null) {
-            account.getEmployeeRole().setActive(e2);
-            account.getEmployeeRole().setPhone(phone);
-        } else if (!e1 && account.getEmployeeRole() != null) {
-            employeeRoleFacade.remove(account.getEmployeeRole());
-            account.setEmployeeRole(null);
-        }
+    public void editAccount(Account account,
+            boolean shouldHaveAdminRole, boolean isAdminActive,
+            boolean shouldHaveEmployeeRole, boolean isEmployeeActive,
+            boolean shouldHaveCustomerRole, boolean isCustomerActive, String phone)
+            throws BaseApplicationException {
         
-        if (c1 && account.getCustomerRole() == null) {
-            CustomerRole cR = new CustomerRole();
-            cR.setActive(c2);
-            cR.setAccount(account);
-            account.setCustomerRole(cR);
-            customerRoleFacade.create(cR);
-        } else if (c1 && account.getCustomerRole() != null) {
-            account.getCustomerRole().setActive(c2);
-        } else if (!c1 && account.getCustomerRole() != null) {
-            customerRoleFacade.remove(account.getCustomerRole());
-            account.setCustomerRole(null);
-        }
+        editAccountRole(account, account.getAdminRole(),    new AdminRole(),    shouldHaveAdminRole,    isAdminActive,    "");
+        editAccountRole(account, account.getEmployeeRole(), new EmployeeRole(), shouldHaveEmployeeRole, isEmployeeActive, phone);
+        editAccountRole(account, account.getCustomerRole(), new CustomerRole(), shouldHaveCustomerRole, isCustomerActive, "");
         
         accountFacade.edit(account);
+    }
+
+    private void editAccountRole(Account account, AccountRole role,
+    AccountRole newRole, boolean shouldHaveRole, boolean isRoleActive, String phone)
+    throws BaseApplicationException {
+        
+        if (shouldHaveRole && !has(role)) {
+            AccountRole ar = newRole;
+            ar.setActive(isRoleActive);
+            ar.setAccount(account);
+            if (ar instanceof EmployeeRole)
+                ((EmployeeRole) ar).setPhone(phone);
+            accountRoleFacade.create(newRole);
+        } else if (shouldHaveRole && has(role)) {
+            role.setActive(isRoleActive);
+            if (role instanceof EmployeeRole)
+                ((EmployeeRole) role).setPhone(phone);
+        } else if (!shouldHaveRole && has(role)) {
+            role.setAccount(null);
+            accountRoleFacade.remove(role);
+        }
+    }
+    
+    private boolean has(AccountRole role) {
+        return role != null;
     }
 
     @RolesAllowed("ADMIN")

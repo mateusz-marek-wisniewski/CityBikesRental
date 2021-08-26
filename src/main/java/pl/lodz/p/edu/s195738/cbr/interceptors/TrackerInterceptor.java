@@ -26,10 +26,14 @@ public class TrackerInterceptor {
 
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
 
-        StringBuilder message = new StringBuilder("[" + simpleTimeFormat.format(new Date()) + "] Wywołanie metody: ");
-        message.append(ictx.getMethod().toString());
-        message.append(" użytkownik: ").append(sctx.getCallerPrincipal().getName());
-        message.append(" wartości parametrów: ");
+        StringBuilder message = new StringBuilder();
+        message.append("[")
+               .append(simpleTimeFormat.format(new Date()))
+               .append("] Wywołanie metody: ")
+               .append(ictx.getMethod().toString())
+               .append(" użytkownik: ")
+               .append(sctx.getCallerPrincipal().getName())
+               .append(" wartości parametrów: ");
 
         Object[] params = ictx.getParameters();
         if (params != null) {
@@ -37,7 +41,8 @@ public class TrackerInterceptor {
                 if (null == param) {
                     message.append("null ");
                 } else {
-                    message.append(param.toString()).append(" ");
+                    message.append(param.toString())
+                           .append(" ");
                 }
             }
         }
@@ -47,7 +52,8 @@ public class TrackerInterceptor {
         try {
             result = ictx.proceed();
         } catch (Exception e) {
-            message.append("[").append(simpleTimeFormat.format(new Date())).append("] zakończone wyjątkiem: ").append(e.toString());
+            message.append(" zakończone wyjątkiem: ")
+                   .append(e.toString());
             log.severe(message.toString());
             throw e;
         }
@@ -56,7 +62,8 @@ public class TrackerInterceptor {
         if (null == result) {
             message.append("null ");
         } else {
-            message.append(result.toString()).append(" ");
+            message.append(result.toString())
+                   .append(" ");
         }
         log.severe(message.toString());
 

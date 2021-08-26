@@ -75,7 +75,10 @@ public class AccountFacade extends AbstractFacade<Account> {
     
     public Account findByLogin(String login) throws UsernameDoesNotExistException {
         try {
-            return (Account) em.createNamedQuery("Account.findByLogin").setParameter("login", login).getResultList().get(0);
+            return (Account) em.createNamedQuery("Account.findByLogin")
+                               .setParameter("login", login)
+                               .getResultList()
+                               .get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new UsernameDoesNotExistException(e);
         }
@@ -83,7 +86,10 @@ public class AccountFacade extends AbstractFacade<Account> {
 
     public Account findByVerificationHash(String hash) throws EmailVerificationHashDoesNotExistException {
         try {
-            return (Account) em.createNamedQuery("Account.findByEmailVerificationHash").setParameter("emailVerificationHash", hash).getResultList().get(0);
+            return (Account) em.createNamedQuery("Account.findByEmailVerificationHash")
+                               .setParameter("emailVerificationHash", hash)
+                               .getResultList()
+                               .get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new EmailVerificationHashDoesNotExistException(e);
         }
@@ -91,7 +97,10 @@ public class AccountFacade extends AbstractFacade<Account> {
 
     public Account findByEmail(String email) throws EmailAddressIsNotInUseException {
         try {
-            return (Account) em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList().get(0);
+            return (Account) em.createNamedQuery("Account.findByEmail")
+                               .setParameter("email", email)
+                               .getResultList()
+                               .get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new EmailAddressIsNotInUseException(e);
         }

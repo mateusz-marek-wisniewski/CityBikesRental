@@ -368,9 +368,11 @@ public class MOWEndpoint implements SessionSynchronization {
     
     @RolesAllowed("CUSTOMER")
     public List<Rent> getCustomerRentsToReturn() {
-        return customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
-                .filter(r -> r.getEndDate() == null)
-                .collect(Collectors.toList());
+        return customerRoleFacade
+                .find(userSession.getAccount().getCustomerRole().getId())
+                .getRentCollection().stream()
+                    .filter(r -> r.getEndDate() == null)
+                    .collect(Collectors.toList());
     }
     
     @RolesAllowed("CUSTOMER")
@@ -459,7 +461,9 @@ public class MOWEndpoint implements SessionSynchronization {
      */
     @RolesAllowed("CUSTOMER")
     public List<Rent> getCustomerRents() {
-        List<Rent> rentList =  customerRoleFacade.find(userSession.getAccount().getCustomerRole().getId()).getRentCollection().stream()
+        List<Rent> rentList =  customerRoleFacade
+            .find(userSession.getAccount().getCustomerRole().getId())
+            .getRentCollection().stream()
                 .collect(Collectors.toList());
         rentList.sort((r1, r2) -> r2.getStartDate().compareTo(r1.getStartDate()));
         return rentList;

@@ -7,6 +7,7 @@ package pl.lodz.p.edu.s195738.cbr.entities.roles;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import pl.lodz.p.edu.s195738.cbr.entities.Account;
 import pl.lodz.p.edu.s195738.cbr.entities.AccountRole;
 
 /**
@@ -20,5 +21,5 @@ public class AdminRole extends AccountRole {
     public AdminRole() {
         super.setRoleName("ADMIN");
         super.setActive(true);
-    }    
+    }
 }

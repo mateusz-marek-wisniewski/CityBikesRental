@@ -25,3 +25,9 @@ hs_err_pid*
 
 # Generated Faces Files
 faces-config.NavData
+
+# Netbeans
+.settings
+.project
+.classpath
+nb-configuration.xml

@@ -146,7 +146,10 @@ public class RentBean implements Serializable {
     }
     
     public double getMoneyEarned() {
-        return getItems().stream().mapToDouble(r -> r.getCharge().doubleValue()).sum();
+        return getItems().stream()
+                .filter(r -> r.getCharge() != null)
+                .mapToDouble(r -> r.getCharge().doubleValue())
+                .sum();
     }
 
     public List<Rent> getItems() {

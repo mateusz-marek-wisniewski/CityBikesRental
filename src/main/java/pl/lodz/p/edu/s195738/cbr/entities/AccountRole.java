@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AccountRole.findById", query = "SELECT a FROM AccountRole a WHERE a.id = :id"),
     @NamedQuery(name = "AccountRole.findByRoleName", query = "SELECT a FROM AccountRole a WHERE a.roleName = :roleName"),
     @NamedQuery(name = "AccountRole.findByActive", query = "SELECT a FROM AccountRole a WHERE a.active = :active")})
-public class AccountRole implements Serializable {
+public abstract class AccountRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
